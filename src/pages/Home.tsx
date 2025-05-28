@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Palette, Search, TrendingUp, Zap, Shield } from 'lucide-react';
+import { ArrowRight, Code, Palette, Search, TrendingUp, Zap, Shield, Users, Target, Award } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const Home = () => {
@@ -10,46 +10,99 @@ const Home = () => {
     {
       icon: Code,
       title: 'Web Development',
-      description: 'Custom websites and web applications built with cutting-edge technologies.',
+      subtitle: 'Custom Websites That Convert',
+      description: 'From WordPress sites to custom solutions, we bring your vision to reality',
       href: '/services/web'
     },
     {
       icon: Zap,
       title: 'Software Development',
-      description: 'Scalable software solutions tailored to your business needs.',
+      subtitle: 'Tailored Software for Your Unique Needs',
+      description: 'We build custom software solutions, web applications, and mobile apps to streamline your operations and drive efficiency.',
       href: '/services/software'
     },
     {
       icon: Palette,
       title: 'Branding',
-      description: 'Distinctive brand identities that resonate with your audience.',
+      subtitle: 'Craft Your Brand Identity with Impact',
+      description: 'Elevate your brand with captivating logos, visual elements, and marketing materials that resonate with your target audience.',
       href: '/services/branding'
     },
     {
       icon: Search,
       title: 'SEO',
-      description: 'Data-driven SEO strategies to boost your online visibility.',
+      subtitle: 'Dominate Search Results & Drive Organic Growth',
+      description: 'Improve your online visibility with our comprehensive SEO strategies, including keyword research, content optimization, and manual link building.',
       href: '/services/seo'
     },
     {
       icon: TrendingUp,
-      title: 'Paid Ads',
-      description: 'High-converting ad campaigns that maximize your ROI.',
+      title: 'Online Advertisements',
+      subtitle: 'Reach Your Target Audience with Precision',
+      description: 'Maximize your reach and ROI with our targeted online advertising campaigns across search engines and social media platforms.',
       href: '/services/ads'
-    },
-    {
-      icon: Shield,
-      title: 'Security',
-      description: 'Robust security solutions to protect your digital assets.',
-      href: '/services/security'
     }
   ];
 
-  const stats = [
-    { number: '200+', label: 'Projects Delivered' },
-    { number: '98%', label: 'Client Satisfaction' },
-    { number: '5+', label: 'Years Experience' },
-    { number: '24/7', label: 'Support Available' }
+  const frustrations = [
+    'High prices for digital services.',
+    'Incomplete and unsatisfactory work from freelancers and agencies.',
+    'Low-quality deliverables that don\'t meet your expectations.',
+    'Unreliable and untrustworthy service providers.'
+  ];
+
+  const whyChooseUs = [
+    'All-in-One Solutions: We offer a comprehensive suite of digital services under one roof.',
+    'Client-Centric Approach: Your goals are our priority.',
+    'Affordable Excellence: Premium quality without breaking the bank.',
+    'Free Consultation and Support: Start with confidence.',
+    'Data-Driven Results: Trackable success and measurable ROI.'
+  ];
+
+  const values = [
+    {
+      icon: Users,
+      title: 'Client-Centric',
+      description: 'Your goals, our priority. We listen, collaborate, and deliver solutions aligned with your success.'
+    },
+    {
+      icon: Zap,
+      title: 'Innovation',
+      description: 'Driving digital solutions that redefine industries. We embrace cutting-edge technologies and creative thinking.'
+    },
+    {
+      icon: Shield,
+      title: 'Transparency',
+      description: 'Open communication and honest partnerships are the foundation of our relationships.'
+    },
+    {
+      icon: Award,
+      title: 'Quality',
+      description: 'Delivering exceptional results that exceed expectations. We are committed to excellence in everything we do.'
+    },
+    {
+      icon: Target,
+      title: 'Teamwork',
+      description: 'Collaborating with clients to achieve unexpected success. Together, we create something extraordinary.'
+    }
+  ];
+
+  const approachSteps = [
+    {
+      title: 'Understanding Your Goals',
+      subtitle: 'Your Goal, Our Focus',
+      description: 'We begin by understanding your unique business objectives and target audience. We gain insights into your industry, challenges, and aspirations through in-depth consultation.'
+    },
+    {
+      title: 'Strategic Planning',
+      subtitle: 'Crafting Your Digital Blueprint',
+      description: 'Based on your goals, we develop a clear roadmap for your digital journey tailored to your specific needs. Our strategic planning process includes market research, competitor analysis, and goal setting.'
+    },
+    {
+      title: 'Execution and Optimization',
+      subtitle: 'Bringing Your Vision to Life',
+      description: 'Our team of experts brings your digital vision to life through meticulous execution and ongoing optimization. We track key performance indicators (KPIs) to measure success and make data-driven adjustments.'
+    }
   ];
 
   return (
@@ -90,47 +143,64 @@ const Home = () => {
           />
         </div>
 
-        <div className="relative z-10 container-custom text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <motion.h1 
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 text-balance"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
+        <div className="relative z-10 container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              className="text-white text-left"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
             >
-              Digital Innovation
-              <br />
-              <span className="gradient-text">Beyond Limits</span>
-            </motion.h1>
-            
-            <motion.p 
-              className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 text-balance"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-            >
-              We build robust, scalable, and future-proof technology solutions that drive business growth and digital transformation. Your vision, our expertise.
-            </motion.p>
-            
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
-            >
-              <Button className="btn-primary text-lg px-12 py-6">
-                Start Your Project
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Link to="/portfolio" className="btn-secondary text-lg px-12 py-6 inline-flex items-center">
-                View Our Work
-              </Link>
+              <motion.h1 
+                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-balance"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2 }}
+              >
+                Grow Beyond Your Limits:
+                <br />
+                <span className="gradient-text">Digital Experts at Your Service!</span>
+              </motion.h1>
+              
+              <motion.p 
+                className="text-xl md:text-2xl text-gray-300 mb-12 text-balance leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+              >
+                Located in Muzaffarnagar, India, Eversour is a leading digital development company dedicated to helping businesses establish a robust and thriving online presence. In today's competitive digital landscape, a strong online footprint is no longer optional; it's essential for sustained success.
+              </motion.p>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
+              >
+                <Button className="btn-primary text-lg px-12 py-6">
+                  Discover Your Potential
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
+            
+            <motion.div
+              className="relative"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <div className="glass-strong rounded-3xl p-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/20 to-brand-purple-light/20" />
+                <div className="relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop"
+                    alt="Digital Development Team"
+                    className="rounded-2xl w-full h-64 object-cover"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Scroll Indicator */}
@@ -145,32 +215,122 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-white dark:bg-brand-gray-dark">
+      {/* About Us Section */}
+      <section className="section-padding bg-white dark:bg-brand-gray-dark">
         <div className="container-custom">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="text-4xl md:text-5xl font-bold gradient-text mb-2">
-                  {stat.number}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-lg">
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              About <span className="gradient-text">Us</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {/* Digital Development Service Provider */}
+            <motion.div
+              className="glass p-8 rounded-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-4 gradient-text">
+                The Digital Development Service Provider Company in India!
+              </h3>
+            </motion.div>
+
+            {/* Tired of Digital Frustrations */}
+            <motion.div
+              className="glass p-8 rounded-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-red-500">
+                Tired of Digital Frustrations?
+              </h3>
+              <ul className="space-y-3">
+                {frustrations.map((frustration, index) => (
+                  <li key={index} className="flex items-start">
+                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0" />
+                    <span className="text-muted-foreground">{frustration}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Why Choose Eversour */}
+            <motion.div
+              className="glass p-8 rounded-2xl lg:col-span-2 xl:col-span-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-green-500">
+                Why Choose Eversour?
+              </h3>
+              <ul className="space-y-3">
+                {whyChooseUs.map((reason, index) => (
+                  <li key={index} className="flex items-start">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0" />
+                    <span className="text-muted-foreground text-sm">{reason}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Our Values */}
+            <motion.div
+              className="lg:col-span-2 xl:col-span-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-8 text-center">Our Values</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {values.map((value, index) => {
+                  const Icon = value.icon;
+                  return (
+                    <div key={index} className="text-center group">
+                      <div className="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-purple-dark rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <h4 className="font-bold mb-2">{value.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {value.description}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            {/* Our Mission */}
+            <motion.div
+              className="lg:col-span-2 xl:col-span-3 glass p-8 rounded-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-bold mb-4 gradient-text">Our Mission</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                To be the trusted partner for businesses of all sizes, from startups to established organizations, in creating a powerful online presence across industries including real estate, fashion, and content creation. We empower our clients to dominate their markets through innovative digital solutions.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Our Core Services Section */}
       <section className="section-padding">
         <div className="container-custom">
           <motion.div
@@ -181,11 +341,8 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Our <span className="gradient-text">Expertise</span>
+              Expert Digital Solutions to <span className="gradient-text">Propel Your Business Forward</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-balance">
-              We offer comprehensive digital solutions to transform your business and drive growth in the digital landscape.
-            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -203,9 +360,12 @@ const Home = () => {
                   <div className="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-purple-dark rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 group-hover:text-brand-purple transition-colors duration-300">
+                  <h3 className="text-2xl font-bold mb-2 group-hover:text-brand-purple transition-colors duration-300">
                     {service.title}
                   </h3>
+                  <h4 className="text-lg font-semibold mb-4 text-brand-purple">
+                    {service.subtitle}
+                  </h4>
                   <p className="text-muted-foreground mb-6 leading-relaxed">
                     {service.description}
                   </p>
@@ -223,7 +383,88 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Projects Section */}
+      <section className="section-padding bg-muted/50">
+        <div className="container-custom">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+              Our Work <span className="gradient-text">Speaks for Itself</span>
+            </h2>
+            <Link to="/portfolio" className="btn-primary inline-flex items-center">
+              View Our Portfolio
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-8">
+              What Our <span className="gradient-text">Clients Say</span>
+            </h2>
+            <Link to="/testimonials" className="btn-primary inline-flex items-center">
+              Read All Testimonials
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Our Approach Section */}
+      <section className="section-padding bg-muted/50">
+        <div className="container-custom">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              How We <span className="gradient-text">Work</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {approachSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                className="glass p-8 rounded-2xl text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-purple-dark rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <span className="text-2xl font-bold text-white">{index + 1}</span>
+                </div>
+                <h3 className="text-2xl font-bold mb-2">{step.title}</h3>
+                <h4 className="text-lg font-semibold mb-4 text-brand-purple">{step.subtitle}</h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  {step.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
       <section className="section-padding bg-gradient-to-br from-brand-purple to-brand-purple-dark text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
@@ -236,21 +477,16 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-              Ready to Transform Your Business?
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Have Questions? Let's Connect!
             </h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto text-balance opacity-90">
-              Let's discuss how we can help you achieve your digital goals and drive growth through innovative technology solutions.
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Ready to transform your digital presence? Let's discuss how we can help you grow beyond your limits.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button className="bg-white text-brand-purple hover:bg-gray-100 text-lg px-12 py-6">
-                Book a Free Consultation
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Link to="/contact" className="border-2 border-white text-white hover:bg-white hover:text-brand-purple text-lg px-12 py-6 rounded-xl font-semibold transition-all duration-300 inline-flex items-center justify-center">
-                Get in Touch
-              </Link>
-            </div>
+            <Link to="/contact" className="bg-white text-brand-purple hover:bg-gray-100 px-12 py-6 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 inline-flex items-center">
+              Act Now
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
           </motion.div>
         </div>
       </section>
