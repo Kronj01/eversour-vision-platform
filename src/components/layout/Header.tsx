@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../store/useStore';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Menu, X, Moon, Sun, Sparkles } from 'lucide-react';
 import { Button } from '../ui/button';
 
 const Header = () => {
@@ -22,8 +23,7 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
-    { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Testimonials', href: '/testimonials' },
+    { name: 'Projects', href: '/portfolio' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -36,39 +36,54 @@ const Header = () => {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'glass-strong shadow-lg shadow-black/5' 
+          ? 'glass-strong shadow-2xl shadow-brand-purple/10' 
           : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-brand-purple to-brand-purple-dark rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-bold text-xl">E</span>
-            </div>
-            <span className="text-2xl font-bold gradient-text">Eversour</span>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <motion.div 
+              className="relative w-12 h-12 bg-gradient-to-br from-brand-purple to-brand-purple-light rounded-2xl flex items-center justify-center overflow-hidden"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+              <span className="text-white font-bold text-xl relative z-10">E</span>
+              
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-purple-light opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-sm" />
+            </motion.div>
+            
+            <motion.span 
+              className="text-3xl font-bold gradient-text"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              eversour
+            </motion.span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`relative px-4 py-2 rounded-lg transition-all duration-300 ${
+                className={`nav-link relative px-6 py-3 rounded-xl transition-all duration-300 font-medium ${
                   isActive(item.href)
-                    ? 'text-brand-purple bg-brand-purple/10'
-                    : 'text-foreground hover:text-brand-purple hover:bg-brand-purple/5'
+                    ? 'text-brand-purple bg-brand-purple/10 border border-brand-purple/20'
+                    : 'text-white hover:text-brand-purple hover:bg-white/5'
                 }`}
               >
                 {item.name}
                 {isActive(item.href) && (
                   <motion.div
-                    className="absolute inset-0 bg-brand-purple/10 rounded-lg"
+                    className="absolute inset-0 bg-brand-purple/5 rounded-xl border border-brand-purple/30"
                     layoutId="activeTab"
                     transition={{ type: "spring", duration: 0.6 }}
                   />
@@ -84,7 +99,7 @@ const Header = () => {
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="w-10 h-10 rounded-xl hover:bg-brand-purple/10"
+              className="w-12 h-12 rounded-xl glass hover:glass-strong border border-white/10 hover:border-brand-purple/30 transition-all duration-300"
             >
               <AnimatePresence mode="wait">
                 {isDarkMode ? (
@@ -93,9 +108,9 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -90 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Sun className="w-5 h-5" />
+                    <Sun className="w-5 h-5 text-brand-purple" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -103,17 +118,18 @@ const Header = () => {
                     initial={{ scale: 0, rotate: 90 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: -90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Moon className="w-5 h-5" />
+                    <Moon className="w-5 h-5 text-brand-purple" />
                   </motion.div>
                 )}
               </AnimatePresence>
             </Button>
 
             {/* CTA Button */}
-            <Button className="hidden lg:flex btn-primary">
-              Book a Call
+            <Button className="hidden lg:flex btn-primary group">
+              <Sparkles className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
+              Get Started
             </Button>
 
             {/* Mobile Menu Toggle */}
@@ -121,7 +137,7 @@ const Header = () => {
               variant="ghost"
               size="sm"
               onClick={toggleMobileMenu}
-              className="lg:hidden w-10 h-10 rounded-xl hover:bg-brand-purple/10"
+              className="lg:hidden w-12 h-12 rounded-xl glass hover:glass-strong border border-white/10 hover:border-brand-purple/30 transition-all duration-300"
             >
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
@@ -130,9 +146,9 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -90 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6 text-brand-purple" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -140,9 +156,9 @@ const Header = () => {
                     initial={{ scale: 0, rotate: 90 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: -90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <Menu className="w-6 h-6" />
+                    <Menu className="w-6 h-6 text-brand-purple" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -155,42 +171,44 @@ const Header = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden glass-strong border-t border-white/10"
+            className="lg:hidden glass-strong border-t border-brand-purple/20"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="container-custom py-6">
+            <div className="container-custom py-8">
               <nav className="flex flex-col space-y-4">
                 {navigation.map((item, index) => (
                   <motion.div
                     key={item.name}
-                    initial={{ x: -20, opacity: 0 }}
+                    initial={{ x: -30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
                   >
                     <Link
                       to={item.href}
                       onClick={toggleMobileMenu}
-                      className={`block px-4 py-3 rounded-xl transition-all duration-300 ${
+                      className={`block px-6 py-4 rounded-xl transition-all duration-300 font-medium ${
                         isActive(item.href)
-                          ? 'text-brand-purple bg-brand-purple/10'
-                          : 'text-foreground hover:text-brand-purple hover:bg-brand-purple/5'
+                          ? 'text-brand-purple bg-brand-purple/10 border border-brand-purple/30'
+                          : 'text-white hover:text-brand-purple hover:bg-white/5'
                       }`}
                     >
                       {item.name}
                     </Link>
                   </motion.div>
                 ))}
+                
                 <motion.div
-                  initial={{ x: -20, opacity: 0 }}
+                  initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: navigation.length * 0.1 }}
+                  transition={{ delay: navigation.length * 0.1, duration: 0.3 }}
                   className="pt-4"
                 >
-                  <Button className="w-full btn-primary">
-                    Book a Call
+                  <Button className="w-full btn-primary group">
+                    <Sparkles className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
+                    Get Started
                   </Button>
                 </motion.div>
               </nav>
