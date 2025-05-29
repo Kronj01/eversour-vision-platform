@@ -1,14 +1,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Target, Users, Zap, Heart, Award } from 'lucide-react';
+import { Shield, Target, Users, Zap, Heart, Award, TrendingUp, Globe } from 'lucide-react';
 
 const AboutSection = () => {
   const features = [
     {
       icon: Shield,
       title: "The Digital Development Service Provider Company in India!",
-      description: "Leading the way in digital transformation with cutting-edge solutions."
+      description: "Leading the way in digital transformation with cutting-edge solutions and innovative technology.",
+      isLarge: true
     },
     {
       icon: Target,
@@ -35,37 +36,60 @@ const AboutSection = () => {
       icon: Award,
       title: "Excellence Delivered",
       description: "Delivering exceptional results that exceed expectations through innovative digital solutions."
+    },
+    {
+      icon: TrendingUp,
+      title: "Growth Focused",
+      description: "Strategies designed to scale your business and maximize ROI with sustainable growth solutions."
+    },
+    {
+      icon: Globe,
+      title: "Global Reach",
+      description: "Serving clients worldwide with localized expertise and international standards."
     }
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-b from-black to-gray-900">
+    <section className="section-padding bg-gradient-to-b from-black via-gray-950 to-gray-900">
       <div className="container-custom">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text mb-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 bg-brand-purple/10 border border-brand-purple/30 rounded-full px-6 py-3 mb-8"
+          >
+            <Shield className="w-5 h-5 text-brand-purple" />
+            <span className="text-brand-purple font-medium">About Eversour</span>
+          </motion.div>
+
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black gradient-text mb-8 tracking-tight">
             About Us
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-2xl text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
             Building trust through exceptional digital solutions and innovative technology.
           </p>
         </motion.div>
 
-        <div className="bento-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               className={`glass-card group cursor-pointer ${
-                feature.isNegative ? 'border-red-500/30' : ''
+                feature.isLarge ? 'lg:col-span-2' : ''
+              } ${
+                feature.isNegative ? 'border-red-500/30 bg-red-500/5' : ''
               }`}
             >
               <div className={`icon-container ${
@@ -76,11 +100,13 @@ const AboutSection = () => {
                 }`} />
               </div>
               
-              <h3 className="text-xl font-semibold text-white mb-4 group-hover:text-brand-purple transition-colors">
+              <h3 className={`text-2xl font-bold mb-4 group-hover:text-brand-purple transition-colors ${
+                feature.isNegative ? 'text-red-300' : 'text-white'
+              }`}>
                 {feature.title}
               </h3>
               
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-300 leading-relaxed text-lg">
                 {feature.description}
               </p>
             </motion.div>
