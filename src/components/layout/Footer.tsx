@@ -19,12 +19,10 @@ const Footer = () => {
       { name: 'About', href: '/about' },
       { name: 'Portfolio', href: '/portfolio' },
       { name: 'Testimonials', href: '/testimonials' },
-      { name: 'Careers', href: '/careers' },
-      { name: 'Blog', href: '/blog' },
+      { name: 'Contact', href: '/contact' },
     ],
     support: [
       { name: 'Contact', href: '/contact' },
-      { name: 'FAQ', href: '/faq' },
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
     ],
@@ -38,8 +36,8 @@ const Footer = () => {
 
   const contactInfo = [
     { icon: Mail, text: 'eversour01@gmail.com', href: 'mailto:eversour01@gmail.com' },
-    { icon: Phone, text: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-    { icon: MapPin, text: 'San Francisco, CA', href: '#' },
+    { icon: Phone, text: '+91 98765 43210', href: 'tel:+919876543210' },
+    { icon: MapPin, text: 'Muzaffarnagar, India', href: '#' },
   ];
 
   return (
