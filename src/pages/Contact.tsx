@@ -80,10 +80,10 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <section className="section-padding pt-24">
+      <section className="pt-20 pb-12">
         <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
@@ -92,16 +92,16 @@ const Contact = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-400/30 rounded-full px-5 py-2 mb-6"
+              className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-400/30 rounded-full px-4 py-2 mb-6"
             >
               <MessageSquare className="w-4 h-4 text-purple-400" />
               <span className="text-purple-400 font-medium">Get In Touch</span>
             </motion.div>
 
-            <h1 className="text-4xl md:text-6xl font-black gradient-text mb-6 tracking-tight">
-              Let's Connect!
+            <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-4">
+              Have Questions? Let's Connect!
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Ready to grow beyond your limits? Get in touch with us today and let's discuss your project requirements.
             </p>
           </motion.div>
@@ -112,7 +112,7 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="glass-card"
@@ -155,10 +155,10 @@ const Contact = () => {
 
               <div>
                 <label className="block text-white font-medium mb-2">Service Interest</label>
-                <select className="w-full h-12 px-3 bg-white/5 border border-white/20 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-purple-400">
-                  <option value="">Select a service</option>
+                <select className="w-full h-12 px-3 bg-white/5 border border-white/20 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400">
+                  <option value="" className="bg-gray-900 text-white">Select a service</option>
                   {services.map((service, index) => (
-                    <option key={index} value={service.toLowerCase()} className="bg-black">
+                    <option key={index} value={service.toLowerCase()} className="bg-gray-900 text-white hover:bg-gray-800">
                       {service}
                     </option>
                   ))}
@@ -170,7 +170,7 @@ const Contact = () => {
                 <textarea 
                   rows={5}
                   placeholder="Tell us about your project requirements..."
-                  className="w-full px-3 py-3 bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 resize-none"
+                  className="w-full px-3 py-3 bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 resize-none"
                   required
                 />
               </div>
@@ -202,7 +202,7 @@ const Contact = () => {
 
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="space-y-6"
@@ -245,7 +245,7 @@ const Contact = () => {
       </div>
 
       {/* FAQ Section */}
-      <section className="section-padding bg-gradient-to-b from-transparent to-gray-900/50">
+      <section className="py-16 bg-gradient-to-b from-transparent to-gray-900/50">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -281,7 +281,7 @@ const Contact = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-purple-600/20 to-purple-800/20">
+      <section className="py-16 bg-gradient-to-br from-purple-600/20 to-purple-800/20">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
