@@ -1,240 +1,256 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import PageHeader from '../components/ui/PageHeader';
-import { Users, Target, Lightbulb, Award, Coffee, Code2 } from 'lucide-react';
+import { Shield, Target, Users, Zap, Heart, Award, TrendingUp, Globe, CheckCircle } from 'lucide-react';
+import { Button } from '../components/ui/button';
 
 const About = () => {
   const values = [
     {
-      icon: Target,
-      title: 'Excellence',
-      description: 'We strive for perfection in every project, delivering solutions that exceed expectations.'
+      icon: Heart,
+      title: "Client-Centric",
+      description: "We put our clients first, understanding their unique needs and delivering tailored solutions."
     },
     {
-      icon: Lightbulb,
-      title: 'Innovation',
-      description: 'We embrace cutting-edge technologies and creative approaches to solve complex challenges.'
+      icon: Zap,
+      title: "Innovation",
+      description: "Staying ahead of technology trends to provide cutting-edge solutions."
     },
     {
-      icon: Users,
-      title: 'Collaboration',
-      description: 'We work closely with our clients as partners to achieve shared success.'
+      icon: Shield,
+      title: "Transparency",
+      description: "Clear communication and honest practices in every project."
     },
     {
       icon: Award,
-      title: 'Quality',
-      description: 'We maintain the highest standards in code quality, design, and user experience.'
-    }
-  ];
-
-  const team = [
-    {
-      name: 'Alex Thompson',
-      role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-      bio: 'Visionary leader with 10+ years in digital transformation.'
-    },
-    {
-      name: 'Sarah Chen',
-      role: 'Lead Developer',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face',
-      bio: 'Full-stack expert specializing in scalable architectures.'
-    },
-    {
-      name: 'Marcus Rodriguez',
-      role: 'Design Director',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-      bio: 'Creative visionary crafting exceptional user experiences.'
-    },
-    {
-      name: 'Emily Watson',
-      role: 'Strategy Lead',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face',
-      bio: 'Strategic thinker driving business growth through technology.'
+      title: "Quality",
+      description: "Delivering excellence through rigorous testing and attention to detail."
     }
   ];
 
   const stats = [
-    { icon: Coffee, number: '1000+', label: 'Cups of Coffee' },
-    { icon: Code2, number: '50K+', label: 'Lines of Code' },
-    { icon: Users, number: '100+', label: 'Happy Clients' },
-    { icon: Award, number: '25+', label: 'Awards Won' }
+    { number: "100+", label: "Projects Completed", icon: Target },
+    { number: "50+", label: "Satisfied Clients", icon: Users },
+    { number: "5+", label: "Years of Experience", icon: TrendingUp },
+    { number: "24/7", label: "Support Available", icon: Globe }
+  ];
+
+  const achievements = [
+    "Leading digital development company in Muzaffarnagar",
+    "Specialized in modern web technologies",
+    "Award-winning design and development team",
+    "99% client satisfaction rate",
+    "ISO certified development processes",
+    "24/7 customer support"
   ];
 
   return (
-    <div>
-      <PageHeader
-        title="About Eversour"
-        subtitle="Our Story"
-        description="We're a team of passionate digital innovators committed to building the future through technology."
-      />
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <section className="section-padding pt-24">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 bg-purple-500/10 border border-purple-400/30 rounded-full px-5 py-2 mb-6"
+            >
+              <Shield className="w-4 h-4 text-purple-400" />
+              <span className="text-purple-400 font-medium">About Eversour</span>
+            </motion.div>
 
-      {/* Mission Section */}
+            <h1 className="text-4xl md:text-6xl font-black gradient-text mb-6 tracking-tight">
+              About Us
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Building trust through exceptional digital solutions and innovative technology.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Company Story */}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Our <span className="gradient-text">Mission</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                The Digital Development Service Provider Company in India!
               </h2>
-              <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                At Eversour, we believe technology should empower businesses to achieve their boldest ambitions. We're not just a development company – we're your strategic partner in digital transformation.
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                Eversour is leading the way in digital transformation with cutting-edge solutions and innovative technology. We are committed to being the trusted partner for businesses of all sizes, creating powerful online presence across industries.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Founded on the principle that great software can change the world, we combine technical excellence with creative innovation to deliver solutions that don't just meet requirements – they exceed possibilities.
+              <p className="text-gray-300 mb-8 leading-relaxed">
+                Our mission is to deliver exceptional results that exceed expectations through innovative digital solutions, focusing on client-centric approaches, affordable excellence, and data-driven results.
               </p>
+              <Button className="btn-primary">
+                Learn More About Our Journey
+              </Button>
             </motion.div>
             
             <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
+              className="grid grid-cols-2 gap-4"
             >
-              <div className="glass-strong rounded-3xl p-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/20 to-brand-purple-light/20" />
-                <div className="relative">
-                  <div className="grid grid-cols-2 gap-6">
-                    {stats.map((stat, index) => {
-                      const Icon = stat.icon;
-                      return (
-                        <div key={index} className="text-center">
-                          <Icon className="w-8 h-8 text-brand-purple mx-auto mb-3" />
-                          <div className="text-3xl font-bold gradient-text mb-1">
-                            {stat.number}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {stat.label}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="glass-card text-center"
+                >
+                  <stat.icon className="w-8 h-8 text-purple-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold gradient-text mb-1">{stat.number}</div>
+                  <div className="text-gray-400 text-sm">{stat.label}</div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="section-padding bg-muted/50">
+      <section className="section-padding bg-gradient-to-b from-transparent to-gray-900/50">
         <div className="container-custom">
           <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Our <span className="gradient-text">Values</span>
+            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+              Our Core Values
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              These core principles guide every decision we make and every solution we build.
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              The principles that drive our digital solutions and redefine industries.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="text-center group"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="w-20 h-20 bg-gradient-to-br from-brand-purple to-brand-purple-dark rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-10 h-10 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">{value.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {value.description}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Meet Our <span className="gradient-text">Team</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              The brilliant minds behind Eversour's innovative solutions.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, index) => (
               <motion.div
                 key={index}
-                className="group"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className="glass-card text-center group"
               >
-                <div className="relative overflow-hidden rounded-2xl mb-6">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="icon-container mx-auto mb-4">
+                  <value.icon className="w-6 h-6 text-purple-400" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">{member.name}</h3>
-                <p className="text-brand-purple font-semibold mb-3">{member.role}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-purple-400 transition-colors">
+                  {value.title}
+                </h3>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {value.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Why Choose Us */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Why Choose <span className="gradient-text">Eversour?</span>
+              </h2>
+              <div className="space-y-4">
+                {achievements.map((achievement, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-3"
+                  >
+                    <CheckCircle className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                    <span className="text-gray-300">{achievement}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="glass-card"
+            >
+              <h3 className="text-2xl font-bold mb-4">All-in-One Solutions</h3>
+              <p className="text-gray-300 mb-6 leading-relaxed">
+                We provide comprehensive digital solutions including web development, software development, branding, SEO, and online advertisements. Our client-centric approach ensures affordable excellence with free consultation and support.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Data-Driven Results</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Innovative Technology</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="text-gray-300">Global Reach</span>
+                </li>
+              </ul>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-brand-purple to-brand-purple-dark text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
-        
-        <div className="relative container-custom text-center">
+      <section className="section-padding bg-gradient-to-br from-purple-600/20 to-purple-800/20">
+        <div className="container-custom text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Work Together?
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to <span className="gradient-text">Transform</span> Your Business?
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Let's discuss how our team can help bring your vision to life.
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+              Join the businesses that trust Eversour for their digital transformation journey.
             </p>
-            <button className="bg-white text-brand-purple hover:bg-gray-100 px-12 py-6 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105">
-              Start Your Project
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button className="btn-primary px-8 py-4">
+                Start Your Project
+              </Button>
+              <Button className="btn-secondary px-8 py-4">
+                Schedule Consultation
+              </Button>
+            </div>
           </motion.div>
         </div>
       </section>

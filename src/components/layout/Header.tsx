@@ -23,7 +23,8 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
-    { name: 'Projects', href: '/portfolio' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Testimonials', href: '/testimonials' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -36,7 +37,7 @@ const Header = () => {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'glass-strong shadow-2xl shadow-brand-purple/10' 
+          ? 'bg-black/80 backdrop-blur-md border-b border-purple-500/20' 
           : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
@@ -44,23 +45,17 @@ const Header = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center space-x-2 group">
             <motion.div 
-              className="relative w-12 h-12 bg-gradient-to-br from-brand-purple to-brand-purple-light rounded-2xl flex items-center justify-center overflow-hidden"
+              className="relative w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
-              <span className="text-white font-bold text-xl relative z-10">E</span>
-              
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-purple-light opacity-0 group-hover:opacity-50 transition-opacity duration-300 blur-sm" />
+              <span className="text-white font-bold text-lg">E</span>
             </motion.div>
-            
             <motion.span 
-              className="text-3xl font-bold gradient-text"
+              className="text-2xl font-bold gradient-text"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
@@ -68,22 +63,21 @@ const Header = () => {
             </motion.span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`nav-link relative px-6 py-3 rounded-xl transition-all duration-300 font-medium ${
+                className={`relative px-4 py-2 rounded-lg transition-all duration-300 font-medium text-sm ${
                   isActive(item.href)
-                    ? 'text-brand-purple bg-brand-purple/10 border border-brand-purple/20'
-                    : 'text-white hover:text-brand-purple hover:bg-white/5'
+                    ? 'text-purple-400 bg-purple-500/10'
+                    : 'text-white hover:text-purple-400 hover:bg-white/5'
                 }`}
               >
                 {item.name}
                 {isActive(item.href) && (
                   <motion.div
-                    className="absolute inset-0 bg-brand-purple/5 rounded-xl border border-brand-purple/30"
+                    className="absolute inset-0 bg-purple-500/10 rounded-lg border border-purple-400/30"
                     layoutId="activeTab"
                     transition={{ type: "spring", duration: 0.6 }}
                   />
@@ -92,74 +86,23 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Right Section */}
-          <div className="flex items-center space-x-4">
-            {/* Dark Mode Toggle */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleDarkMode}
-              className="w-12 h-12 rounded-xl glass hover:glass-strong border border-white/10 hover:border-brand-purple/30 transition-all duration-300"
-            >
-              <AnimatePresence mode="wait">
-                {isDarkMode ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ scale: 0, rotate: -90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 90 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Sun className="w-5 h-5 text-brand-purple" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ scale: 0, rotate: 90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: -90 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Moon className="w-5 h-5 text-brand-purple" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Button>
-
-            {/* CTA Button */}
-            <Button className="hidden lg:flex btn-primary group">
-              <Sparkles className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
+          <div className="flex items-center space-x-3">
+            <Button className="hidden lg:flex btn-primary text-sm">
+              <Sparkles className="w-4 h-4 mr-2" />
               Get Started
             </Button>
 
-            {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleMobileMenu}
-              className="lg:hidden w-12 h-12 rounded-xl glass hover:glass-strong border border-white/10 hover:border-brand-purple/30 transition-all duration-300"
+              className="lg:hidden w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
             >
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ scale: 0, rotate: -90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 90 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <X className="w-6 h-6 text-brand-purple" />
-                  </motion.div>
+                  <X className="w-5 h-5 text-purple-400" />
                 ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ scale: 0, rotate: 90 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: -90 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Menu className="w-6 h-6 text-brand-purple" />
-                  </motion.div>
+                  <Menu className="w-5 h-5 text-purple-400" />
                 )}
               </AnimatePresence>
             </Button>
@@ -167,18 +110,17 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden glass-strong border-t border-brand-purple/20"
+            className="lg:hidden bg-black/90 backdrop-blur-md border-t border-purple-500/20"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="container-custom py-8">
-              <nav className="flex flex-col space-y-4">
+            <div className="container-custom py-6">
+              <nav className="flex flex-col space-y-3">
                 {navigation.map((item, index) => (
                   <motion.div
                     key={item.name}
@@ -189,10 +131,10 @@ const Header = () => {
                     <Link
                       to={item.href}
                       onClick={toggleMobileMenu}
-                      className={`block px-6 py-4 rounded-xl transition-all duration-300 font-medium ${
+                      className={`block px-4 py-3 rounded-lg transition-all duration-300 font-medium ${
                         isActive(item.href)
-                          ? 'text-brand-purple bg-brand-purple/10 border border-brand-purple/30'
-                          : 'text-white hover:text-brand-purple hover:bg-white/5'
+                          ? 'text-purple-400 bg-purple-500/10'
+                          : 'text-white hover:text-purple-400 hover:bg-white/5'
                       }`}
                     >
                       {item.name}
@@ -204,10 +146,10 @@ const Header = () => {
                   initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: navigation.length * 0.1, duration: 0.3 }}
-                  className="pt-4"
+                  className="pt-3"
                 >
-                  <Button className="w-full btn-primary group">
-                    <Sparkles className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
+                  <Button className="w-full btn-primary">
+                    <Sparkles className="w-4 h-4 mr-2" />
                     Get Started
                   </Button>
                 </motion.div>
