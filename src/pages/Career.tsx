@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, MapPin, Clock, DollarSign, Briefcase, Heart, Growth, Award } from 'lucide-react';
+import { Users, MapPin, Clock, DollarSign, Briefcase, Heart, TrendingUp, Award } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const Career = () => {
@@ -51,7 +50,7 @@ const Career = () => {
       description: 'Comprehensive health insurance and wellness programs for you and your family.'
     },
     {
-      icon: Growth,
+      icon: TrendingUp,
       title: 'Professional Growth',
       description: 'Continuous learning opportunities, skill development programs, and career advancement.'
     },
