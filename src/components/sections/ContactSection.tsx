@@ -1,27 +1,82 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, Clock, CheckCircle, Sparkles } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 
 const ContactSection = () => {
-  const [formStatus, setFormStatus] = useState('idle'); // idle, sending, success, error
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    message: '',
+    service: ''
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('sending');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success');
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 2000);
+    // Handle form submission here
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: 'Call Us',
+      detail: '+91 98765 43210',
+      link: 'tel:+919876543210'
+    },
+    {
+      icon: Mail,
+      title: 'Email Us',
+      detail: 'eversour01@gmail.com',
+      link: 'mailto:eversour01@gmail.com'
+    },
+    {
+      icon: MapPin,
+      title: 'Visit Us',
+      detail: 'Muzaffarnagar, India',
+      link: '#'
+    },
+    {
+      icon: Clock,
+      title: 'Business Hours',
+      detail: 'Mon - Fri: 9AM - 6PM IST',
+      link: '#'
+    }
+  ];
+
+  const services = [
+    'Web Development',
+    'Software Development',
+    'Branding & Design',
+    'SEO Optimization',
+    'Paid Advertising',
+    'Consultation',
+    'Other'
+  ];
+
   return (
-    <section className="section-padding bg-gradient-to-b from-gray-900 via-black to-gray-950">
-      <div className="container-custom">
+    <section className="py-32 bg-black relative overflow-hidden">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-purple-600/5 to-blue-600/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -31,186 +86,221 @@ const ContactSection = () => {
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-brand-purple/10 border border-brand-purple/30 rounded-full px-6 py-3 mb-8"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/40 rounded-full px-6 py-3 mb-8 backdrop-blur-sm"
           >
-            <Mail className="w-5 h-5 text-brand-purple" />
-            <span className="text-brand-purple font-medium">Get In Touch</span>
+            <Sparkles className="w-5 h-5 text-purple-400" />
+            <span className="text-purple-400 font-semibold text-lg">Get In Touch</span>
           </motion.div>
 
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black gradient-text mb-8 tracking-tight">
-            Have Questions? Let's Connect!
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 text-white">
+            Let's Build Something{' '}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+              Amazing Together
+            </span>
           </h2>
-          <p className="text-2xl text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
-            Ready to grow beyond your limits? Get in touch with us today and let's discuss your project.
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Ready to transform your digital presence? We're here to help you achieve your goals with cutting-edge solutions.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Enhanced Contact Form */}
+        <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="glass-card"
+            className="order-2 lg:order-1"
           >
-            <h3 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-              <Send className="w-8 h-8 text-brand-purple" />
-              Send us a message
-            </h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-white font-semibold mb-3 text-lg">Name</label>
-                  <Input 
-                    type="text" 
-                    placeholder="Your full name"
-                    className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-14 text-lg"
-                    required
-                  />
+            <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-purple-400/20 rounded-3xl p-8 hover:border-purple-400/40 transition-all duration-300">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-white font-semibold mb-3">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-white font-semibold mb-3">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                      placeholder="Enter your email"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-white font-semibold mb-3 text-lg">Email</label>
-                  <Input 
-                    type="email" 
-                    placeholder="your@email.com"
-                    className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-14 text-lg"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-white font-semibold mb-3 text-lg">Phone</label>
-                <Input 
-                  type="tel" 
-                  placeholder="Your phone number"
-                  className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-14 text-lg"
-                />
-              </div>
 
-              <div>
-                <label className="block text-white font-semibold mb-3 text-lg">Service Interest</label>
-                <select className="w-full h-14 px-4 bg-white/5 border border-white/20 rounded-lg text-white text-lg focus:outline-none focus:ring-2 focus:ring-brand-purple">
-                  <option value="">Select a service</option>
-                  <option value="web">Web Development</option>
-                  <option value="software">Software Development</option>
-                  <option value="branding">Branding</option>
-                  <option value="seo">SEO</option>
-                  <option value="ads">Online Advertisements</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-white font-semibold mb-3 text-lg">Message</label>
-                <textarea 
-                  rows={6}
-                  placeholder="Tell us about your project requirements..."
-                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-purple text-lg resize-none"
-                  required
-                />
-              </div>
-              
-              <Button 
-                type="submit"
-                disabled={formStatus === 'sending'}
-                className="w-full btn-primary py-5 text-xl font-semibold group"
-              >
-                {formStatus === 'sending' ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
-                    Sending...
-                  </>
-                ) : formStatus === 'success' ? (
-                  <>
-                    <CheckCircle className="w-6 h-6 mr-3" />
-                    Message Sent!
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform" />
-                    Send Message
-                  </>
-                )}
-              </Button>
-            </form>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="company" className="block text-white font-semibold mb-3">
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                      placeholder="Your company name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-white font-semibold mb-3">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                      placeholder="Your phone number"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="service" className="block text-white font-semibold mb-3">
+                    Service Interested In
+                  </label>
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+                  >
+                    <option value="" className="bg-black">Select a service</option>
+                    {services.map((service) => (
+                      <option key={service} value={service} className="bg-black">
+                        {service}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-white font-semibold mb-3">
+                    Project Details *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className="w-full px-6 py-4 bg-white/10 border border-purple-400/30 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 resize-none"
+                    placeholder="Tell us about your project requirements..."
+                  />
+                </div>
+
+                <Button 
+                  type="submit"
+                  disabled={isSubmitted}
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-5 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105 flex items-center justify-center gap-3"
+                >
+                  {isSubmitted ? (
+                    <>
+                      <CheckCircle className="w-6 h-6" />
+                      Message Sent Successfully!
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-6 h-6" />
+                      Send Message
+                    </>
+                  )}
+                </Button>
+              </form>
+            </div>
           </motion.div>
 
-          {/* Enhanced Contact Information */}
+          {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="order-1 lg:order-2"
           >
-            <div className="glass-card">
-              <h3 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-                <Phone className="w-8 h-8 text-brand-purple" />
-                Get in touch
-              </h3>
-              
-              <div className="space-y-8">
-                <div className="flex items-start space-x-6 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="icon-container !w-12 !h-12 !mb-0">
-                    <Phone className="w-6 h-6 text-brand-purple" />
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-lg mb-1">Phone</p>
-                    <p className="text-gray-300 text-lg">+91 (XXX) XXX-XXXX</p>
-                    <p className="text-gray-400 text-sm">Available 24/7 for urgent queries</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-6 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="icon-container !w-12 !h-12 !mb-0">
-                    <Mail className="w-6 h-6 text-brand-purple" />
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-lg mb-1">Email</p>
-                    <p className="text-gray-300 text-lg">eversour01@gmail.com</p>
-                    <p className="text-gray-400 text-sm">We respond within 2 hours</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-6 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="icon-container !w-12 !h-12 !mb-0">
-                    <MapPin className="w-6 h-6 text-brand-purple" />
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-lg mb-1">Address</p>
-                    <p className="text-gray-300 text-lg">Muzaffarnagar, India</p>
-                    <p className="text-gray-400 text-sm">Serving clients globally</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-6 p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="icon-container !w-12 !h-12 !mb-0">
-                    <Clock className="w-6 h-6 text-brand-purple" />
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-lg mb-1">Business Hours</p>
-                    <p className="text-gray-300 text-lg">Mon - Fri: 9:00 AM - 6:00 PM IST</p>
-                    <p className="text-gray-400 text-sm">Emergency support available</p>
-                  </div>
-                </div>
+            <div className="space-y-8">
+              <div className="text-center lg:text-left">
+                <h3 className="text-3xl font-black text-white mb-6">
+                  Ready to Start Your Digital Journey?
+                </h3>
+                <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                  Don't let your competition get ahead. Contact us today and let's discuss how we can help transform your business with our digital solutions.
+                </p>
               </div>
-            </div>
 
-            {/* Call to Action Card */}
-            <div className="glass-card text-center">
-              <Calendar className="w-16 h-16 text-brand-purple mx-auto mb-6" />
-              <h4 className="text-2xl font-bold text-white mb-4">Book a Free Consultation</h4>
-              <p className="text-gray-300 mb-6 text-lg">
-                Schedule a 30-minute call to discuss your project requirements and get expert advice.
-              </p>
-              <Button className="btn-secondary w-full text-lg py-4">
-                Schedule Call
-              </Button>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-6">
+                {contactInfo.map((info, index) => {
+                  const Icon = info.icon;
+                  return (
+                    <motion.a
+                      key={index}
+                      href={info.link}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      className="block group"
+                    >
+                      <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 group-hover:border-purple-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-14 h-14 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-xl flex items-center justify-center border border-purple-400/40 group-hover:scale-110 transition-transform duration-300">
+                            <Icon className="w-7 h-7 text-purple-400" />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-white text-lg group-hover:text-purple-400 transition-colors">
+                              {info.title}
+                            </h4>
+                            <p className="text-gray-300 group-hover:text-white transition-colors">
+                              {info.detail}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.a>
+                  );
+                })}
+              </div>
+
+              {/* CTA Section */}
+              <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-sm border border-purple-400/30 rounded-3xl p-8 text-center">
+                <h4 className="text-2xl font-black text-white mb-4">
+                  Get a Free Consultation
+                </h4>
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Book a 30-minute strategy session to discuss your project requirements and get expert recommendations.
+                </p>
+                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-xl font-bold transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/25 hover:scale-105">
+                  Schedule Free Call
+                </Button>
+              </div>
             </div>
           </motion.div>
         </div>

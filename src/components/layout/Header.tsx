@@ -40,11 +40,8 @@ const Header = () => {
       ]
     },
     { name: 'Portfolio', href: '/portfolio' },
-    { name: 'Testimonials', href: '/testimonials' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'Blog', href: '/blog' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Career', href: '/career' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -57,43 +54,43 @@ const Header = () => {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/95 backdrop-blur-md border-b border-white/10 shadow-lg' 
+          ? 'bg-black/95 backdrop-blur-xl border-b border-purple-400/20 shadow-2xl shadow-purple-500/10' 
           : 'bg-transparent'
       }`}
     >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
+      <div className="container mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold gradient-text"
+              className="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
             >
               eversour
             </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-10">
             {navItems.map((item) => (
               <div key={item.name} className="relative">
                 {item.dropdown ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-purple-400 ${
+                      <button className={`flex items-center space-x-2 text-base font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
                         isActive(item.href) ? 'text-purple-400' : 'text-white'
                       }`}>
                         <span>{item.name}</span>
                         <ChevronDown className="w-4 h-4" />
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-black/95 backdrop-blur-md border border-white/20 shadow-xl">
+                    <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-xl">
                       {item.dropdown.map((subItem) => (
                         <DropdownMenuItem key={subItem.name} asChild>
                           <Link
                             to={subItem.href}
-                            className={`block px-4 py-2 text-sm transition-colors hover:text-purple-400 hover:bg-white/10 ${
-                              isActive(subItem.href) ? 'text-purple-400 bg-white/5' : 'text-white'
+                            className={`block px-6 py-3 text-base transition-all duration-300 hover:text-purple-400 hover:bg-purple-500/10 rounded-lg ${
+                              isActive(subItem.href) ? 'text-purple-400 bg-purple-500/10' : 'text-white'
                             }`}
                           >
                             {subItem.name}
@@ -105,7 +102,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`text-sm font-medium transition-colors hover:text-purple-400 ${
+                    className={`text-base font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
                       isActive(item.href) ? 'text-purple-400' : 'text-white'
                     }`}
                   >
@@ -119,7 +116,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link to="/contact">
-              <Button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-gray-200 hover:scale-105 text-sm">
+              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-full font-bold text-base transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105">
                 Get Started
               </Button>
             </Link>
@@ -128,9 +125,9 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-white hover:text-purple-400 transition-colors"
+            className="lg:hidden text-white hover:text-purple-400 transition-colors p-2"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
       </div>
@@ -143,29 +140,29 @@ const Header = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-black/95 backdrop-blur-md border-t border-white/10"
+            className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-purple-400/20"
           >
-            <div className="container-custom py-4">
-              <nav className="flex flex-col space-y-4">
+            <div className="container mx-auto px-6 py-6">
+              <nav className="flex flex-col space-y-6">
                 {navItems.map((item) => (
                   <div key={item.name}>
                     {item.dropdown ? (
                       <div>
                         <Link
                           to={item.href}
-                          className={`block text-sm font-medium transition-colors hover:text-purple-400 ${
+                          className={`block text-lg font-semibold transition-colors hover:text-purple-400 ${
                             isActive(item.href) ? 'text-purple-400' : 'text-white'
                           }`}
                           onClick={() => setIsOpen(false)}
                         >
                           {item.name}
                         </Link>
-                        <div className="ml-4 mt-2 space-y-2">
+                        <div className="ml-6 mt-3 space-y-3">
                           {item.dropdown.map((subItem) => (
                             <Link
                               key={subItem.name}
                               to={subItem.href}
-                              className={`block text-sm transition-colors hover:text-purple-400 ${
+                              className={`block text-base transition-colors hover:text-purple-400 ${
                                 isActive(subItem.href) ? 'text-purple-400' : 'text-gray-300'
                               }`}
                               onClick={() => setIsOpen(false)}
@@ -178,7 +175,7 @@ const Header = () => {
                     ) : (
                       <Link
                         to={item.href}
-                        className={`block text-sm font-medium transition-colors hover:text-purple-400 ${
+                        className={`block text-lg font-semibold transition-colors hover:text-purple-400 ${
                           isActive(item.href) ? 'text-purple-400' : 'text-white'
                         }`}
                         onClick={() => setIsOpen(false)}
@@ -189,7 +186,7 @@ const Header = () => {
                   </div>
                 ))}
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition-colors w-full mt-4">
+                  <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 w-full mt-6">
                     Get Started
                   </Button>
                 </Link>
