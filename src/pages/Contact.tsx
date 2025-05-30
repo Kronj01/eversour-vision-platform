@@ -240,7 +240,7 @@ const Contact = () => {
                 Schedule Call
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
