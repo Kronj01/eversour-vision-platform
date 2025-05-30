@@ -31,6 +31,7 @@ const Header = () => {
       name: 'Services', 
       href: '/services',
       dropdown: [
+        { name: 'All Services', href: '/services' },
         { name: 'Web Development', href: '/services/web' },
         { name: 'Software Development', href: '/services/software' },
         { name: 'Branding', href: '/services/branding' },
@@ -40,6 +41,10 @@ const Header = () => {
     },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Testimonials', href: '/testimonials' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Career', href: '/career' },
     { name: 'Contact', href: '/contact' },
   ];
 
