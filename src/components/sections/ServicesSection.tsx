@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Smartphone, Palette, Search, Target, ArrowRight, Sparkles } from 'lucide-react';
+import { Code, Smartphone, Palette, Search, Megaphone, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
 
@@ -11,130 +11,115 @@ const ServicesSection = () => {
       icon: Code,
       title: "Web Development",
       subtitle: "Custom Websites That Convert",
-      description: "From WordPress sites to custom solutions, we bring your vision to reality with cutting-edge technology and modern frameworks.",
-      link: "/services/web",
-      gradient: "from-blue-500 to-purple-600",
-      features: ["Responsive Design", "SEO Optimized", "Fast Loading"]
+      description: "From WordPress sites to custom solutions, we bring your vision to reality",
+      cta: "Learn More",
+      link: "/services/web"
     },
     {
       icon: Smartphone,
       title: "Software Development",
       subtitle: "Tailored Software for Your Unique Needs",
       description: "We build custom software solutions, web applications, and mobile apps to streamline your operations and drive efficiency.",
-      link: "/services/software",
-      gradient: "from-purple-500 to-pink-600",
-      features: ["Custom Solutions", "Scalable Architecture", "API Integration"]
+      cta: "Learn More About Our Software Solutions",
+      link: "/services/software"
     },
     {
       icon: Palette,
       title: "Branding",
       subtitle: "Craft Your Brand Identity with Impact",
       description: "Elevate your brand with captivating logos, visual elements, and marketing materials that resonate with your target audience.",
-      link: "/services/branding",
-      gradient: "from-pink-500 to-red-600",
-      features: ["Logo Design", "Brand Guidelines", "Marketing Materials"]
+      cta: "Discover Our Branding Services",
+      link: "/services/branding"
     },
     {
       icon: Search,
       title: "SEO",
       subtitle: "Dominate Search Results & Drive Organic Growth",
       description: "Improve your online visibility with our comprehensive SEO strategies, including keyword research, content optimization, and manual link building.",
-      link: "/services/seo",
-      gradient: "from-green-500 to-blue-600",
-      features: ["Keyword Research", "On-Page SEO", "Link Building"]
+      cta: "Request a Free SEO Audit",
+      link: "/services/seo"
     },
     {
-      icon: Target,
+      icon: Megaphone,
       title: "Online Advertisements",
       subtitle: "Reach Your Target Audience with Precision",
       description: "Maximize your reach and ROI with our targeted online advertising campaigns across search engines and social media platforms.",
-      link: "/services/ads",
-      gradient: "from-orange-500 to-red-600",
-      features: ["Google Ads", "Social Media Ads", "Performance Tracking"]
+      cta: "Start Your Ad Campaign Today",
+      link: "/services/ads"
     }
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-b from-gray-900 via-black to-gray-950">
+    <section className="py-20 bg-black">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-brand-purple/10 border border-brand-purple/30 rounded-full px-6 py-3 mb-8"
-          >
-            <Sparkles className="w-5 h-5 text-brand-purple" />
-            <span className="text-brand-purple font-medium">Our Services</span>
-          </motion.div>
-
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black gradient-text mb-8 tracking-tight">
-            Expert Digital Solutions to Propel Your Business Forward
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+            Expert Digital Solutions to <span className="gradient-text">Propel Your Business Forward</span>
           </h2>
-          <p className="text-2xl text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
-            Comprehensive digital services designed to help you grow beyond your limits.
+          <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            We offer comprehensive, high-quality digital services tailored to your unique business needs, from web development to online marketing.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="service-card group relative overflow-hidden"
-            >
-              {/* Gradient Border Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-2xl`} />
-              
-              <div className={`w-20 h-20 rounded-3xl bg-gradient-to-r ${service.gradient} p-0.5 mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <div className="w-full h-full bg-black rounded-3xl flex items-center justify-center">
-                  <service.icon className="w-10 h-10 text-white" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 group hover:bg-white/10 transition-all duration-300 hover:border-purple-400/30 hover:scale-105"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-400/30 mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Icon className="w-6 h-6 text-purple-400" />
                 </div>
-              </div>
-              
-              <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-brand-purple transition-colors">
-                {service.title}
-              </h3>
-              
-              <h4 className="text-xl font-semibold text-brand-purple mb-4">
-                {service.subtitle}
-              </h4>
-              
-              <p className="text-gray-300 mb-6 leading-relaxed text-lg">
-                {service.description}
-              </p>
-
-              {/* Features List */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {service.features.map((feature, featureIndex) => (
-                  <span 
-                    key={featureIndex}
-                    className="px-3 py-1 bg-brand-purple/20 text-brand-purple text-sm rounded-full border border-brand-purple/30"
-                  >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-              
-              <Link to={service.link}>
-                <Button className="btn-secondary group w-full text-lg py-4">
-                  Learn More
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
-                </Button>
-              </Link>
-            </motion.div>
-          ))}
+                
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                  {service.title}
+                </h3>
+                
+                <h4 className="text-lg font-semibold text-purple-400 mb-3">
+                  {service.subtitle}
+                </h4>
+                
+                <p className="text-gray-300 mb-6 leading-relaxed text-sm">
+                  {service.description}
+                </p>
+                
+                <Link to={service.link}>
+                  <Button className="w-full bg-transparent border border-purple-400 text-purple-400 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-purple-400 hover:text-black flex items-center justify-center group text-sm">
+                    {service.cta}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <Link to="/services">
+            <Button className="bg-white text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:bg-gray-200 hover:scale-105 text-lg">
+              View All Services
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

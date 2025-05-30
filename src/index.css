@@ -40,8 +40,9 @@
   body {
     @apply bg-black text-white font-inter;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: radial-gradient(ellipse at top, rgba(16, 16, 16, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    background: #000000;
     min-height: 100vh;
+    line-height: 1.6;
   }
 
   html {
@@ -63,11 +64,11 @@
   }
 
   .btn-primary {
-    @apply bg-white text-black px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-gray-100 hover:scale-[1.02] hover:shadow-lg border border-purple-200 flex items-center justify-center;
+    @apply bg-white text-black px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-gray-100 hover:scale-[1.02] hover:shadow-lg border border-purple-200 flex items-center justify-center;
   }
 
   .btn-secondary {
-    @apply bg-transparent border-2 border-purple-400 text-purple-400 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-purple-400 hover:text-black hover:scale-[1.02] flex items-center justify-center;
+    @apply bg-transparent border-2 border-purple-400 text-purple-400 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-purple-400 hover:text-black hover:scale-[1.02] flex items-center justify-center;
   }
 
   .glass {
@@ -79,7 +80,7 @@
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 transition-all duration-300 hover:bg-white/10 hover:border-purple-400/30;
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:bg-white/10 hover:border-purple-400/30;
   }
 
   .service-card {
@@ -162,7 +163,7 @@
 }
 
 .floating-orb {
-  @apply absolute rounded-full opacity-30 blur-3xl;
+  @apply absolute rounded-full opacity-20 blur-3xl;
 }
 
 .floating-orb-1 {
@@ -200,78 +201,6 @@
 .bento-card-tall {
   grid-row: span 2;
   min-height: 400px;
-}
-
-/* Cyber UI Elements */
-.cyber-border {
-  position: relative;
-}
-
-.cyber-border::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(139, 92, 246, 0.1) 50%, transparent 70%);
-  border-radius: inherit;
-  z-index: -1;
-}
-
-.neon-glow {
-  box-shadow: 
-    0 0 5px rgba(139, 92, 246, 0.5),
-    0 0 10px rgba(139, 92, 246, 0.3),
-    0 0 20px rgba(139, 92, 246, 0.1);
-}
-
-/* Advanced Hover Effects */
-.hover-lift {
-  transition: all 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.hover-glow {
-  transition: all 0.3s ease;
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-}
-
-/* Parallax Elements */
-.parallax-bg {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-  .container-custom {
-    @apply px-4;
-  }
-  
-  .section-padding {
-    @apply py-12;
-  }
-  
-  .floating-orb-1,
-  .floating-orb-2,
-  .floating-orb-3 {
-    @apply w-48 h-48;
-  }
-  
-  .bento-card-large,
-  .bento-card-tall {
-    grid-column: span 1;
-    grid-row: span 1;
-    min-height: 200px;
-  }
 }
 
 /* Custom Scrollbar */
@@ -314,4 +243,51 @@
   );
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .container-custom {
+    @apply px-4;
+  }
+  
+  .section-padding {
+    @apply py-12;
+  }
+  
+  .floating-orb-1,
+  .floating-orb-2,
+  .floating-orb-3 {
+    @apply w-48 h-48;
+  }
+  
+  .bento-card-large,
+  .bento-card-tall {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 200px;
+  }
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* Button hover improvements */
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Card hover improvements */
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
 }

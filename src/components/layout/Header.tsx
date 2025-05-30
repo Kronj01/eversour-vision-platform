@@ -67,9 +67,9 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-2">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-black gradient-text"
+              className="text-2xl font-bold gradient-text"
             >
-              Eversour
+              eversour
             </motion.div>
           </Link>
 
@@ -93,7 +93,7 @@ const Header = () => {
                           <Link
                             to={subItem.href}
                             className={`block px-4 py-2 text-sm transition-colors hover:text-purple-400 hover:bg-white/10 ${
-                              isActive(subItem.href) ? 'text-purple-400' : 'text-white'
+                              isActive(subItem.href) ? 'text-purple-400 bg-white/5' : 'text-white'
                             }`}
                           >
                             {subItem.name}
@@ -119,7 +119,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link to="/contact">
-              <Button className="btn-primary text-sm">
+              <Button className="bg-white text-black px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-gray-200 hover:scale-105 text-sm">
                 Get Started
               </Button>
             </Link>
@@ -189,7 +189,7 @@ const Header = () => {
                   </div>
                 ))}
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button className="btn-primary w-full mt-4">
+                  <Button className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition-colors w-full mt-4">
                     Get Started
                   </Button>
                 </Link>
