@@ -60,12 +60,16 @@
 
   /* Enhanced Button Styles with Glowing Effect */
   .btn-primary {
-    @apply bg-white text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 border border-purple-400/20 flex items-center justify-center relative overflow-hidden group;
+    @apply bg-white text-black px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 border border-purple-400/20 flex items-center justify-center relative overflow-hidden;
   }
 
   .btn-primary::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full;
+    @apply absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-400/20 opacity-0 transition-opacity duration-300 rounded-full;
+  }
+
+  .btn-primary:hover::before {
+    @apply opacity-100;
   }
 
   .btn-secondary {
@@ -89,7 +93,7 @@
   }
 
   .icon-container {
-    @apply w-16 h-16 bg-gradient-to-br from-purple-500/20 to-purple-400/20 rounded-2xl flex items-center justify-center border border-purple-400/30 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg;
+    @apply w-16 h-16 bg-gradient-to-br from-purple-500/20 to-purple-400/20 rounded-2xl flex items-center justify-center border border-purple-400/30 transition-all duration-300;
   }
 
   .hero-gradient {
@@ -113,7 +117,7 @@
   }
 
   .glow-button {
-    @apply bg-white text-black px-8 py-4 rounded-full font-bold transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 relative overflow-hidden group;
+    @apply bg-white text-black px-8 py-4 rounded-full font-bold transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 relative overflow-hidden;
     box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
   }
 
