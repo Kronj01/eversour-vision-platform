@@ -54,39 +54,42 @@ const Header = () => {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/95 backdrop-blur-xl border-b border-purple-400/20 shadow-2xl shadow-purple-500/10' 
-          : 'bg-transparent'
+          ? 'bg-black/95 backdrop-blur-xl border-b border-purple-400/30 shadow-2xl shadow-purple-500/20' 
+          : 'bg-black/80 backdrop-blur-sm'
       }`}
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Enhanced Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-3"
             >
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-400 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
                 <Zap className="w-7 h-7 text-white" />
               </div>
-              <span className="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-3xl font-black bg-gradient-to-r from-white via-purple-300 to-purple-400 bg-clip-text text-transparent">
                 eversour
               </span>
             </motion.div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Enhanced Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <div key={item.name} className="relative">
                 {item.dropdown ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className={`flex items-center space-x-2 text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
+                      <button className={`flex items-center space-x-2 text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 relative group ${
                         isActive(item.href) ? 'text-purple-400' : 'text-white'
                       }`}>
                         <span>{item.name}</span>
                         <ChevronDown className="w-4 h-4" />
+                        <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-400 to-purple-600 transform origin-left transition-transform duration-300 ${
+                          isActive(item.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                        }`}></div>
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-2xl">
@@ -107,22 +110,26 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
+                    className={`text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 relative group ${
                       isActive(item.href) ? 'text-purple-400' : 'text-white'
                     }`}
                   >
                     {item.name}
+                    <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-400 to-purple-600 transform origin-left transition-transform duration-300 ${
+                      isActive(item.href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`}></div>
                   </Link>
                 )}
               </div>
             ))}
           </nav>
 
-          {/* CTA Button */}
+          {/* Enhanced CTA Button */}
           <div className="hidden lg:block">
             <Link to="/contact">
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105">
-                Get Started
+              <Button className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 relative overflow-hidden group">
+                <span className="relative z-10">Get Started</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Button>
             </Link>
           </div>
@@ -137,7 +144,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Enhanced Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -145,7 +152,7 @@ const Header = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-purple-400/20"
+            className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-purple-400/30"
           >
             <div className="container mx-auto px-6 py-8">
               <nav className="flex flex-col space-y-6">
@@ -191,7 +198,7 @@ const Header = () => {
                   </div>
                 ))}
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 w-full mt-8">
+                  <Button className="bg-white text-black px-8 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 w-full mt-8">
                     Get Started
                   </Button>
                 </Link>
