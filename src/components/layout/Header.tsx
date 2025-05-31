@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -64,32 +64,37 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+              className="flex items-center space-x-3"
             >
-              eversour
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <Zap className="w-7 h-7 text-white" />
+              </div>
+              <span className="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                eversour
+              </span>
             </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-10">
+          <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <div key={item.name} className="relative">
                 {item.dropdown ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className={`flex items-center space-x-2 text-base font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
+                      <button className={`flex items-center space-x-2 text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
                         isActive(item.href) ? 'text-purple-400' : 'text-white'
                       }`}>
                         <span>{item.name}</span>
                         <ChevronDown className="w-4 h-4" />
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-xl">
+                    <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-2xl">
                       {item.dropdown.map((subItem) => (
                         <DropdownMenuItem key={subItem.name} asChild>
                           <Link
                             to={subItem.href}
-                            className={`block px-6 py-3 text-base transition-all duration-300 hover:text-purple-400 hover:bg-purple-500/10 rounded-lg ${
+                            className={`block px-6 py-4 text-lg transition-all duration-300 hover:text-purple-400 hover:bg-purple-500/10 rounded-xl ${
                               isActive(subItem.href) ? 'text-purple-400 bg-purple-500/10' : 'text-white'
                             }`}
                           >
@@ -102,7 +107,7 @@ const Header = () => {
                 ) : (
                   <Link
                     to={item.href}
-                    className={`text-base font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
+                    className={`text-lg font-semibold transition-all duration-300 hover:text-purple-400 hover:scale-105 ${
                       isActive(item.href) ? 'text-purple-400' : 'text-white'
                     }`}
                   >
@@ -116,7 +121,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link to="/contact">
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-full font-bold text-base transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105">
+              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105">
                 Get Started
               </Button>
             </Link>
@@ -127,7 +132,7 @@ const Header = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden text-white hover:text-purple-400 transition-colors p-2"
           >
-            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
           </button>
         </div>
       </div>
@@ -142,7 +147,7 @@ const Header = () => {
             transition={{ duration: 0.3 }}
             className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-purple-400/20"
           >
-            <div className="container mx-auto px-6 py-6">
+            <div className="container mx-auto px-6 py-8">
               <nav className="flex flex-col space-y-6">
                 {navItems.map((item) => (
                   <div key={item.name}>
@@ -150,19 +155,19 @@ const Header = () => {
                       <div>
                         <Link
                           to={item.href}
-                          className={`block text-lg font-semibold transition-colors hover:text-purple-400 ${
+                          className={`block text-xl font-semibold transition-colors hover:text-purple-400 ${
                             isActive(item.href) ? 'text-purple-400' : 'text-white'
                           }`}
                           onClick={() => setIsOpen(false)}
                         >
                           {item.name}
                         </Link>
-                        <div className="ml-6 mt-3 space-y-3">
+                        <div className="ml-6 mt-4 space-y-4">
                           {item.dropdown.map((subItem) => (
                             <Link
                               key={subItem.name}
                               to={subItem.href}
-                              className={`block text-base transition-colors hover:text-purple-400 ${
+                              className={`block text-lg transition-colors hover:text-purple-400 ${
                                 isActive(subItem.href) ? 'text-purple-400' : 'text-gray-300'
                               }`}
                               onClick={() => setIsOpen(false)}
@@ -175,7 +180,7 @@ const Header = () => {
                     ) : (
                       <Link
                         to={item.href}
-                        className={`block text-lg font-semibold transition-colors hover:text-purple-400 ${
+                        className={`block text-xl font-semibold transition-colors hover:text-purple-400 ${
                           isActive(item.href) ? 'text-purple-400' : 'text-white'
                         }`}
                         onClick={() => setIsOpen(false)}
@@ -186,7 +191,7 @@ const Header = () => {
                   </div>
                 ))}
                 <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 w-full mt-6">
+                  <Button className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 w-full mt-8">
                     Get Started
                   </Button>
                 </Link>
