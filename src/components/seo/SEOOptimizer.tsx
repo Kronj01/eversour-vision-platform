@@ -14,7 +14,7 @@ interface SEOProps {
   modifiedTime?: string;
   section?: string;
   tags?: string[];
-  structuredData?: object;
+  structuredData?: any;
 }
 
 const SEOOptimizer: React.FC<SEOProps> = ({
@@ -31,10 +31,12 @@ const SEOOptimizer: React.FC<SEOProps> = ({
   tags,
   structuredData
 }) => {
-  const currentUrl = url || window.location.href;
+  const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   const siteName = "Eversour";
   
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     // Add structured data for local business
     const localBusinessData = {
       "@context": "https://schema.org",
@@ -105,11 +107,9 @@ const SEOOptimizer: React.FC<SEOProps> = ({
     };
 
     // Combine all structured data
-    const allStructuredData = [localBusinessData, organizationData, websiteData];
-    
-    if (structuredData) {
-      allStructuredData.push(structuredData);
-    }
+    const allStructuredData = structuredData 
+      ? [localBusinessData, organizationData, websiteData, structuredData]
+      : [localBusinessData, organizationData, websiteData];
 
     // Add to page
     const script = document.createElement('script');
