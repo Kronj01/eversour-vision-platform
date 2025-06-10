@@ -2,19 +2,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Zap } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, User, LogOut, Settings } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const location = useLocation();
+  const { user, profile, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +51,15 @@ const Header = () => {
   ];
 
   const isActive = (href: string) => location.pathname === href;
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
 
   return (
     <motion.header
@@ -124,14 +138,52 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Enhanced CTA Button */}
-          <div className="hidden lg:block">
-            <Link to="/contact">
-              <Button className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 relative overflow-hidden group">
-                <span className="relative z-10">Get Started</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Button>
-            </Link>
+          {/* Auth Section */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center space-x-3 p-2 rounded-xl hover:bg-purple-500/10 transition-colors">
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src={profile?.avatar_url || ''} alt={profile?.full_name || 'User'} />
+                      <AvatarFallback className="bg-purple-600 text-white">
+                        {profile?.full_name ? getInitials(profile.full_name) : <User className="w-5 h-5" />}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="text-left">
+                      <p className="text-white font-medium">{profile?.full_name || 'User'}</p>
+                      <p className="text-purple-400 text-sm">{profile?.role}</p>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-2xl w-56">
+                  <DropdownMenuItem onClick={() => setShowUserProfile(true)} className="text-white hover:bg-purple-500/10 cursor-pointer">
+                    <Settings className="w-4 h-4 mr-3" />
+                    Profile Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-gray-700" />
+                  <DropdownMenuItem onClick={signOut} className="text-red-400 hover:bg-red-500/10 cursor-pointer">
+                    <LogOut className="w-4 h-4 mr-3" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link to="/auth">
+                  <Button variant="ghost" className="text-white hover:text-purple-400 hover:bg-purple-500/10">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button className="bg-white text-black px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 relative overflow-hidden group">
+                    <span className="relative z-10">Get Started</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -197,13 +249,98 @@ const Header = () => {
                     )}
                   </div>
                 ))}
-                <Link to="/contact" onClick={() => setIsOpen(false)}>
-                  <Button className="bg-white text-black px-8 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 w-full mt-8">
-                    Get Started
-                  </Button>
-                </Link>
+                
+                {/* Mobile Auth */}
+                <div className="pt-6 border-t border-gray-800">
+                  {user ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="w-12 h-12">
+                          <AvatarImage src={profile?.avatar_url || ''} alt={profile?.full_name || 'User'} />
+                          <AvatarFallback className="bg-purple-600 text-white">
+                            {profile?.full_name ? getInitials(profile.full_name) : <User className="w-6 h-6" />}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-white font-medium">{profile?.full_name || 'User'}</p>
+                          <p className="text-purple-400 text-sm">{profile?.role}</p>
+                        </div>
+                      </div>
+                      <Button
+                        onClick={() => {
+                          setShowUserProfile(true);
+                          setIsOpen(false);
+                        }}
+                        variant="outline"
+                        className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10"
+                      >
+                        <Settings className="w-4 h-4 mr-2" />
+                        Profile Settings
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          signOut();
+                          setIsOpen(false);
+                        }}
+                        variant="destructive"
+                        className="w-full bg-red-600 hover:bg-red-700"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>
+                        <Button variant="outline" className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10">
+                          Sign In
+                        </Button>
+                      </Link>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>
+                        <Button className="bg-white text-black px-8 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 w-full">
+                          Get Started
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </nav>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* User Profile Modal */}
+      <AnimatePresence>
+        {showUserProfile && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowUserProfile(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserProfile(false)}
+                  className="absolute top-4 right-4 z-10 text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                {/* UserProfile component will be rendered here */}
+                <div className="bg-gray-900/50 backdrop-blur-xl rounded-2xl p-8 border border-purple-400/20 shadow-2xl shadow-purple-500/10">
+                  <h2 className="text-2xl font-bold text-white mb-8">Profile Settings</h2>
+                  <p className="text-gray-400">Profile settings coming soon...</p>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
