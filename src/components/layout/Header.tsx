@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Zap, User, LogOut, Settings } from 'lucide-react';
+import { Menu, X, ChevronDown, Zap, User, LogOut, Settings, Shield } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -158,6 +158,20 @@ const Header = () => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-black/95 backdrop-blur-xl border border-purple-400/30 shadow-2xl shadow-purple-500/20 rounded-2xl w-56">
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="text-white hover:bg-purple-500/10 cursor-pointer">
+                      <User className="w-4 h-4 mr-3" />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  {profile?.role === 'admin' && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="text-purple-400 hover:bg-purple-500/10 cursor-pointer">
+                        <Shield className="w-4 h-4 mr-3" />
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem onClick={() => setShowUserProfile(true)} className="text-white hover:bg-purple-500/10 cursor-pointer">
                     <Settings className="w-4 h-4 mr-3" />
                     Profile Settings
@@ -266,6 +280,20 @@ const Header = () => {
                           <p className="text-purple-400 text-sm">{profile?.role}</p>
                         </div>
                       </div>
+                      <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                        <Button variant="outline" className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10">
+                          <User className="w-4 h-4 mr-2" />
+                          Dashboard
+                        </Button>
+                      </Link>
+                      {profile?.role === 'admin' && (
+                        <Link to="/admin" onClick={() => setIsOpen(false)}>
+                          <Button variant="outline" className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10">
+                            <Shield className="w-4 h-4 mr-2" />
+                            Admin Dashboard
+                          </Button>
+                        </Link>
+                      )}
                       <Button
                         onClick={() => {
                           setShowUserProfile(true);
