@@ -1,21 +1,47 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, MessageSquare, Globe, Users } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import { useContactForm } from '../hooks/useContactForm';
 
 const Contact = () => {
+  const { submitContactForm, isSubmitting } = useContactForm();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    service_interest: '',
+    message: ''
+  });
   const [formStatus, setFormStatus] = useState('idle');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('sending');
     
-    setTimeout(() => {
+    const result = await submitContactForm(formData);
+    
+    if (result.success) {
       setFormStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service_interest: '',
+        message: ''
+      });
       setTimeout(() => setFormStatus('idle'), 3000);
-    }, 2000);
+    }
   };
 
   const contactMethods = [
@@ -128,6 +154,9 @@ const Contact = () => {
                   <label className="block text-white font-medium mb-2">Name</label>
                   <Input 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="Your full name"
                     className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12"
                     required
@@ -137,6 +166,9 @@ const Contact = () => {
                   <label className="block text-white font-medium mb-2">Email</label>
                   <Input 
                     type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="your@email.com"
                     className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12"
                     required
@@ -144,18 +176,39 @@ const Contact = () => {
                 </div>
               </div>
               
-              <div>
-                <label className="block text-white font-medium mb-2">Phone</label>
-                <Input 
-                  type="tel" 
-                  placeholder="Your phone number"
-                  className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12"
-                />
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-white font-medium mb-2">Phone</label>
+                  <Input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Your phone number"
+                    className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12"
+                  />
+                </div>
+                <div>
+                  <label className="block text-white font-medium mb-2">Company</label>
+                  <Input 
+                    type="text" 
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    placeholder="Your company name"
+                    className="bg-white/5 border-white/20 text-white placeholder:text-gray-400 h-12"
+                  />
+                </div>
               </div>
 
               <div>
                 <label className="block text-white font-medium mb-2">Service Interest</label>
-                <select className="w-full h-12 px-3 bg-white/5 border border-white/20 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400">
+                <select 
+                  name="service_interest"
+                  value={formData.service_interest}
+                  onChange={handleInputChange}
+                  className="w-full h-12 px-3 bg-white/5 border border-white/20 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400"
+                >
                   <option value="" className="bg-gray-900 text-white">Select a service</option>
                   {services.map((service, index) => (
                     <option key={index} value={service.toLowerCase()} className="bg-gray-900 text-white hover:bg-gray-800">
@@ -168,6 +221,9 @@ const Contact = () => {
               <div>
                 <label className="block text-white font-medium mb-2">Message</label>
                 <textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   rows={5}
                   placeholder="Tell us about your project requirements..."
                   className="w-full px-3 py-3 bg-white/5 border border-white/20 rounded-md text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 resize-none"
@@ -177,10 +233,10 @@ const Contact = () => {
               
               <Button 
                 type="submit"
-                disabled={formStatus === 'sending'}
+                disabled={isSubmitting}
                 className="w-full btn-primary py-3 font-semibold"
               >
-                {formStatus === 'sending' ? (
+                {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin mr-2" />
                     Sending...

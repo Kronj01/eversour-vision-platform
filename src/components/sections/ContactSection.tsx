@@ -3,24 +3,38 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Phone, Mail, MapPin, Clock, CheckCircle, Sparkles, Zap, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useContactForm } from '@/hooks/useContactForm';
 
 const ContactSection = () => {
+  const { submitContactForm, isSubmitting } = useContactForm();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     phone: '',
     message: '',
-    service: ''
+    service_interest: ''
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
+    
+    const result = await submitContactForm(formData);
+    
+    if (result.success) {
+      setIsSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        message: '',
+        service_interest: ''
+      });
+      setTimeout(() => setIsSubmitted(false), 3000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -181,13 +195,13 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-white font-semibold mb-4 text-lg">
+                  <label htmlFor="service_interest" className="block text-white font-semibold mb-4 text-lg">
                     Service Interested In
                   </label>
                   <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
+                    id="service_interest"
+                    name="service_interest"
+                    value={formData.service_interest}
                     onChange={handleChange}
                     className="w-full px-6 py-5 bg-white/10 border border-purple-400/30 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 text-lg"
                   >
@@ -218,10 +232,15 @@ const ContactSection = () => {
 
                 <Button 
                   type="submit"
-                  disabled={isSubmitted}
+                  disabled={isSubmitting || isSubmitted}
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-10 py-6 rounded-2xl font-bold text-xl transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105 flex items-center justify-center gap-4"
                 >
-                  {isSubmitted ? (
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-7 h-7 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Sending Message...
+                    </>
+                  ) : isSubmitted ? (
                     <>
                       <CheckCircle className="w-7 h-7" />
                       Message Sent Successfully!
