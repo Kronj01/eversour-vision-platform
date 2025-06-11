@@ -30,7 +30,9 @@ export const useContactSubmissions = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setSubmissions(data || []);
+      
+      // Type cast the data to match our interface
+      setSubmissions((data || []) as ContactSubmission[]);
     } catch (error: any) {
       console.error('Error fetching submissions:', error);
       toast({
