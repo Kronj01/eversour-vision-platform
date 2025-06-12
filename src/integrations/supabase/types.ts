@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_data: Json
+          event_type: string
+          id: string
+          ip_address: string | null
+          page_url: string | null
+          session_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_data?: Json
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          page_url?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_data?: Json
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          page_url?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       blog_categories: {
         Row: {
           color: string | null
@@ -176,6 +212,120 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          preferences: Json | null
+          status: string
+          subscribed_at: string
+          unsubscribed_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          preferences?: Json | null
+          status?: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          preferences?: Json | null
+          status?: string
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          message: string
+          read: boolean
+          title: string
+          type: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message: string
+          read?: boolean
+          title: string
+          type?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message?: string
+          read?: boolean
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      portfolio_files: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          file_path: string
+          file_size: number
+          filename: string
+          id: string
+          is_public: boolean
+          mime_type: string
+          original_name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          file_path: string
+          file_size: number
+          filename: string
+          id?: string
+          is_public?: boolean
+          mime_type: string
+          original_name: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          file_path?: string
+          file_size?: number
+          filename?: string
+          id?: string
+          is_public?: boolean
+          mime_type?: string
+          original_name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -203,6 +353,45 @@ export type Database = {
           id?: string
           role?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      search_index: {
+        Row: {
+          content: string
+          content_id: string
+          content_type: string
+          created_at: string
+          id: string
+          search_vector: unknown | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          content: string
+          content_id: string
+          content_type: string
+          created_at?: string
+          id?: string
+          search_vector?: unknown | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          content?: string
+          content_id?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          search_vector?: unknown | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          url?: string
         }
         Relationships: []
       }
