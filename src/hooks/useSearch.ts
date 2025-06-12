@@ -54,7 +54,13 @@ export const useSearch = () => {
 
       if (error) throw error;
 
-      setResults(data || []);
+      // Type the data properly
+      const typedData = (data || []).map(item => ({
+        ...item,
+        content_type: item.content_type as 'blog_post' | 'page' | 'service' | 'portfolio'
+      }));
+
+      setResults(typedData);
     } catch (error: any) {
       console.error('Error searching:', error);
       toast({

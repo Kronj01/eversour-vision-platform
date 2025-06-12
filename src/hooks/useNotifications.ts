@@ -35,8 +35,15 @@ export const useNotifications = () => {
 
       if (error) throw error;
 
-      setNotifications(data || []);
-      setUnreadCount(data?.filter(n => !n.read).length || 0);
+      // Type the data properly
+      const typedData = (data || []).map(item => ({
+        ...item,
+        type: item.type as 'info' | 'success' | 'warning' | 'error',
+        data: item.data as Record<string, any>
+      }));
+
+      setNotifications(typedData);
+      setUnreadCount(typedData.filter(n => !n.read).length);
     } catch (error: any) {
       console.error('Error fetching notifications:', error);
       toast({
@@ -124,7 +131,12 @@ export const useNotifications = () => {
           filter: user ? `user_id=eq.${user.id}` : ''
         }, 
         (payload) => {
-          const newNotification = payload.new as Notification;
+          const newNotification = {
+            ...payload.new,
+            type: payload.new.type as 'info' | 'success' | 'warning' | 'error',
+            data: payload.new.data as Record<string, any>
+          } as Notification;
+          
           setNotifications(prev => [newNotification, ...prev]);
           setUnreadCount(prev => prev + 1);
           
