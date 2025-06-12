@@ -23,28 +23,47 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 const AdvancedAnalyticsDashboard = () => {
   const { 
-    analytics, 
-    pageViews, 
-    userSessions, 
-    deviceStats, 
+    dashboard, 
     loading, 
-    fetchAnalytics,
-    fetchPageViews,
-    fetchUserSessions,
-    fetchDeviceStats
+    trackEvent,
+    fetchDashboard
   } = useAdvancedAnalytics();
   
   const [timeRange, setTimeRange] = useState('7d');
   const [selectedMetric, setSelectedMetric] = useState('pageviews');
 
   useEffect(() => {
-    fetchAnalytics(timeRange);
-    fetchPageViews(timeRange);
-    fetchUserSessions(timeRange);
-    fetchDeviceStats(timeRange);
+    fetchDashboard();
   }, [timeRange]);
 
   const pieColors = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444'];
+
+  // Mock data for charts since we're working with the dashboard data structure
+  const pageViewsChart = [
+    { date: '2024-01-01', views: 245 },
+    { date: '2024-01-02', views: 312 },
+    { date: '2024-01-03', views: 289 },
+    { date: '2024-01-04', views: 356 },
+    { date: '2024-01-05', views: 421 },
+    { date: '2024-01-06', views: 387 },
+    { date: '2024-01-07', views: 445 }
+  ];
+
+  const userSessionsChart = [
+    { date: '2024-01-01', sessions: 189 },
+    { date: '2024-01-02', sessions: 234 },
+    { date: '2024-01-03', sessions: 201 },
+    { date: '2024-01-04', sessions: 278 },
+    { date: '2024-01-05', sessions: 312 },
+    { date: '2024-01-06', sessions: 289 },
+    { date: '2024-01-07', sessions: 334 }
+  ];
+
+  const deviceStatsChart = [
+    { name: 'Desktop', value: 65, percentage: '65%' },
+    { name: 'Mobile', value: 28, percentage: '28%' },
+    { name: 'Tablet', value: 7, percentage: '7%' }
+  ];
 
   if (loading) {
     return (
@@ -111,8 +130,8 @@ const AdvancedAnalyticsDashboard = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-blue-500/20 rounded-lg mx-auto mb-3">
                     <Eye className="w-6 h-6 text-blue-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{analytics.totalPageViews.toLocaleString()}</h3>
-                  <p className="text-sm text-gray-400">Page Views</p>
+                  <h3 className="text-2xl font-bold text-white mb-1">{dashboard.totalEvents.toLocaleString()}</h3>
+                  <p className="text-sm text-gray-400">Total Events</p>
                   <div className="flex items-center justify-center mt-2">
                     <ArrowUp className="w-4 h-4 text-green-400 mr-1" />
                     <span className="text-sm text-green-400">+12.5%</span>
@@ -123,8 +142,8 @@ const AdvancedAnalyticsDashboard = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-green-500/20 rounded-lg mx-auto mb-3">
                     <Users className="w-6 h-6 text-green-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{analytics.uniqueVisitors.toLocaleString()}</h3>
-                  <p className="text-sm text-gray-400">Unique Visitors</p>
+                  <h3 className="text-2xl font-bold text-white mb-1">{dashboard.todayEvents.toLocaleString()}</h3>
+                  <p className="text-sm text-gray-400">Today's Events</p>
                   <div className="flex items-center justify-center mt-2">
                     <ArrowUp className="w-4 h-4 text-green-400 mr-1" />
                     <span className="text-sm text-green-400">+8.3%</span>
@@ -135,8 +154,8 @@ const AdvancedAnalyticsDashboard = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-purple-500/20 rounded-lg mx-auto mb-3">
                     <Clock className="w-6 h-6 text-purple-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{analytics.avgSessionDuration}</h3>
-                  <p className="text-sm text-gray-400">Avg. Session</p>
+                  <h3 className="text-2xl font-bold text-white mb-1">{dashboard.weeklyEvents.toLocaleString()}</h3>
+                  <p className="text-sm text-gray-400">Weekly Events</p>
                   <div className="flex items-center justify-center mt-2">
                     <ArrowDown className="w-4 h-4 text-red-400 mr-1" />
                     <span className="text-sm text-red-400">-2.1%</span>
@@ -147,8 +166,8 @@ const AdvancedAnalyticsDashboard = () => {
                   <div className="flex items-center justify-center w-12 h-12 bg-orange-500/20 rounded-lg mx-auto mb-3">
                     <MousePointer className="w-6 h-6 text-orange-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{analytics.bounceRate}%</h3>
-                  <p className="text-sm text-gray-400">Bounce Rate</p>
+                  <h3 className="text-2xl font-bold text-white mb-1">{dashboard.monthlyEvents.toLocaleString()}</h3>
+                  <p className="text-sm text-gray-400">Monthly Events</p>
                   <div className="flex items-center justify-center mt-2">
                     <ArrowDown className="w-4 h-4 text-green-400 mr-1" />
                     <span className="text-sm text-green-400">-5.2%</span>
@@ -161,7 +180,7 @@ const AdvancedAnalyticsDashboard = () => {
                 <h3 className="text-lg font-semibold text-white mb-4">Traffic Overview</h3>
                 <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={pageViews}>
+                    <LineChart data={pageViewsChart}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                       <XAxis dataKey="date" stroke="#9CA3AF" />
                       <YAxis stroke="#9CA3AF" />
@@ -193,7 +212,7 @@ const AdvancedAnalyticsDashboard = () => {
                   <h3 className="text-lg font-semibold text-white mb-4">Page Views Trend</h3>
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={pageViews}>
+                      <BarChart data={pageViewsChart}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                         <XAxis dataKey="date" stroke="#9CA3AF" />
                         <YAxis stroke="#9CA3AF" />
@@ -215,11 +234,11 @@ const AdvancedAnalyticsDashboard = () => {
                 <div className="glass-card">
                   <h3 className="text-lg font-semibold text-white mb-4">Top Pages</h3>
                   <div className="space-y-3">
-                    {analytics.topPages.map((page, index) => (
+                    {dashboard.topPages.map((page, index) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
                         <div>
-                          <p className="text-white font-medium">{page.path}</p>
-                          <p className="text-sm text-gray-400">{page.title}</p>
+                          <p className="text-white font-medium">{page.page}</p>
+                          <p className="text-sm text-gray-400">Page</p>
                         </div>
                         <div className="text-right">
                           <p className="text-white font-semibold">{page.views.toLocaleString()}</p>
@@ -231,18 +250,18 @@ const AdvancedAnalyticsDashboard = () => {
                 </div>
               </div>
 
-              {/* Traffic Sources */}
+              {/* Top Events */}
               <div className="glass-card">
-                <h3 className="text-lg font-semibold text-white mb-4">Traffic Sources</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">Top Events</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {analytics.trafficSources.map((source, index) => (
+                  {dashboard.topEvents.map((event, index) => (
                     <div key={index} className="text-center p-4 bg-gray-800/50 rounded-lg">
                       <div className="flex items-center justify-center w-12 h-12 bg-purple-500/20 rounded-lg mx-auto mb-3">
                         <Globe className="w-6 h-6 text-purple-400" />
                       </div>
-                      <h4 className="text-white font-semibold">{source.source}</h4>
-                      <p className="text-2xl font-bold text-purple-400 my-2">{source.visits.toLocaleString()}</p>
-                      <p className="text-sm text-gray-400">{source.percentage}% of traffic</p>
+                      <h4 className="text-white font-semibold">{event.event}</h4>
+                      <p className="text-2xl font-bold text-purple-400 my-2">{event.count.toLocaleString()}</p>
+                      <p className="text-sm text-gray-400">events</p>
                     </div>
                   ))}
                 </div>
@@ -256,7 +275,7 @@ const AdvancedAnalyticsDashboard = () => {
                   <h3 className="text-lg font-semibold text-white mb-4">User Sessions</h3>
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={userSessions}>
+                      <LineChart data={userSessionsChart}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                         <XAxis dataKey="date" stroke="#9CA3AF" />
                         <YAxis stroke="#9CA3AF" />
@@ -292,28 +311,14 @@ const AdvancedAnalyticsDashboard = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-400">Avg. Pages per Session</span>
+                      <span className="text-gray-400">Avg. Events per Session</span>
                       <span className="text-white font-semibold">3.2</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-400">Avg. Session Duration</span>
-                      <span className="text-white font-semibold">{analytics.avgSessionDuration}</span>
+                      <span className="text-gray-400">Total Sessions</span>
+                      <span className="text-white font-semibold">{dashboard.totalEvents}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Geographic Data */}
-              <div className="glass-card">
-                <h3 className="text-lg font-semibold text-white mb-4">Geographic Distribution</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {analytics.countries.map((country, index) => (
-                    <div key={index} className="text-center p-4 bg-gray-800/50 rounded-lg">
-                      <p className="text-white font-semibold">{country.name}</p>
-                      <p className="text-2xl font-bold text-purple-400 my-2">{country.visitors.toLocaleString()}</p>
-                      <p className="text-sm text-gray-400">{country.percentage}%</p>
-                    </div>
-                  ))}
                 </div>
               </div>
             </TabsContent>
@@ -327,7 +332,7 @@ const AdvancedAnalyticsDashboard = () => {
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
-                          data={deviceStats}
+                          data={deviceStatsChart}
                           cx="50%"
                           cy="50%"
                           innerRadius={60}
@@ -335,7 +340,7 @@ const AdvancedAnalyticsDashboard = () => {
                           paddingAngle={5}
                           dataKey="value"
                         >
-                          {deviceStats.map((entry, index) => (
+                          {deviceStatsChart.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                           ))}
                         </Pie>
@@ -356,7 +361,7 @@ const AdvancedAnalyticsDashboard = () => {
                 <div className="glass-card">
                   <h3 className="text-lg font-semibold text-white mb-4">Device Statistics</h3>
                   <div className="space-y-4">
-                    {deviceStats.map((device, index) => (
+                    {deviceStatsChart.map((device, index) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
                         <div className="flex items-center space-x-3">
                           <div 
@@ -367,40 +372,7 @@ const AdvancedAnalyticsDashboard = () => {
                         </div>
                         <div className="text-right">
                           <p className="text-white font-semibold">{device.value.toLocaleString()}</p>
-                          <p className="text-sm text-gray-400">{device.percentage}%</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Browser and OS Stats */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="glass-card">
-                  <h3 className="text-lg font-semibold text-white mb-4">Top Browsers</h3>
-                  <div className="space-y-3">
-                    {analytics.browsers.map((browser, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
-                        <span className="text-white">{browser.name}</span>
-                        <div className="text-right">
-                          <span className="text-white font-semibold">{browser.visitors.toLocaleString()}</span>
-                          <span className="text-sm text-gray-400 ml-2">{browser.percentage}%</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="glass-card">
-                  <h3 className="text-lg font-semibold text-white mb-4">Operating Systems</h3>
-                  <div className="space-y-3">
-                    {analytics.operatingSystems.map((os, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg">
-                        <span className="text-white">{os.name}</span>
-                        <div className="text-right">
-                          <span className="text-white font-semibold">{os.visitors.toLocaleString()}</span>
-                          <span className="text-sm text-gray-400 ml-2">{os.percentage}%</span>
+                          <p className="text-sm text-gray-400">{device.percentage}</p>
                         </div>
                       </div>
                     ))}
