@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -41,20 +41,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const subscriptionRef = useRef<any>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
+    // Clean up any existing subscription
+    if (subscriptionRef.current) {
+      subscriptionRef.current.unsubscribe();
+      subscriptionRef.current = null;
+    }
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!isMounted) return;
+        
         console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
-          // Fetch user profile after authentication
+          // Fetch user profile after authentication with a small delay
           setTimeout(async () => {
-            await fetchUserProfile(session.user.id);
-          }, 0);
+            if (isMounted) {
+              await fetchUserProfile(session.user.id);
+            }
+          }, 100);
         } else {
           setProfile(null);
         }
@@ -63,8 +76,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
+    subscriptionRef.current = subscription;
+
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!isMounted) return;
+      
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -73,7 +90,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      if (subscriptionRef.current) {
+        subscriptionRef.current.unsubscribe();
+        subscriptionRef.current = null;
+      }
+    };
   }, []);
 
   const fetchUserProfile = async (userId: string) => {
@@ -82,16 +105,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('profiles')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching profile:', error);
+        // If profile doesn't exist, create one
+        if (error.code === 'PGRST116' || error.message.includes('no rows returned')) {
+          await createUserProfile(userId);
+        }
         return;
       }
 
-      setProfile(data);
+      if (data) {
+        setProfile(data);
+      }
     } catch (error) {
       console.error('Error fetching profile:', error);
+    }
+  };
+
+  const createUserProfile = async (userId: string) => {
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData.user;
+      
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .insert({
+          id: userId,
+          email: user.email || '',
+          full_name: user.user_metadata?.full_name || null,
+          role: 'user'
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Error creating profile:', error);
+        return;
+      }
+
+      if (data) {
+        setProfile(data);
+      }
+    } catch (error) {
+      console.error('Error creating profile:', error);
     }
   };
 
