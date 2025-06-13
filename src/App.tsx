@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -38,43 +39,45 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Layout>
-              <SEOOptimizer />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<AllServices />} />
-                <Route path="/services/web" element={<WebDevelopment />} />
-                <Route path="/services/software" element={<SoftwareDevelopment />} />
-                <Route path="/services/branding" element={<Branding />} />
-                <Route path="/services/seo" element={<SEO />} />
-                <Route path="/services/ads" element={<Ads />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/testimonials" element={<Testimonials />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/career" element={<Career />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </HelmetProvider>
-  </QueryClientProvider>
-);
+const App: React.FC = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Layout>
+                <SEOOptimizer />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/services" element={<AllServices />} />
+                  <Route path="/services/web" element={<WebDevelopment />} />
+                  <Route path="/services/software" element={<SoftwareDevelopment />} />
+                  <Route path="/services/branding" element={<Branding />} />
+                  <Route path="/services/seo" element={<SEO />} />
+                  <Route path="/services/ads" element={<Ads />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/career" element={<Career />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
