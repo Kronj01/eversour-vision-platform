@@ -25,42 +25,55 @@ import Blog from "./pages/Blog";
 import FAQ from "./pages/FAQ";
 import Career from "./pages/Career";
 import NotFound from "./pages/NotFound";
+import SEOOptimizer from "./components/seo/SEOOptimizer";
+import { HelmetProvider } from 'react-helmet-async';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<AllServices />} />
-              <Route path="/services/web" element={<WebDevelopment />} />
-              <Route path="/services/software" element={<SoftwareDevelopment />} />
-              <Route path="/services/branding" element={<Branding />} />
-              <Route path="/services/seo" element={<SEO />} />
-              <Route path="/services/ads" element={<Ads />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/testimonials" element={<Testimonials />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/career" element={<Career />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Layout>
+              <SEOOptimizer />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<AllServices />} />
+                <Route path="/services/web" element={<WebDevelopment />} />
+                <Route path="/services/software" element={<SoftwareDevelopment />} />
+                <Route path="/services/branding" element={<Branding />} />
+                <Route path="/services/seo" element={<SEO />} />
+                <Route path="/services/ads" element={<Ads />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/testimonials" element={<Testimonials />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/career" element={<Career />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 

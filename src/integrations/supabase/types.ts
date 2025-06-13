@@ -45,6 +45,48 @@ export type Database = {
         }
         Relationships: []
       }
+      backlinks: {
+        Row: {
+          anchor_text: string | null
+          created_at: string
+          domain_authority: number | null
+          first_seen: string
+          id: string
+          last_seen: string
+          link_type: string | null
+          page_authority: number | null
+          source_url: string
+          status: string | null
+          target_url: string
+        }
+        Insert: {
+          anchor_text?: string | null
+          created_at?: string
+          domain_authority?: number | null
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          link_type?: string | null
+          page_authority?: number | null
+          source_url: string
+          status?: string | null
+          target_url: string
+        }
+        Update: {
+          anchor_text?: string | null
+          created_at?: string
+          domain_authority?: number | null
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          link_type?: string | null
+          page_authority?: number | null
+          source_url?: string
+          status?: string | null
+          target_url?: string
+        }
+        Relationships: []
+      }
       blog_categories: {
         Row: {
           color: string | null
@@ -212,6 +254,51 @@ export type Database = {
         }
         Relationships: []
       }
+      keyword_tracking: {
+        Row: {
+          cpc: number | null
+          created_at: string
+          current_position: number | null
+          difficulty_score: number | null
+          id: string
+          keyword: string
+          last_checked: string
+          previous_position: number | null
+          search_volume: number | null
+          target_position: number | null
+          tracked_since: string
+          url: string
+        }
+        Insert: {
+          cpc?: number | null
+          created_at?: string
+          current_position?: number | null
+          difficulty_score?: number | null
+          id?: string
+          keyword: string
+          last_checked?: string
+          previous_position?: number | null
+          search_volume?: number | null
+          target_position?: number | null
+          tracked_since?: string
+          url: string
+        }
+        Update: {
+          cpc?: number | null
+          created_at?: string
+          current_position?: number | null
+          difficulty_score?: number | null
+          id?: string
+          keyword?: string
+          last_checked?: string
+          previous_position?: number | null
+          search_volume?: number | null
+          target_position?: number | null
+          tracked_since?: string
+          url?: string
+        }
+        Relationships: []
+      }
       newsletter_subscriptions: {
         Row: {
           created_at: string
@@ -278,6 +365,60 @@ export type Database = {
           type?: string
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      performance_metrics: {
+        Row: {
+          accessibility_score: number | null
+          best_practices_score: number | null
+          created_at: string
+          cumulative_layout_shift: number | null
+          device_type: string | null
+          first_contentful_paint: number | null
+          first_input_delay: number | null
+          id: string
+          largest_contentful_paint: number | null
+          performance_score: number | null
+          seo_lighthouse_score: number | null
+          speed_index: number | null
+          time_to_first_byte: number | null
+          total_blocking_time: number | null
+          url: string
+        }
+        Insert: {
+          accessibility_score?: number | null
+          best_practices_score?: number | null
+          created_at?: string
+          cumulative_layout_shift?: number | null
+          device_type?: string | null
+          first_contentful_paint?: number | null
+          first_input_delay?: number | null
+          id?: string
+          largest_contentful_paint?: number | null
+          performance_score?: number | null
+          seo_lighthouse_score?: number | null
+          speed_index?: number | null
+          time_to_first_byte?: number | null
+          total_blocking_time?: number | null
+          url: string
+        }
+        Update: {
+          accessibility_score?: number | null
+          best_practices_score?: number | null
+          created_at?: string
+          cumulative_layout_shift?: number | null
+          device_type?: string | null
+          first_contentful_paint?: number | null
+          first_input_delay?: number | null
+          id?: string
+          largest_contentful_paint?: number | null
+          performance_score?: number | null
+          seo_lighthouse_score?: number | null
+          speed_index?: number | null
+          time_to_first_byte?: number | null
+          total_blocking_time?: number | null
+          url?: string
         }
         Relationships: []
       }
@@ -390,6 +531,255 @@ export type Database = {
           search_vector?: unknown | null
           tags?: string[] | null
           title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      seo_automation_rules: {
+        Row: {
+          actions: Json
+          conditions: Json
+          created_at: string
+          description: string | null
+          execution_count: number | null
+          id: string
+          is_active: boolean | null
+          last_executed: string | null
+          name: string
+          rule_type: string
+          updated_at: string
+        }
+        Insert: {
+          actions: Json
+          conditions: Json
+          created_at?: string
+          description?: string | null
+          execution_count?: number | null
+          id?: string
+          is_active?: boolean | null
+          last_executed?: string | null
+          name: string
+          rule_type: string
+          updated_at?: string
+        }
+        Update: {
+          actions?: Json
+          conditions?: Json
+          created_at?: string
+          description?: string | null
+          execution_count?: number | null
+          id?: string
+          is_active?: boolean | null
+          last_executed?: string | null
+          name?: string
+          rule_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      seo_forecasts: {
+        Row: {
+          confidence_score: number | null
+          created_at: string
+          current_value: number
+          factors: Json | null
+          forecast_period: string
+          forecast_type: string
+          id: string
+          methodology: string | null
+          predicted_value: number
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string
+          current_value: number
+          factors?: Json | null
+          forecast_period: string
+          forecast_type: string
+          id?: string
+          methodology?: string | null
+          predicted_value: number
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string
+          current_value?: number
+          factors?: Json | null
+          forecast_period?: string
+          forecast_type?: string
+          id?: string
+          methodology?: string | null
+          predicted_value?: number
+        }
+        Relationships: []
+      }
+      seo_issues: {
+        Row: {
+          created_at: string
+          description: string
+          estimated_fix_time: number | null
+          id: string
+          impact_score: number | null
+          is_resolved: boolean | null
+          issue_type: string
+          priority_score: number | null
+          recommendation: string
+          severity: string
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          estimated_fix_time?: number | null
+          id?: string
+          impact_score?: number | null
+          is_resolved?: boolean | null
+          issue_type: string
+          priority_score?: number | null
+          recommendation: string
+          severity: string
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          estimated_fix_time?: number | null
+          id?: string
+          impact_score?: number | null
+          is_resolved?: boolean | null
+          issue_type?: string
+          priority_score?: number | null
+          recommendation?: string
+          severity?: string
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      seo_metrics: {
+        Row: {
+          aeo_score: number | null
+          alt_text_missing: number | null
+          backlinks_count: number | null
+          created_at: string
+          domain_authority: number | null
+          external_links: number | null
+          geo_optimization_score: number | null
+          h1_count: number | null
+          h2_count: number | null
+          https_enabled: boolean | null
+          id: string
+          image_count: number | null
+          internal_links: number | null
+          load_time_ms: number | null
+          meta_description: string | null
+          meta_title: string | null
+          mobile_friendly: boolean | null
+          organic_keywords: number | null
+          page_size_kb: number | null
+          page_speed_score: number | null
+          seo_score: number | null
+          sitemap_indexed: boolean | null
+          structured_data_present: boolean | null
+          updated_at: string
+          url: string
+          voice_optimization_score: number | null
+        }
+        Insert: {
+          aeo_score?: number | null
+          alt_text_missing?: number | null
+          backlinks_count?: number | null
+          created_at?: string
+          domain_authority?: number | null
+          external_links?: number | null
+          geo_optimization_score?: number | null
+          h1_count?: number | null
+          h2_count?: number | null
+          https_enabled?: boolean | null
+          id?: string
+          image_count?: number | null
+          internal_links?: number | null
+          load_time_ms?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          mobile_friendly?: boolean | null
+          organic_keywords?: number | null
+          page_size_kb?: number | null
+          page_speed_score?: number | null
+          seo_score?: number | null
+          sitemap_indexed?: boolean | null
+          structured_data_present?: boolean | null
+          updated_at?: string
+          url: string
+          voice_optimization_score?: number | null
+        }
+        Update: {
+          aeo_score?: number | null
+          alt_text_missing?: number | null
+          backlinks_count?: number | null
+          created_at?: string
+          domain_authority?: number | null
+          external_links?: number | null
+          geo_optimization_score?: number | null
+          h1_count?: number | null
+          h2_count?: number | null
+          https_enabled?: boolean | null
+          id?: string
+          image_count?: number | null
+          internal_links?: number | null
+          load_time_ms?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          mobile_friendly?: boolean | null
+          organic_keywords?: number | null
+          page_size_kb?: number | null
+          page_speed_score?: number | null
+          seo_score?: number | null
+          sitemap_indexed?: boolean | null
+          structured_data_present?: boolean | null
+          updated_at?: string
+          url?: string
+          voice_optimization_score?: number | null
+        }
+        Relationships: []
+      }
+      sitemap_urls: {
+        Row: {
+          changefreq: string | null
+          created_at: string
+          id: string
+          is_indexed: boolean | null
+          lastmod: string | null
+          priority: number | null
+          status_code: number | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          changefreq?: string | null
+          created_at?: string
+          id?: string
+          is_indexed?: boolean | null
+          lastmod?: string | null
+          priority?: number | null
+          status_code?: number | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          changefreq?: string | null
+          created_at?: string
+          id?: string
+          is_indexed?: boolean | null
+          lastmod?: string | null
+          priority?: number | null
+          status_code?: number | null
           updated_at?: string
           url?: string
         }

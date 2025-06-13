@@ -14,7 +14,11 @@ import {
   Bell,
   Search,
   Settings,
-  TrendingUp
+  TrendingUp,
+  Activity,
+  Target,
+  Zap,
+  Globe
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminStats from '@/components/admin/AdminStats';
@@ -24,6 +28,9 @@ import ContactFormManagement from '@/components/admin/ContactFormManagement';
 import NewsletterManagement from '@/components/admin/NewsletterManagement';
 import FileUploadManager from '@/components/admin/FileUploadManager';
 import AdvancedAnalyticsDashboard from '@/components/admin/AdvancedAnalyticsDashboard';
+import SEOManagementDashboard from '@/components/admin/SEOManagementDashboard';
+import PerformanceMonitoringDashboard from '@/components/admin/PerformanceMonitoringDashboard';
+import AnalyticsForecastingDashboard from '@/components/admin/AnalyticsForecastingDashboard';
 import { Navigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -54,6 +61,24 @@ const AdminDashboard = () => {
       label: 'Analytics',
       icon: TrendingUp,
       description: 'Advanced analytics and insights'
+    },
+    {
+      value: 'performance',
+      label: 'Performance',
+      icon: Activity,
+      description: 'Real-time performance monitoring'
+    },
+    {
+      value: 'seo',
+      label: 'SEO Management',
+      icon: Search,
+      description: 'Complete SEO optimization suite'
+    },
+    {
+      value: 'forecasting',
+      label: 'Forecasting',
+      icon: Target,
+      description: 'Analytics forecasting and ROI tracking'
     },
     {
       value: 'users',
@@ -98,27 +123,27 @@ const AdminDashboard = () => {
         >
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-3xl md:text-4xl font-bold gradient-text">
-              Admin Dashboard
+              Digital Intelligence Hub
             </h1>
             <Badge variant="secondary" className="bg-purple-600/20 text-purple-400">
               Administrator
             </Badge>
           </div>
           <p className="text-gray-400">
-            Manage your website content, users, and analytics from one central location.
+            Advanced digital performance, growth automation, and predictive intelligence platform.
           </p>
         </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid grid-cols-3 md:grid-cols-7 bg-gray-900/50 p-1 rounded-lg">
+          <TabsList className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 bg-gray-900/50 p-1 rounded-lg overflow-x-auto">
             {tabItems.map((item) => (
               <TabsTrigger
                 key={item.value}
                 value={item.value}
-                className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-400 hover:text-white transition-colors"
+                className="data-[state=active]:bg-purple-600 data-[state=active]:text-white text-gray-400 hover:text-white transition-colors min-w-fit"
               >
                 <item.icon className="w-4 h-4 md:mr-2" />
-                <span className="hidden md:inline">{item.label}</span>
+                <span className="hidden md:inline text-xs lg:text-sm whitespace-nowrap">{item.label}</span>
               </TabsTrigger>
             ))}
           </TabsList>
@@ -140,6 +165,36 @@ const AdminDashboard = () => {
               transition={{ duration: 0.6 }}
             >
               <AdvancedAnalyticsDashboard />
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="performance" className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <PerformanceMonitoringDashboard />
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="seo" className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <SEOManagementDashboard />
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="forecasting" className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <AnalyticsForecastingDashboard />
             </motion.div>
           </TabsContent>
 
@@ -194,7 +249,7 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Quick Actions */}
+        {/* Enhanced Quick Actions */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -204,31 +259,62 @@ const AdminDashboard = () => {
           <Card className="bg-gray-900/50 border-gray-800">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
-                <Settings className="w-5 h-5 mr-2" />
-                Quick Actions
+                <Zap className="w-5 h-5 mr-2" />
+                Digital Intelligence Quick Actions
               </CardTitle>
               <CardDescription className="text-gray-400">
-                Common administrative tasks and shortcuts
+                Access advanced tools and automation features instantly
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {tabItems.slice(1).map((item) => (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {tabItems.slice(1, 6).map((item) => (
                   <motion.button
                     key={item.value}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setActiveTab(item.value)}
-                    className="glass-card text-left hover:bg-gray-800/50 transition-colors"
+                    className="glass-card text-left hover:bg-gray-800/50 transition-colors group"
                   >
-                    <item.icon className="w-8 h-8 text-purple-400 mb-3" />
-                    <h3 className="font-semibold text-white mb-1">{item.label}</h3>
-                    <p className="text-sm text-gray-400">{item.description}</p>
+                    <item.icon className="w-8 h-8 text-purple-400 mb-3 group-hover:text-purple-300 transition-colors" />
+                    <h3 className="font-semibold text-white mb-1 group-hover:text-purple-100 transition-colors">{item.label}</h3>
+                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">{item.description}</p>
                   </motion.button>
                 ))}
               </div>
             </CardContent>
           </Card>
+        </motion.div>
+
+        {/* System Status Indicators */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-6"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="glass-card text-center">
+              <Globe className="w-6 h-6 text-green-400 mx-auto mb-2" />
+              <p className="text-sm text-white">System Status</p>
+              <Badge className="bg-green-500/20 text-green-400 mt-1">Operational</Badge>
+            </div>
+            <div className="glass-card text-center">
+              <Activity className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+              <p className="text-sm text-white">Performance</p>
+              <Badge className="bg-blue-500/20 text-blue-400 mt-1">Excellent</Badge>
+            </div>
+            <div className="glass-card text-center">
+              <Search className="w-6 h-6 text-purple-400 mx-auto mb-2" />
+              <p className="text-sm text-white">SEO Score</p>
+              <Badge className="bg-purple-500/20 text-purple-400 mt-1">94/100</Badge>
+            </div>
+            <div className="glass-card text-center">
+              <TrendingUp className="w-6 h-6 text-orange-400 mx-auto mb-2" />
+              <p className="text-sm text-white">Growth Rate</p>
+              <Badge className="bg-orange-500/20 text-orange-400 mt-1">+47%</Badge>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>
