@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -41,61 +41,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const subscriptionRef = useRef<any>(null);
 
   useEffect(() => {
-    let isMounted = true;
-
-    // Clean up any existing subscription
-    if (subscriptionRef.current) {
-      subscriptionRef.current.unsubscribe();
-      subscriptionRef.current = null;
-    }
+    let mounted = true;
 
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (!isMounted) return;
+        if (!mounted) return;
         
         console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
 
-        if (session?.user) {
-          // Fetch user profile after authentication with a small delay
-          setTimeout(async () => {
-            if (isMounted) {
-              await fetchUserProfile(session.user.id);
-            }
-          }, 100);
+        if (session?.user && mounted) {
+          // Fetch user profile
+          await fetchUserProfile(session.user.id);
         } else {
           setProfile(null);
         }
         
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     );
 
-    subscriptionRef.current = subscription;
-
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!isMounted) return;
+      if (!mounted) return;
       
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchUserProfile(session.user.id);
+      } else {
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => {
-      isMounted = false;
-      if (subscriptionRef.current) {
-        subscriptionRef.current.unsubscribe();
-        subscriptionRef.current = null;
-      }
+      mounted = false;
+      subscription.unsubscribe();
     };
   }, []);
 
@@ -105,12 +92,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('profiles')
         .select('*')
         .eq('id', userId)
-        .maybeSingle();
+        .single();
 
       if (error) {
         console.error('Error fetching profile:', error);
         // If profile doesn't exist, create one
-        if (error.code === 'PGRST116' || error.message.includes('no rows returned')) {
+        if (error.code === 'PGRST116') {
           await createUserProfile(userId);
         }
         return;
