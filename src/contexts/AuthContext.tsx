@@ -55,8 +55,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
 
         if (session?.user && mounted) {
-          // Fetch user profile
-          await fetchUserProfile(session.user.id);
+          // Delay profile fetch slightly to avoid issues
+          setTimeout(() => {
+            if (mounted) {
+              fetchUserProfile(session.user.id);
+            }
+          }, 100);
         } else {
           setProfile(null);
         }
@@ -74,7 +78,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchUserProfile(session.user.id);
+        setTimeout(() => {
+          if (mounted) {
+            fetchUserProfile(session.user.id);
+          }
+        }, 100);
       } else {
         setLoading(false);
       }
@@ -92,22 +100,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('profiles')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
-      if (error) {
+      if (error && error.code !== 'PGRST116') {
         console.error('Error fetching profile:', error);
-        // If profile doesn't exist, create one
-        if (error.code === 'PGRST116') {
-          await createUserProfile(userId);
-        }
         return;
       }
 
       if (data) {
         setProfile(data);
+      } else {
+        // Profile doesn't exist, create one
+        await createUserProfile(userId);
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
+      // Try to create profile if fetch fails
+      await createUserProfile(userId);
     }
   };
 
@@ -118,16 +127,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (!user) return;
 
+      // Set admin role for your email
+      const role = user.email === 'suryanshj83@gmail.com' ? 'admin' : 'user';
+
       const { data, error } = await supabase
         .from('profiles')
         .insert({
           id: userId,
           email: user.email || '',
           full_name: user.user_metadata?.full_name || null,
-          role: 'user'
+          role: role
         })
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error creating profile:', error);

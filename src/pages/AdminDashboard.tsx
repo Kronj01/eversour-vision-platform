@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -34,7 +33,7 @@ import AnalyticsForecastingDashboard from '@/components/admin/AnalyticsForecasti
 import { Navigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
-  const { user, loading } = useAuth();
+  const { user, profile, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
   if (loading) {
@@ -45,7 +44,14 @@ const AdminDashboard = () => {
     );
   }
 
-  if (!user || user.user_metadata?.role !== 'admin') {
+  // Fix: Check both user_metadata role AND profile role for admin access
+  const isAdmin = user && (
+    user.user_metadata?.role === 'admin' || 
+    profile?.role === 'admin' ||
+    user.email === 'suryanshj83@gmail.com' // Temporary admin access for your email
+  );
+
+  if (!user || !isAdmin) {
     return <Navigate to="/auth" replace />;
   }
 
