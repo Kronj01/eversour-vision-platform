@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -72,7 +71,7 @@ export const useAnalyticsForecasting = () => {
         forecast_period: item.forecast_period,
         confidence_score: item.confidence_score || 0,
         created_at: item.created_at,
-        factors: item.factors || {},
+        factors: typeof item.factors === 'object' && item.factors !== null ? item.factors as Record<string, any> : {},
         methodology: item.methodology || 'machine_learning'
       }));
 
