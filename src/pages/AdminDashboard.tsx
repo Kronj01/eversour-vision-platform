@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, BarChart3, Users, FileText, Settings, AlertCircle } from 'lucide-react';
+import { Shield, BarChart3, Users, FileText, Settings, AlertCircle, Bug, Globe, Zap, Target, Megaphone, Layout } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import BlogManagement from '@/components/admin/BlogManagement';
@@ -12,6 +12,10 @@ import SEOManagementDashboard from '@/components/admin/SEOManagementDashboard';
 import AdvancedAnalyticsDashboard from '@/components/admin/AdvancedAnalyticsDashboard';
 import BackendAnalyticsDashboard from '@/components/backend/BackendAnalyticsDashboard';
 import LeadManagement from '@/components/backend/LeadManagement';
+import BugReportingDashboard from '@/components/admin/BugReportingDashboard';
+import ContentManagementDashboard from '@/components/admin/ContentManagementDashboard';
+import FunnelBuilderDashboard from '@/components/admin/FunnelBuilderDashboard';
+import ThemeCustomizer from '@/components/admin/ThemeCustomizer';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -28,7 +32,7 @@ const AdminDashboard = () => {
     return <Navigate to="/auth" replace />;
   }
 
-  // Check if user is admin (you can modify this logic based on your requirements)
+  // Check if user is admin
   const isAdmin = user.email === 'suryanshj83@gmail.com';
 
   if (!isAdmin) {
@@ -56,12 +60,12 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Admin Dashboard</h1>
-          <p className="text-gray-400">Manage your application and monitor performance</p>
+          <h1 className="text-4xl font-bold text-white mb-2">Advanced Admin Dashboard</h1>
+          <p className="text-gray-400">Complete platform management with advanced capabilities</p>
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 bg-gray-800/50">
+          <TabsList className="grid w-full grid-cols-10 bg-gray-800/50 overflow-x-auto">
             <TabsTrigger value="overview" className="text-white data-[state=active]:bg-purple-600">
               <BarChart3 className="w-4 h-4 mr-2" />
               Overview
@@ -69,6 +73,18 @@ const AdminDashboard = () => {
             <TabsTrigger value="backend" className="text-white data-[state=active]:bg-purple-600">
               <Shield className="w-4 h-4 mr-2" />
               Backend
+            </TabsTrigger>
+            <TabsTrigger value="bugs" className="text-white data-[state=active]:bg-purple-600">
+              <Bug className="w-4 h-4 mr-2" />
+              Bug Reports
+            </TabsTrigger>
+            <TabsTrigger value="content" className="text-white data-[state=active]:bg-purple-600">
+              <Globe className="w-4 h-4 mr-2" />
+              Content
+            </TabsTrigger>
+            <TabsTrigger value="funnels" className="text-white data-[state=active]:bg-purple-600">
+              <Zap className="w-4 h-4 mr-2" />
+              Funnels
             </TabsTrigger>
             <TabsTrigger value="leads" className="text-white data-[state=active]:bg-purple-600">
               <Users className="w-4 h-4 mr-2" />
@@ -83,12 +99,12 @@ const AdminDashboard = () => {
               Blog
             </TabsTrigger>
             <TabsTrigger value="seo" className="text-white data-[state=active]:bg-purple-600">
-              <Settings className="w-4 h-4 mr-2" />
+              <Target className="w-4 h-4 mr-2" />
               SEO
             </TabsTrigger>
-            <TabsTrigger value="contacts" className="text-white data-[state=active]:bg-purple-600">
-              <Settings className="w-4 h-4 mr-2" />
-              Contacts
+            <TabsTrigger value="theme" className="text-white data-[state=active]:bg-purple-600">
+              <Layout className="w-4 h-4 mr-2" />
+              Theme
             </TabsTrigger>
           </TabsList>
 
@@ -98,6 +114,18 @@ const AdminDashboard = () => {
 
           <TabsContent value="backend">
             <BackendAnalyticsDashboard />
+          </TabsContent>
+
+          <TabsContent value="bugs">
+            <BugReportingDashboard />
+          </TabsContent>
+
+          <TabsContent value="content">
+            <ContentManagementDashboard />
+          </TabsContent>
+
+          <TabsContent value="funnels">
+            <FunnelBuilderDashboard />
           </TabsContent>
 
           <TabsContent value="leads">
@@ -116,8 +144,8 @@ const AdminDashboard = () => {
             <SEOManagementDashboard />
           </TabsContent>
 
-          <TabsContent value="contacts">
-            <ContactFormManagement />
+          <TabsContent value="theme">
+            <ThemeCustomizer />
           </TabsContent>
         </Tabs>
       </div>
