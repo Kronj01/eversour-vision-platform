@@ -24,7 +24,10 @@ export const useNotifications = () => {
   const { toast } = useToast();
 
   const fetchNotifications = async () => {
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const { data, error } = await supabase
@@ -118,42 +121,61 @@ export const useNotifications = () => {
   };
 
   useEffect(() => {
-    fetchNotifications();
+    let mounted = true;
+    let subscription: any = null;
 
-    // Set up real-time subscription
-    const subscription = supabase
-      .channel('notifications')
-      .on('postgres_changes', 
-        { 
-          event: 'INSERT', 
-          schema: 'public', 
-          table: 'notifications',
-          filter: user ? `user_id=eq.${user.id}` : ''
-        }, 
-        (payload) => {
-          const newNotification = {
-            ...payload.new,
-            type: payload.new.type as 'info' | 'success' | 'warning' | 'error',
-            data: payload.new.data as Record<string, any>
-          } as Notification;
-          
-          setNotifications(prev => [newNotification, ...prev]);
-          setUnreadCount(prev => prev + 1);
-          
-          // Show toast notification
-          toast({
-            title: newNotification.title,
-            description: newNotification.message,
-            variant: newNotification.type === 'error' ? 'destructive' : 'default',
-          });
-        }
-      )
-      .subscribe();
+    const setupNotifications = async () => {
+      if (!user || !mounted) return;
+
+      // Fetch initial notifications
+      await fetchNotifications();
+
+      if (!mounted) return;
+
+      // Set up real-time subscription with unique channel name
+      const channelName = `notifications_${user.id}_${Date.now()}`;
+      
+      subscription = supabase
+        .channel(channelName)
+        .on('postgres_changes', 
+          { 
+            event: 'INSERT', 
+            schema: 'public', 
+            table: 'notifications',
+            filter: `user_id=eq.${user.id}`
+          }, 
+          (payload) => {
+            if (!mounted) return;
+            
+            const newNotification = {
+              ...payload.new,
+              type: payload.new.type as 'info' | 'success' | 'warning' | 'error',
+              data: payload.new.data as Record<string, any>
+            } as Notification;
+            
+            setNotifications(prev => [newNotification, ...prev]);
+            setUnreadCount(prev => prev + 1);
+            
+            // Show toast notification
+            toast({
+              title: newNotification.title,
+              description: newNotification.message,
+              variant: newNotification.type === 'error' ? 'destructive' : 'default',
+            });
+          }
+        )
+        .subscribe();
+    };
+
+    setupNotifications();
 
     return () => {
-      subscription.unsubscribe();
+      mounted = false;
+      if (subscription) {
+        supabase.removeChannel(subscription);
+      }
     };
-  }, [user]);
+  }, [user?.id]); // Only depend on user.id to prevent unnecessary re-subscriptions
 
   return {
     notifications,
