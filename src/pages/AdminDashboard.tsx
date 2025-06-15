@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -17,7 +18,8 @@ import {
   Activity,
   Target,
   Zap,
-  Globe
+  Globe,
+  AlertCircle
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import AdminStats from '@/components/admin/AdminStats';
@@ -41,20 +43,42 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+          <p className="text-gray-400">Loading dashboard...</p>
+        </div>
       </div>
     );
   }
 
-  // Fix: Check both user_metadata role AND profile role for admin access
+  // Enhanced admin check with better error handling
   const isAdmin = user && (
     user.user_metadata?.role === 'admin' || 
     profile?.role === 'admin' ||
     user.email === 'suryanshj83@gmail.com' // Temporary admin access for your email
   );
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return <Navigate to="/auth" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Card className="bg-gray-900/50 border-gray-800 max-w-md mx-auto">
+          <CardContent className="text-center py-12">
+            <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-white mb-2">Access Denied</h2>
+            <p className="text-gray-400 mb-4">
+              You don't have admin privileges to access this dashboard.
+            </p>
+            <p className="text-sm text-gray-500">
+              Contact an administrator to request access.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   const tabItems = [
@@ -145,9 +169,14 @@ const AdminDashboard = () => {
             <h1 className="text-3xl md:text-4xl font-bold gradient-text">
               Digital Intelligence Hub
             </h1>
-            <Badge variant="secondary" className="bg-purple-600/20 text-purple-400">
-              Administrator
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <Badge variant="secondary" className="bg-purple-600/20 text-purple-400">
+                Administrator
+              </Badge>
+              <Badge variant="outline" className="text-green-400 border-green-400">
+                {user.email}
+              </Badge>
+            </div>
           </div>
           <p className="text-gray-400">
             Advanced digital performance, growth automation, and predictive intelligence platform with Python/FastAPI backend integration.
