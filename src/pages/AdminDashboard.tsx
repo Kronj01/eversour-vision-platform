@@ -30,6 +30,8 @@ import AdvancedAnalyticsDashboard from '@/components/admin/AdvancedAnalyticsDash
 import SEOManagementDashboard from '@/components/admin/SEOManagementDashboard';
 import PerformanceMonitoringDashboard from '@/components/admin/PerformanceMonitoringDashboard';
 import AnalyticsForecastingDashboard from '@/components/admin/AnalyticsForecastingDashboard';
+import BackendAnalyticsDashboard from '@/components/backend/BackendAnalyticsDashboard';
+import LeadManagement from '@/components/backend/LeadManagement';
 import { Navigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -63,9 +65,21 @@ const AdminDashboard = () => {
       description: 'Dashboard overview and statistics'
     },
     {
-      value: 'analytics',
-      label: 'Analytics',
+      value: 'backend-analytics',
+      label: 'Backend Analytics',
       icon: TrendingUp,
+      description: 'Analytics from Python/FastAPI backend'
+    },
+    {
+      value: 'leads',
+      label: 'Lead Management',
+      icon: Users,
+      description: 'Manage leads from backend system'
+    },
+    {
+      value: 'analytics',
+      label: 'Supabase Analytics',
+      icon: Activity,
       description: 'Advanced analytics and insights'
     },
     {
@@ -136,12 +150,12 @@ const AdminDashboard = () => {
             </Badge>
           </div>
           <p className="text-gray-400">
-            Advanced digital performance, growth automation, and predictive intelligence platform.
+            Advanced digital performance, growth automation, and predictive intelligence platform with Python/FastAPI backend integration.
           </p>
         </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 bg-gray-900/50 p-1 rounded-lg overflow-x-auto">
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12 bg-gray-900/50 p-1 rounded-lg overflow-x-auto">
             {tabItems.map((item) => (
               <TabsTrigger
                 key={item.value}
@@ -161,6 +175,26 @@ const AdminDashboard = () => {
               transition={{ duration: 0.6 }}
             >
               <AdminStats />
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="backend-analytics" className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <BackendAnalyticsDashboard />
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="leads" className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <LeadManagement />
             </motion.div>
           </TabsContent>
 
