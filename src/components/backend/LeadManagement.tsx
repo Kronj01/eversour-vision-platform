@@ -29,10 +29,10 @@ import {
   Filter,
   AlertCircle
 } from 'lucide-react';
-import { useBackendLeads } from '@/hooks/useBackendData';
+import { useLeads } from '@/hooks/api/useLeads';
 
 const LeadManagement = () => {
-  const { leads, loading, error, createLead, updateLead } = useBackendLeads();
+  const { leads, loading, error, updateLead } = useLeads();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -56,7 +56,7 @@ const LeadManagement = () => {
   };
 
   const handleStatusUpdate = async (leadId: string, newStatus: string) => {
-    await updateLead(leadId, { status: newStatus });
+    await updateLead(leadId, { status: newStatus as any });
   };
 
   if (loading) {

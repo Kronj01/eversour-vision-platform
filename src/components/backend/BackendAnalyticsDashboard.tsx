@@ -2,18 +2,11 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  BarChart3, 
-  TrendingUp, 
-  Users, 
-  Globe,
-  Activity,
-  AlertCircle
-} from 'lucide-react';
-import { useBackendAnalytics } from '@/hooks/useBackendData';
+import { BarChart3, TrendingUp, Users, Globe, Activity, AlertCircle } from 'lucide-react';
+import { useAnalytics } from '@/hooks/api/useAnalytics';
 
 const BackendAnalyticsDashboard = () => {
-  const { data: analytics, loading, error } = useBackendAnalytics();
+  const { data: analytics, loading, error } = useAnalytics();
 
   if (loading) {
     return (
