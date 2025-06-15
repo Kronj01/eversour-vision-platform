@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { BackendServices } from '@/services/backendServices';
 import { useToast } from '@/hooks/use-toast';
@@ -40,29 +39,29 @@ export const useBackendSEO = () => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const seoData = await BackendServices.getSEOData();
-        setData(seoData);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message);
-        toast({
-          title: "Error fetching SEO data",
-          description: err.message,
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchSEOData = async () => {
+    try {
+      setLoading(true);
+      const seoData = await BackendServices.getSEOData();
+      setData(seoData);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message);
+      toast({
+        title: "Error fetching SEO data",
+        description: err.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchSEOData();
   }, [toast]);
 
-  return { data, loading, error, refetch: fetchData };
+  return { data, loading, error, refetch: fetchSEOData };
 };
 
 export const useBackendLeads = (status?: string) => {
