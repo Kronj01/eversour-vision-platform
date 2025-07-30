@@ -16,6 +16,9 @@ import BugReportingDashboard from '@/components/admin/BugReportingDashboard';
 import ContentManagementDashboard from '@/components/admin/ContentManagementDashboard';
 import FunnelBuilderDashboard from '@/components/admin/FunnelBuilderDashboard';
 import ThemeCustomizer from '@/components/admin/ThemeCustomizer';
+import RealTimeDashboard from '@/components/admin/RealTimeDashboard';
+import MarketingAutomationDashboard from '@/components/admin/MarketingAutomationDashboard';
+import AdvancedFormBuilder from '@/components/admin/AdvancedFormBuilder';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -64,8 +67,12 @@ const AdminDashboard = () => {
           <p className="text-gray-400">Complete platform management with advanced capabilities</p>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-10 bg-gray-800/50 overflow-x-auto">
+        <Tabs defaultValue="realtime" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-13 bg-gray-800/50 overflow-x-auto">
+            <TabsTrigger value="realtime" className="text-white data-[state=active]:bg-purple-600">
+              <Zap className="w-4 h-4 mr-2" />
+              Real-Time
+            </TabsTrigger>
             <TabsTrigger value="overview" className="text-white data-[state=active]:bg-purple-600">
               <BarChart3 className="w-4 h-4 mr-2" />
               Overview
@@ -106,7 +113,19 @@ const AdminDashboard = () => {
               <Layout className="w-4 h-4 mr-2" />
               Theme
             </TabsTrigger>
+            <TabsTrigger value="automation" className="text-white data-[state=active]:bg-purple-600">
+              <Zap className="w-4 h-4 mr-2" />
+              Automation
+            </TabsTrigger>
+            <TabsTrigger value="forms" className="text-white data-[state=active]:bg-purple-600">
+              <FileText className="w-4 h-4 mr-2" />
+              Forms
+            </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="realtime">
+            <RealTimeDashboard />
+          </TabsContent>
 
           <TabsContent value="overview">
             <AdvancedAnalyticsDashboard />
@@ -146,6 +165,14 @@ const AdminDashboard = () => {
 
           <TabsContent value="theme">
             <ThemeCustomizer />
+          </TabsContent>
+
+          <TabsContent value="automation">
+            <MarketingAutomationDashboard />
+          </TabsContent>
+
+          <TabsContent value="forms">
+            <AdvancedFormBuilder />
           </TabsContent>
         </Tabs>
       </div>
