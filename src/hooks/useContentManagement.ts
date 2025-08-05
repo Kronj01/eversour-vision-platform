@@ -1,150 +1,171 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-export interface PageContent {
+export interface ContentItem {
   id: string;
-  page_path: string;
-  page_title: string;
+  title: string;
+  type: 'page' | 'blog' | 'media' | 'video';
+  status: 'draft' | 'review' | 'published' | 'archived';
+  content: string;
+  meta_title: string;
   meta_description: string;
-  meta_keywords: string[];
-  og_title: string;
-  og_description: string;
-  og_image: string;
-  content_blocks: ContentBlock[];
-  published: boolean;
+  slug: string;
+  featured_image: string;
+  tags: string[];
+  author?: string;
   created_at: string;
   updated_at: string;
+  published_at?: string;
+  view_count?: number;
 }
 
-export interface ContentBlock {
-  id: string;
-  type: 'hero' | 'text' | 'image' | 'video' | 'cta' | 'testimonial' | 'features';
-  content: any;
-  order: number;
-  visible: boolean;
-}
-
-export interface MediaAsset {
-  id: string;
-  filename: string;
-  url: string;
-  type: 'image' | 'video' | 'document';
-  size: number;
-  alt_text?: string;
-  caption?: string;
-  uploaded_at: string;
+export interface ContentStats {
+  total: number;
+  published: number;
+  drafts: number;
+  pages: number;
+  blogs: number;
+  media: number;
 }
 
 export const useContentManagement = () => {
-  const [pages, setPages] = useState<PageContent[]>([]);
-  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>([]);
+  const [content, setContent] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState<ContentStats>({
+    total: 0,
+    published: 0,
+    drafts: 0,
+    pages: 0,
+    blogs: 0,
+    media: 0
+  });
   const { toast } = useToast();
 
-  useEffect(() => {
-    // Mock data - replace with actual API calls
-    const mockPages: PageContent[] = [
-      {
-        id: '1',
-        page_path: '/',
-        page_title: 'Eversour - Next-Generation Digital Solutions',
-        meta_description: 'Transform your business with cutting-edge digital solutions',
-        meta_keywords: ['digital solutions', 'web development', 'software'],
-        og_title: 'Eversour - Digital Solutions',
-        og_description: 'Transform your business with cutting-edge digital solutions',
-        og_image: '/images/og-home.jpg',
-        content_blocks: [],
-        published: true,
-        created_at: '2024-01-01T00:00:00Z',
-        updated_at: '2024-01-15T10:00:00Z',
-      },
-      {
-        id: '2',
-        page_path: '/about',
-        page_title: 'About Eversour',
-        meta_description: 'Learn about our mission and team',
-        meta_keywords: ['about', 'team', 'mission'],
-        og_title: 'About Eversour',
-        og_description: 'Learn about our mission and team',
-        og_image: '/images/og-about.jpg',
-        content_blocks: [],
-        published: true,
-        created_at: '2024-01-01T00:00:00Z',
-        updated_at: '2024-01-10T15:30:00Z',
-      },
-    ];
-
-    const mockMedia: MediaAsset[] = [
-      {
-        id: '1',
-        filename: 'hero-bg.jpg',
-        url: '/images/hero-bg.jpg',
-        type: 'image',
-        size: 1024000,
-        alt_text: 'Hero background image',
-        uploaded_at: '2024-01-01T00:00:00Z',
-      },
-    ];
-
-    setPages(mockPages);
-    setMediaAssets(mockMedia);
-    setLoading(false);
-  }, []);
-
-  const updatePageContent = async (pageId: string, updates: Partial<PageContent>) => {
+  const fetchContent = async () => {
     try {
-      setPages(prev => prev.map(page => 
-        page.id === pageId 
-          ? { ...page, ...updates, updated_at: new Date().toISOString() }
-          : page
-      ));
-      toast({
-        title: "Page updated successfully",
-        description: "The page content has been updated.",
+      // Mock data for demonstration
+      const mockContent: ContentItem[] = [
+        {
+          id: '1',
+          title: 'About Eversour',
+          type: 'page',
+          status: 'published',
+          content: 'Eversour is a next-generation digital solutions company...',
+          meta_title: 'About Eversour - Digital Solutions Company',
+          meta_description: 'Learn about Eversour and our commitment to innovative digital solutions.',
+          slug: 'about',
+          featured_image: '/images/about-hero.jpg',
+          tags: ['company', 'about'],
+          author: 'Admin',
+          created_at: new Date(Date.now() - 86400000 * 30).toISOString(),
+          updated_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+          published_at: new Date(Date.now() - 86400000 * 25).toISOString(),
+          view_count: 1250
+        }
+      ];
+
+      setContent(mockContent);
+      setStats({
+        total: mockContent.length,
+        published: mockContent.filter(item => item.status === 'published').length,
+        drafts: mockContent.filter(item => item.status === 'draft').length,
+        pages: mockContent.filter(item => item.type === 'page').length,
+        blogs: mockContent.filter(item => item.type === 'blog').length,
+        media: mockContent.filter(item => item.type === 'media' || item.type === 'video').length
       });
     } catch (error: any) {
+      console.error('Error fetching content:', error);
       toast({
-        title: "Error updating page",
+        title: "Error loading content",
         description: error.message,
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const uploadMedia = async (file: File) => {
+  const createContent = async (contentData: Omit<ContentItem, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      // Mock upload - replace with actual upload logic
-      const newAsset: MediaAsset = {
-        id: Date.now().toString(),
-        filename: file.name,
-        url: URL.createObjectURL(file),
-        type: file.type.startsWith('image/') ? 'image' : 'document',
-        size: file.size,
-        uploaded_at: new Date().toISOString(),
+      const newContent: ContentItem = {
+        ...contentData,
+        id: Math.random().toString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        view_count: 0
       };
 
-      setMediaAssets(prev => [newAsset, ...prev]);
+      setContent(prev => [newContent, ...prev]);
       toast({
-        title: "Media uploaded successfully",
-        description: "The file has been uploaded and is ready to use.",
+        title: "Content created",
+        description: `${contentData.type.charAt(0).toUpperCase() + contentData.type.slice(1)} "${contentData.title}" has been created.`,
       });
-      return newAsset;
+
+      return { success: true };
     } catch (error: any) {
       toast({
-        title: "Error uploading media",
+        title: "Failed to create content",
         description: error.message,
         variant: "destructive",
       });
-      return null;
+      return { success: false, error: error.message };
     }
   };
 
+  const updateContent = async (contentId: string, contentData: Partial<ContentItem>) => {
+    try {
+      setContent(prev => prev.map(item => 
+        item.id === contentId 
+          ? { ...item, ...contentData, updated_at: new Date().toISOString() }
+          : item
+      ));
+
+      toast({
+        title: "Content updated",
+        description: "Content has been successfully updated.",
+      });
+
+      return { success: true };
+    } catch (error: any) {
+      toast({
+        title: "Failed to update content",
+        description: error.message,
+        variant: "destructive",
+      });
+      return { success: false, error: error.message };
+    }
+  };
+
+  const deleteContent = async (contentId: string) => {
+    try {
+      setContent(prev => prev.filter(item => item.id !== contentId));
+      toast({
+        title: "Content deleted",
+        description: "Content has been successfully deleted.",
+      });
+
+      return { success: true };
+    } catch (error: any) {
+      toast({
+        title: "Failed to delete content",
+        description: error.message,
+        variant: "destructive",
+      });
+      return { success: false, error: error.message };
+    }
+  };
+
+  useEffect(() => {
+    fetchContent();
+  }, []);
+
   return {
-    pages,
-    mediaAssets,
+    content,
     loading,
-    updatePageContent,
-    uploadMedia,
+    stats,
+    fetchContent,
+    createContent,
+    updateContent,
+    deleteContent
   };
 };

@@ -105,7 +105,7 @@ const Header = () => {
                     <User className="w-4 h-4 mr-2" />
                     Dashboard
                   </Button>
-                  {user.user_metadata?.role === 'admin' && (
+                  {user.email === 'suryanshj83@gmail.com' && (
                     <Button
                       variant="ghost"
                       size="sm"
