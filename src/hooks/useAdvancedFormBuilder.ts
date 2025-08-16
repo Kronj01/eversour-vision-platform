@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
 
 export interface FormField {
   id: string;
@@ -84,56 +85,36 @@ export const useAdvancedFormBuilder = () => {
 
   const fetchForms = async () => {
     try {
-      // Using mock data since we don't have forms table yet
-      const mockForms: AdvancedForm[] = [
-        {
-          id: '1',
-          name: 'Contact Form',
-          description: 'General contact form for inquiries',
-          fields: [
-            { 
-              id: '1', 
-              type: 'text', 
-              label: 'Full Name', 
-              required: true, 
-              order: 1,
-              validation: { minLength: 2, maxLength: 50 }
-            },
-            { 
-              id: '2', 
-              type: 'email', 
-              label: 'Email Address', 
-              required: true, 
-              order: 2,
-              validation: { pattern: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$' }
-            },
-            { 
-              id: '3', 
-              type: 'select', 
-              label: 'Service Interest', 
-              required: true, 
-              order: 3,
-              options: ['Web Development', 'SEO Services', 'Branding', 'Software Development']
-            },
-            { 
-              id: '4', 
-              type: 'textarea', 
-              label: 'Message', 
-              required: true, 
-              order: 4,
-              validation: { minLength: 10, maxLength: 1000 }
-            }
-          ],
+      const { data, error } = await supabase
+        .from('forms')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      // Transform database format to AdvancedForm format
+      const transformedForms: AdvancedForm[] = (data || []).map(form => {
+        const formSchema = form.form_schema as any;
+        const settings = form.settings as any;
+        
+        return {
+          id: form.id,
+          name: form.name,
+          description: form.description || '',
+          fields: formSchema.fields || [],
           settings: {
-            submitButtonText: 'Send Message',
-            successMessage: 'Thank you for your message! We\'ll get back to you soon.',
-            errorMessage: 'There was an error submitting your form. Please try again.',
-            emailNotifications: true,
-            autoResponder: true,
-            allowMultipleSubmissions: false,
-            captchaEnabled: true
+            submitButtonText: settings.submitButtonText || 'Submit',
+            successMessage: settings.successMessage || 'Thank you for your submission!',
+            errorMessage: settings.errorMessage || 'There was an error submitting your form.',
+            redirectUrl: settings.redirectUrl,
+            emailNotifications: settings.emailNotifications || false,
+            autoResponder: settings.autoResponder || false,
+            allowMultipleSubmissions: settings.allowMultipleSubmissions || true,
+            captchaEnabled: settings.captchaEnabled || false,
+            submitLimit: settings.submitLimit,
+            expiryDate: settings.expiryDate
           },
-          styling: {
+          styling: settings.styling || {
             backgroundColor: '#ffffff',
             textColor: '#374151',
             borderColor: '#d1d5db',
@@ -144,73 +125,20 @@ export const useAdvancedFormBuilder = () => {
             borderRadius: '8px',
             spacing: '16px'
           },
-          analytics: {
-            views: 1234,
-            submissions: 89,
-            conversionRate: 7.2,
-            abandonment: 15.8,
-            avgTimeToComplete: 185
+          analytics: settings.analytics || {
+            views: 0,
+            submissions: 0,
+            conversionRate: 0,
+            abandonment: 0,
+            avgTimeToComplete: 0
           },
-          status: 'published',
-          created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
-          updated_at: new Date(Date.now() - 86400000 * 2).toISOString()
-        },
-        {
-          id: '2',
-          name: 'Newsletter Signup',
-          description: 'Simple newsletter subscription form',
-          fields: [
-            { 
-              id: '1', 
-              type: 'email', 
-              label: 'Email Address', 
-              placeholder: 'Enter your email',
-              required: true, 
-              order: 1
-            },
-            { 
-              id: '2', 
-              type: 'checkbox', 
-              label: 'Consent', 
-              required: true, 
-              order: 2,
-              options: ['I agree to receive marketing emails']
-            }
-          ],
-          settings: {
-            submitButtonText: 'Subscribe',
-            successMessage: 'Welcome! Check your email to confirm your subscription.',
-            errorMessage: 'Subscription failed. Please try again.',
-            emailNotifications: false,
-            autoResponder: true,
-            allowMultipleSubmissions: false,
-            captchaEnabled: false
-          },
-          styling: {
-            backgroundColor: '#1f2937',
-            textColor: '#f9fafb',
-            borderColor: '#374151',
-            buttonColor: '#10b981',
-            buttonTextColor: '#ffffff',
-            fontFamily: 'Inter',
-            fontSize: '14px',
-            borderRadius: '6px',
-            spacing: '12px'
-          },
-          analytics: {
-            views: 2156,
-            submissions: 342,
-            conversionRate: 15.9,
-            abandonment: 8.2,
-            avgTimeToComplete: 45
-          },
-          status: 'published',
-          created_at: new Date(Date.now() - 86400000 * 14).toISOString(),
-          updated_at: new Date(Date.now() - 86400000 * 1).toISOString()
-        }
-      ];
+          status: form.is_active ? 'published' : 'draft',
+          created_at: form.created_at,
+          updated_at: form.updated_at
+        };
+      });
 
-      setForms(mockForms);
+      setForms(transformedForms);
     } catch (error: any) {
       console.error('Error fetching forms:', error);
       toast({
@@ -225,28 +153,46 @@ export const useAdvancedFormBuilder = () => {
 
   const createForm = async (formData: Omit<AdvancedForm, 'id' | 'created_at' | 'updated_at' | 'analytics'>) => {
     try {
-      const newForm: AdvancedForm = {
-        ...formData,
-        id: Math.random().toString(36).substring(2, 15),
-        analytics: {
-          views: 0,
-          submissions: 0,
-          conversionRate: 0,
-          abandonment: 0,
-          avgTimeToComplete: 0
-        },
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+      const user = await supabase.auth.getUser();
+      
+      const formInsert: Database['public']['Tables']['forms']['Insert'] = {
+        name: formData.name,
+        description: formData.description || null,
+        form_schema: {
+          fields: formData.fields
+        } as any,
+        settings: {
+          ...formData.settings,
+          styling: formData.styling,
+          analytics: {
+            views: 0,
+            submissions: 0,
+            conversionRate: 0,
+            abandonment: 0,
+            avgTimeToComplete: 0
+          }
+        } as any,
+        is_active: formData.status === 'published',
+        created_by: user.data.user?.id || null
       };
 
-      setForms(prev => [newForm, ...prev]);
+      const { data, error } = await supabase
+        .from('forms')
+        .insert(formInsert)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      await fetchForms(); // Refresh the forms list
       toast({
         title: "Form created",
         description: `"${formData.name}" has been created successfully.`,
       });
 
-      return { success: true, data: newForm };
+      return { success: true, data };
     } catch (error: any) {
+      console.error('Error creating form:', error);
       toast({
         title: "Failed to create form",
         description: error.message,
@@ -258,12 +204,37 @@ export const useAdvancedFormBuilder = () => {
 
   const updateForm = async (id: string, updates: Partial<AdvancedForm>) => {
     try {
-      setForms(prev => prev.map(form => 
-        form.id === id 
-          ? { ...form, ...updates, updated_at: new Date().toISOString() }
-          : form
-      ));
+      const dbUpdates: any = {
+        updated_at: new Date().toISOString()
+      };
 
+      if (updates.name) dbUpdates.name = updates.name;
+      if (updates.description !== undefined) dbUpdates.description = updates.description;
+      if (updates.status) dbUpdates.is_active = updates.status === 'published';
+      
+      if (updates.fields || updates.settings || updates.styling) {
+        const currentForm = forms.find(f => f.id === id);
+        if (currentForm) {
+          dbUpdates.form_schema = {
+            fields: updates.fields || currentForm.fields
+          };
+          dbUpdates.settings = {
+            ...(currentForm.settings || {}),
+            ...(updates.settings || {}),
+            styling: updates.styling || currentForm.styling,
+            analytics: currentForm.analytics
+          };
+        }
+      }
+
+      const { error } = await supabase
+        .from('forms')
+        .update(dbUpdates)
+        .eq('id', id);
+
+      if (error) throw error;
+
+      await fetchForms(); // Refresh the forms list
       toast({
         title: "Form updated",
         description: "Form has been updated successfully.",
@@ -282,7 +253,14 @@ export const useAdvancedFormBuilder = () => {
 
   const deleteForm = async (id: string) => {
     try {
-      setForms(prev => prev.filter(form => form.id !== id));
+      const { error } = await supabase
+        .from('forms')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      await fetchForms(); // Refresh the forms list
       toast({
         title: "Form deleted",
         description: "Form has been deleted successfully.",
@@ -339,35 +317,65 @@ export const useAdvancedFormBuilder = () => {
 
   const submitForm = async (formId: string, submissionData: Record<string, any>) => {
     try {
-      const submission: FormSubmission = {
-        id: Math.random().toString(36).substring(2, 15),
-        form_id: formId,
-        submission_data: submissionData,
-        submitted_at: new Date().toISOString(),
-        ip_address: '127.0.0.1', // This would be real IP in production
-        user_agent: navigator.userAgent,
-        session_id: localStorage.getItem('analytics_session_id') || 'anonymous'
-      };
+      const { data, error } = await supabase
+        .from('form_submissions')
+        .insert({
+          form_id: formId,
+          submission_data: submissionData,
+          ip_address: '127.0.0.1', // This would be real IP in production
+          user_agent: navigator.userAgent,
+          session_id: localStorage.getItem('analytics_session_id') || 'anonymous'
+        })
+        .select()
+        .single();
 
-      setSubmissions(prev => [submission, ...prev]);
+      if (error) throw error;
 
-      // Update form analytics
-      setForms(prev => prev.map(form => 
-        form.id === formId 
-          ? { 
-              ...form, 
-              analytics: {
-                ...form.analytics,
-                submissions: form.analytics.submissions + 1,
-                conversionRate: ((form.analytics.submissions + 1) / form.analytics.views) * 100
-              }
-            }
-          : form
-      ));
+      await fetchSubmissions(); // Refresh submissions
+      
+      // Update form analytics in database
+      const form = forms.find(f => f.id === formId);
+      if (form) {
+        const newSubmissionCount = form.analytics.submissions + 1;
+        const newConversionRate = (newSubmissionCount / Math.max(form.analytics.views, 1)) * 100;
+        
+        await updateForm(formId, {
+          analytics: {
+            ...form.analytics,
+            submissions: newSubmissionCount,
+            conversionRate: newConversionRate
+          }
+        });
+      }
 
-      return { success: true, submissionId: submission.id };
+      return { success: true, submissionId: data.id };
     } catch (error: any) {
       return { success: false, error: error.message };
+    }
+  };
+
+  const fetchSubmissions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('form_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const transformedSubmissions: FormSubmission[] = (data || []).map(sub => ({
+        id: sub.id,
+        form_id: sub.form_id,
+        submission_data: sub.submission_data as Record<string, any>,
+        submitted_at: sub.created_at,
+        ip_address: sub.ip_address,
+        user_agent: sub.user_agent,
+        session_id: sub.session_id
+      }));
+
+      setSubmissions(transformedSubmissions);
+    } catch (error: any) {
+      console.error('Error fetching submissions:', error);
     }
   };
 
@@ -393,6 +401,7 @@ export const useAdvancedFormBuilder = () => {
 
   useEffect(() => {
     fetchForms();
+    fetchSubmissions();
   }, []);
 
   return {
@@ -400,6 +409,7 @@ export const useAdvancedFormBuilder = () => {
     submissions,
     loading,
     fetchForms,
+    fetchSubmissions,
     createForm,
     updateForm,
     deleteForm,

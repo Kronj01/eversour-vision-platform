@@ -19,6 +19,7 @@ import ThemeCustomizer from '@/components/admin/ThemeCustomizer';
 import RealTimeDashboard from '@/components/admin/RealTimeDashboard';
 import MarketingAutomationDashboard from '@/components/admin/MarketingAutomationDashboard';
 import AdvancedFormBuilder from '@/components/admin/AdvancedFormBuilder';
+import FormSubmissionsManagement from '@/components/admin/FormSubmissionsManagement';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -68,7 +69,7 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="realtime" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-13 bg-gray-800/50 overflow-x-auto">
+          <TabsList className="grid w-full grid-cols-14 bg-gray-800/50 overflow-x-auto">
             <TabsTrigger value="realtime" className="text-white data-[state=active]:bg-purple-600">
               <Zap className="w-4 h-4 mr-2" />
               Real-Time
@@ -120,6 +121,10 @@ const AdminDashboard = () => {
             <TabsTrigger value="forms" className="text-white data-[state=active]:bg-purple-600">
               <FileText className="w-4 h-4 mr-2" />
               Forms
+            </TabsTrigger>
+            <TabsTrigger value="submissions" className="text-white data-[state=active]:bg-purple-600">
+              <FileText className="w-4 h-4 mr-2" />
+              Submissions
             </TabsTrigger>
           </TabsList>
 
@@ -173,6 +178,10 @@ const AdminDashboard = () => {
 
           <TabsContent value="forms">
             <AdvancedFormBuilder />
+          </TabsContent>
+
+          <TabsContent value="submissions">
+            <FormSubmissionsManagement />
           </TabsContent>
         </Tabs>
       </div>
