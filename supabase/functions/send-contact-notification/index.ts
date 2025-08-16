@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
@@ -25,7 +26,31 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     const { name, email, message, company, phone, service_interest }: ContactNotificationRequest = await req.json();
+
+    // Store contact submission in database
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .insert({
+        name,
+        email,
+        phone,
+        company,
+        service_interest,
+        message,
+        status: 'new'
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Database error:', error);
+      throw new Error('Failed to store contact submission');
+    }
 
     // Send confirmation email to user
     const userEmailResponse = await resend.emails.send({
@@ -71,9 +96,13 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Emails sent successfully:", { userEmailResponse, adminEmailResponse });
+    console.log("Emails sent successfully and contact stored:", { userEmailResponse, adminEmailResponse, contactId: data.id });
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ 
+      success: true, 
+      message: 'Contact submission received and emails sent',
+      id: data.id 
+    }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",

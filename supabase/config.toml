@@ -1,1 +1,10 @@
 project_id = "hzgscfjfhezutlyvkbyw"
+
+[functions.send-contact-notification]
+verify_jwt = false
+
+[functions.analytics-tracking]
+verify_jwt = false
+
+[functions.file-upload]
+verify_jwt = true

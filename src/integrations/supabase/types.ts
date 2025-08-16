@@ -7,8 +7,148 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "12.2.3 (519615d)"
+  }
   public: {
     Tables: {
+      ab_experiments: {
+        Row: {
+          confidence_level: number | null
+          conversion_goal: string | null
+          created_at: string
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          start_date: string | null
+          status: string | null
+          traffic_allocation: number | null
+          updated_at: string
+          variants: Json
+        }
+        Insert: {
+          confidence_level?: number | null
+          conversion_goal?: string | null
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          start_date?: string | null
+          status?: string | null
+          traffic_allocation?: number | null
+          updated_at?: string
+          variants?: Json
+        }
+        Update: {
+          confidence_level?: number | null
+          conversion_goal?: string | null
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          start_date?: string | null
+          status?: string | null
+          traffic_allocation?: number | null
+          updated_at?: string
+          variants?: Json
+        }
+        Relationships: []
+      }
+      ab_participants: {
+        Row: {
+          converted: boolean | null
+          created_at: string
+          experiment_id: string
+          id: string
+          session_id: string
+          variant_id: string
+        }
+        Insert: {
+          converted?: boolean | null
+          created_at?: string
+          experiment_id: string
+          id?: string
+          session_id: string
+          variant_id: string
+        }
+        Update: {
+          converted?: boolean | null
+          created_at?: string
+          experiment_id?: string
+          id?: string
+          session_id?: string
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ab_participants_experiment_id_fkey"
+            columns: ["experiment_id"]
+            isOneToOne: false
+            referencedRelation: "ab_experiments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ab_participants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "visitor_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
+      }
+      alerts: {
+        Row: {
+          alert_type: string
+          comparison_operator: string | null
+          conditions: Json
+          created_at: string
+          frequency: string | null
+          id: string
+          is_active: boolean | null
+          last_triggered: string | null
+          name: string
+          notification_methods: Json | null
+          recipients: Json | null
+          threshold_value: number | null
+          updated_at: string
+        }
+        Insert: {
+          alert_type: string
+          comparison_operator?: string | null
+          conditions: Json
+          created_at?: string
+          frequency?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_triggered?: string | null
+          name: string
+          notification_methods?: Json | null
+          recipients?: Json | null
+          threshold_value?: number | null
+          updated_at?: string
+        }
+        Update: {
+          alert_type?: string
+          comparison_operator?: string | null
+          conditions?: Json
+          created_at?: string
+          frequency?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_triggered?: string | null
+          name?: string
+          notification_methods?: Json | null
+          recipients?: Json | null
+          threshold_value?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       analytics_events: {
         Row: {
           created_at: string
@@ -42,6 +182,78 @@ export type Database = {
           session_id?: string | null
           user_agent?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      api_keys: {
+        Row: {
+          created_at: string
+          encrypted_key: string
+          id: string
+          is_active: boolean | null
+          key_name: string
+          service_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          encrypted_key: string
+          id?: string
+          is_active?: boolean | null
+          key_name: string
+          service_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          encrypted_key?: string
+          id?: string
+          is_active?: boolean | null
+          key_name?: string
+          service_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      automation_workflows: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          success_rate: number | null
+          total_runs: number | null
+          trigger_config: Json
+          trigger_type: string
+          updated_at: string
+          workflow_steps: Json
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          success_rate?: number | null
+          total_runs?: number | null
+          trigger_config: Json
+          trigger_type: string
+          updated_at?: string
+          workflow_steps?: Json
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          success_rate?: number | null
+          total_runs?: number | null
+          trigger_config?: Json
+          trigger_type?: string
+          updated_at?: string
+          workflow_steps?: Json
         }
         Relationships: []
       }
@@ -254,6 +466,253 @@ export type Database = {
         }
         Relationships: []
       }
+      conversions: {
+        Row: {
+          campaign_id: string | null
+          conversion_type: string
+          conversion_value: number | null
+          created_at: string
+          form_id: string | null
+          goal_id: string | null
+          id: string
+          metadata: Json | null
+          session_id: string
+        }
+        Insert: {
+          campaign_id?: string | null
+          conversion_type: string
+          conversion_value?: number | null
+          created_at?: string
+          form_id?: string | null
+          goal_id?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id: string
+        }
+        Update: {
+          campaign_id?: string | null
+          conversion_type?: string
+          conversion_value?: number | null
+          created_at?: string
+          form_id?: string | null
+          goal_id?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "visitor_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
+      }
+      dashboard_widgets: {
+        Row: {
+          created_at: string
+          dashboard_id: string | null
+          height: number | null
+          id: string
+          is_active: boolean | null
+          position_x: number | null
+          position_y: number | null
+          updated_at: string
+          user_id: string
+          widget_config: Json
+          widget_type: string
+          width: number | null
+        }
+        Insert: {
+          created_at?: string
+          dashboard_id?: string | null
+          height?: number | null
+          id?: string
+          is_active?: boolean | null
+          position_x?: number | null
+          position_y?: number | null
+          updated_at?: string
+          user_id: string
+          widget_config?: Json
+          widget_type: string
+          width?: number | null
+        }
+        Update: {
+          created_at?: string
+          dashboard_id?: string | null
+          height?: number | null
+          id?: string
+          is_active?: boolean | null
+          position_x?: number | null
+          position_y?: number | null
+          updated_at?: string
+          user_id?: string
+          widget_config?: Json
+          widget_type?: string
+          width?: number | null
+        }
+        Relationships: []
+      }
+      email_campaigns: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          name: string
+          recipient_list: Json
+          scheduled_at: string | null
+          sent_at: string | null
+          stats: Json | null
+          status: string
+          subject: string
+          template_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          name: string
+          recipient_list?: Json
+          scheduled_at?: string | null
+          sent_at?: string | null
+          stats?: Json | null
+          status?: string
+          subject: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          name?: string
+          recipient_list?: Json
+          scheduled_at?: string | null
+          sent_at?: string | null
+          stats?: Json | null
+          status?: string
+          subject?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      file_uploads: {
+        Row: {
+          created_at: string
+          file_path: string
+          file_size: number
+          filename: string
+          id: string
+          metadata: Json | null
+          mime_type: string
+          original_name: string
+          upload_type: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          file_size: number
+          filename: string
+          id?: string
+          metadata?: Json | null
+          mime_type: string
+          original_name: string
+          upload_type?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          file_size?: number
+          filename?: string
+          id?: string
+          metadata?: Json | null
+          mime_type?: string
+          original_name?: string
+          upload_type?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
+      form_submissions: {
+        Row: {
+          created_at: string
+          form_id: string
+          id: string
+          ip_address: string | null
+          session_id: string | null
+          submission_data: Json
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          form_id: string
+          id?: string
+          ip_address?: string | null
+          session_id?: string | null
+          submission_data?: Json
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          form_id?: string
+          id?: string
+          ip_address?: string | null
+          session_id?: string | null
+          submission_data?: Json
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "form_submissions_form_id_fkey"
+            columns: ["form_id"]
+            isOneToOne: false
+            referencedRelation: "forms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forms: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          form_schema: Json
+          id: string
+          is_active: boolean | null
+          name: string
+          settings: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          form_schema?: Json
+          id?: string
+          is_active?: boolean | null
+          name: string
+          settings?: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          form_schema?: Json
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          settings?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
       keyword_tracking: {
         Row: {
           cpc: number | null
@@ -296,6 +755,54 @@ export type Database = {
           target_position?: number | null
           tracked_since?: string
           url?: string
+        }
+        Relationships: []
+      }
+      lead_magnets: {
+        Row: {
+          content_url: string | null
+          conversion_tracking: Json | null
+          created_at: string
+          description: string | null
+          display_rules: Json | null
+          form_config: Json
+          id: string
+          is_active: boolean | null
+          name: string
+          thumbnail_url: string | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content_url?: string | null
+          conversion_tracking?: Json | null
+          created_at?: string
+          description?: string | null
+          display_rules?: Json | null
+          form_config?: Json
+          id?: string
+          is_active?: boolean | null
+          name: string
+          thumbnail_url?: string | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content_url?: string | null
+          conversion_tracking?: Json | null
+          created_at?: string
+          description?: string | null
+          display_rules?: Json | null
+          form_config?: Json
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          thumbnail_url?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -368,6 +875,53 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          bounce: boolean | null
+          created_at: string
+          exit_page: boolean | null
+          id: string
+          page_title: string | null
+          page_url: string
+          scroll_depth: number | null
+          session_id: string
+          time_on_page: number | null
+          updated_at: string
+        }
+        Insert: {
+          bounce?: boolean | null
+          created_at?: string
+          exit_page?: boolean | null
+          id?: string
+          page_title?: string | null
+          page_url: string
+          scroll_depth?: number | null
+          session_id: string
+          time_on_page?: number | null
+          updated_at?: string
+        }
+        Update: {
+          bounce?: boolean | null
+          created_at?: string
+          exit_page?: boolean | null
+          id?: string
+          page_title?: string | null
+          page_url?: string
+          scroll_depth?: number | null
+          session_id?: string
+          time_on_page?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_views_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "visitor_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
+      }
       performance_metrics: {
         Row: {
           accessibility_score: number | null
@@ -419,6 +973,48 @@ export type Database = {
           time_to_first_byte?: number | null
           total_blocking_time?: number | null
           url?: string
+        }
+        Relationships: []
+      }
+      performance_tracking: {
+        Row: {
+          connection_type: string | null
+          created_at: string
+          cumulative_layout_shift: number | null
+          device_type: string | null
+          first_contentful_paint: number | null
+          first_input_delay: number | null
+          id: string
+          largest_contentful_paint: number | null
+          load_time: number | null
+          page_url: string
+          time_to_interactive: number | null
+        }
+        Insert: {
+          connection_type?: string | null
+          created_at?: string
+          cumulative_layout_shift?: number | null
+          device_type?: string | null
+          first_contentful_paint?: number | null
+          first_input_delay?: number | null
+          id?: string
+          largest_contentful_paint?: number | null
+          load_time?: number | null
+          page_url: string
+          time_to_interactive?: number | null
+        }
+        Update: {
+          connection_type?: string | null
+          created_at?: string
+          cumulative_layout_shift?: number | null
+          device_type?: string | null
+          first_contentful_paint?: number | null
+          first_input_delay?: number | null
+          id?: string
+          largest_contentful_paint?: number | null
+          load_time?: number | null
+          page_url?: string
+          time_to_interactive?: number | null
         }
         Relationships: []
       }
@@ -785,6 +1381,205 @@ export type Database = {
         }
         Relationships: []
       }
+      theme_settings: {
+        Row: {
+          color_scheme: Json | null
+          created_at: string
+          custom_css: string | null
+          id: string
+          is_active: boolean | null
+          layout_settings: Json | null
+          theme_name: string
+          typography: Json | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          color_scheme?: Json | null
+          created_at?: string
+          custom_css?: string | null
+          id?: string
+          is_active?: boolean | null
+          layout_settings?: Json | null
+          theme_name?: string
+          typography?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          color_scheme?: Json | null
+          created_at?: string
+          custom_css?: string | null
+          id?: string
+          is_active?: boolean | null
+          layout_settings?: Json | null
+          theme_name?: string
+          typography?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_events: {
+        Row: {
+          coordinates: Json | null
+          created_at: string
+          element_selector: string | null
+          element_text: string | null
+          event_type: string
+          form_data: Json | null
+          id: string
+          metadata: Json | null
+          page_url: string
+          session_id: string
+        }
+        Insert: {
+          coordinates?: Json | null
+          created_at?: string
+          element_selector?: string | null
+          element_text?: string | null
+          event_type: string
+          form_data?: Json | null
+          id?: string
+          metadata?: Json | null
+          page_url: string
+          session_id: string
+        }
+        Update: {
+          coordinates?: Json | null
+          created_at?: string
+          element_selector?: string | null
+          element_text?: string | null
+          event_type?: string
+          form_data?: Json | null
+          id?: string
+          metadata?: Json | null
+          page_url?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "visitor_sessions"
+            referencedColumns: ["session_id"]
+          },
+        ]
+      }
+      visitor_sessions: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          device_type: string | null
+          id: string
+          ip_address: string | null
+          is_active: boolean | null
+          last_activity: string
+          os: string | null
+          referrer: string | null
+          session_id: string
+          started_at: string
+          total_page_views: number | null
+          total_time_spent: number | null
+          user_agent: string | null
+          user_id: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean | null
+          last_activity?: string
+          os?: string | null
+          referrer?: string | null
+          session_id: string
+          started_at?: string
+          total_page_views?: number | null
+          total_time_spent?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: string | null
+          is_active?: boolean | null
+          last_activity?: string
+          os?: string | null
+          referrer?: string | null
+          session_id?: string
+          started_at?: string
+          total_page_views?: number | null
+          total_time_spent?: number | null
+          user_agent?: string | null
+          user_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
+      workflow_executions: {
+        Row: {
+          completed_at: string | null
+          contact_id: string | null
+          current_step: number | null
+          error_message: string | null
+          execution_data: Json | null
+          id: string
+          session_id: string | null
+          started_at: string
+          status: string | null
+          workflow_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          contact_id?: string | null
+          current_step?: number | null
+          error_message?: string | null
+          execution_data?: Json | null
+          id?: string
+          session_id?: string | null
+          started_at?: string
+          status?: string | null
+          workflow_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          contact_id?: string | null
+          current_step?: number | null
+          error_message?: string | null
+          execution_data?: Json | null
+          id?: string
+          session_id?: string | null
+          started_at?: string
+          status?: string | null
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_executions_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "automation_workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -808,21 +1603,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -840,14 +1639,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -863,14 +1664,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -886,14 +1689,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -901,14 +1706,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
