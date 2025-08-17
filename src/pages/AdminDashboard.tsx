@@ -69,34 +69,14 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="realtime" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-14 bg-gray-800/50 overflow-x-auto">
+          <TabsList className="grid w-full grid-cols-8 bg-gray-800/50">
             <TabsTrigger value="realtime" className="text-white data-[state=active]:bg-purple-600">
               <Zap className="w-4 h-4 mr-2" />
               Real-Time
             </TabsTrigger>
-            <TabsTrigger value="overview" className="text-white data-[state=active]:bg-purple-600">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Overview
-            </TabsTrigger>
             <TabsTrigger value="backend" className="text-white data-[state=active]:bg-purple-600">
               <Shield className="w-4 h-4 mr-2" />
               Backend
-            </TabsTrigger>
-            <TabsTrigger value="bugs" className="text-white data-[state=active]:bg-purple-600">
-              <Bug className="w-4 h-4 mr-2" />
-              Bug Reports
-            </TabsTrigger>
-            <TabsTrigger value="content" className="text-white data-[state=active]:bg-purple-600">
-              <Globe className="w-4 h-4 mr-2" />
-              Content
-            </TabsTrigger>
-            <TabsTrigger value="funnels" className="text-white data-[state=active]:bg-purple-600">
-              <Zap className="w-4 h-4 mr-2" />
-              Funnels
-            </TabsTrigger>
-            <TabsTrigger value="leads" className="text-white data-[state=active]:bg-purple-600">
-              <Users className="w-4 h-4 mr-2" />
-              Leads
             </TabsTrigger>
             <TabsTrigger value="users" className="text-white data-[state=active]:bg-purple-600">
               <Users className="w-4 h-4 mr-2" />
@@ -110,21 +90,17 @@ const AdminDashboard = () => {
               <Target className="w-4 h-4 mr-2" />
               SEO
             </TabsTrigger>
-            <TabsTrigger value="theme" className="text-white data-[state=active]:bg-purple-600">
-              <Layout className="w-4 h-4 mr-2" />
-              Theme
-            </TabsTrigger>
             <TabsTrigger value="automation" className="text-white data-[state=active]:bg-purple-600">
               <Zap className="w-4 h-4 mr-2" />
               Automation
             </TabsTrigger>
-            <TabsTrigger value="forms" className="text-white data-[state=active]:bg-purple-600">
-              <FileText className="w-4 h-4 mr-2" />
-              Forms
+            <TabsTrigger value="content" className="text-white data-[state=active]:bg-purple-600">
+              <Globe className="w-4 h-4 mr-2" />
+              Content
             </TabsTrigger>
-            <TabsTrigger value="submissions" className="text-white data-[state=active]:bg-purple-600">
-              <FileText className="w-4 h-4 mr-2" />
-              Submissions
+            <TabsTrigger value="theme" className="text-white data-[state=active]:bg-purple-600">
+              <Layout className="w-4 h-4 mr-2" />
+              Theme
             </TabsTrigger>
           </TabsList>
 
@@ -132,56 +108,119 @@ const AdminDashboard = () => {
             <RealTimeDashboard />
           </TabsContent>
 
-          <TabsContent value="overview">
-            <AdvancedAnalyticsDashboard />
-          </TabsContent>
-
           <TabsContent value="backend">
-            <BackendAnalyticsDashboard />
+            <Tabs defaultValue="analytics" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                <TabsTrigger value="leads">Leads</TabsTrigger>
+                <TabsTrigger value="bugs">Bug Reports</TabsTrigger>
+                <TabsTrigger value="performance">Performance</TabsTrigger>
+              </TabsList>
+              <TabsContent value="analytics">
+                <BackendAnalyticsDashboard />
+              </TabsContent>
+              <TabsContent value="leads">
+                <LeadManagement />
+              </TabsContent>
+              <TabsContent value="bugs">
+                <BugReportingDashboard />
+              </TabsContent>
+              <TabsContent value="performance">
+                <AdvancedAnalyticsDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
-          <TabsContent value="bugs">
-            <BugReportingDashboard />
+          <TabsContent value="users">
+            <Tabs defaultValue="management" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="management">User Management</TabsTrigger>
+                <TabsTrigger value="forms">Form Submissions</TabsTrigger>
+                <TabsTrigger value="contact">Contact Submissions</TabsTrigger>
+              </TabsList>
+              <TabsContent value="management">
+                <UserManagement />
+              </TabsContent>
+              <TabsContent value="forms">
+                <FormSubmissionsManagement />
+              </TabsContent>
+              <TabsContent value="contact">
+                <ContactFormManagement />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
+          <TabsContent value="blog">
+            <Tabs defaultValue="posts" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="posts">Blog Posts</TabsTrigger>
+                <TabsTrigger value="categories">Categories</TabsTrigger>
+                <TabsTrigger value="analytics">Blog Analytics</TabsTrigger>
+              </TabsList>
+              <TabsContent value="posts">
+                <BlogManagement />
+              </TabsContent>
+              <TabsContent value="categories">
+                <BlogManagement />
+              </TabsContent>
+              <TabsContent value="analytics">
+                <BlogManagement />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
+          <TabsContent value="seo">
+            <Tabs defaultValue="overview" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="overview">SEO Overview</TabsTrigger>
+                <TabsTrigger value="onpage">On-Page SEO</TabsTrigger>
+                <TabsTrigger value="technical">Technical SEO</TabsTrigger>
+                <TabsTrigger value="offpage">Off-Page SEO</TabsTrigger>
+              </TabsList>
+              <TabsContent value="overview">
+                <SEOManagementDashboard />
+              </TabsContent>
+              <TabsContent value="onpage">
+                <SEOManagementDashboard />
+              </TabsContent>
+              <TabsContent value="technical">
+                <SEOManagementDashboard />
+              </TabsContent>
+              <TabsContent value="offpage">
+                <SEOManagementDashboard />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
+          <TabsContent value="automation">
+            <Tabs defaultValue="workflows" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="workflows">Workflows</TabsTrigger>
+                <TabsTrigger value="funnels">Funnels</TabsTrigger>
+                <TabsTrigger value="forms">Form Builder</TabsTrigger>
+                <TabsTrigger value="email">Email Campaigns</TabsTrigger>
+              </TabsList>
+              <TabsContent value="workflows">
+                <MarketingAutomationDashboard />
+              </TabsContent>
+              <TabsContent value="funnels">
+                <FunnelBuilderDashboard />
+              </TabsContent>
+              <TabsContent value="forms">
+                <AdvancedFormBuilder />
+              </TabsContent>
+              <TabsContent value="email">
+                <MarketingAutomationDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
           <TabsContent value="content">
             <ContentManagementDashboard />
           </TabsContent>
 
-          <TabsContent value="funnels">
-            <FunnelBuilderDashboard />
-          </TabsContent>
-
-          <TabsContent value="leads">
-            <LeadManagement />
-          </TabsContent>
-
-          <TabsContent value="users">
-            <UserManagement />
-          </TabsContent>
-
-          <TabsContent value="blog">
-            <BlogManagement />
-          </TabsContent>
-
-          <TabsContent value="seo">
-            <SEOManagementDashboard />
-          </TabsContent>
-
           <TabsContent value="theme">
             <ThemeCustomizer />
-          </TabsContent>
-
-          <TabsContent value="automation">
-            <MarketingAutomationDashboard />
-          </TabsContent>
-
-          <TabsContent value="forms">
-            <AdvancedFormBuilder />
-          </TabsContent>
-
-          <TabsContent value="submissions">
-            <FormSubmissionsManagement />
           </TabsContent>
         </Tabs>
       </div>
