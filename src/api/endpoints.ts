@@ -2,40 +2,45 @@
 import { apiClient } from './client';
 import { Analytics, Lead, SEOData } from './types';
 
-// Analytics API
+// External APIs disabled - using Supabase directly
 export const analyticsApi = {
-  getAnalytics: (timeframe: string = '30d'): Promise<Analytics> =>
-    apiClient.get(`/analytics?timeframe=${timeframe}`),
+  getAnalytics: async (timeframe: string = '30d'): Promise<Analytics> => {
+    throw new Error('External API disabled - use Supabase analytics instead');
+  },
     
-  getPageAnalytics: (url: string) =>
-    apiClient.get(`/analytics/page?url=${encodeURIComponent(url)}`),
+  getPageAnalytics: async (url: string) => {
+    throw new Error('External API disabled - use Supabase analytics instead');
+  },
 };
 
-// Leads API
 export const leadsApi = {
-  getLeads: (status?: string): Promise<Lead[]> => {
-    const params = status ? `?status=${status}` : '';
-    return apiClient.get(`/leads${params}`);
+  getLeads: async (status?: string): Promise<Lead[]> => {
+    throw new Error('External API disabled - use Supabase contact_submissions instead');
   },
   
-  createLead: (leadData: Partial<Lead>): Promise<Lead> =>
-    apiClient.post('/leads', leadData),
+  createLead: async (leadData: Partial<Lead>): Promise<Lead> => {
+    throw new Error('External API disabled - use Supabase contact_submissions instead');
+  },
     
-  updateLead: (id: string, data: Partial<Lead>): Promise<Lead> =>
-    apiClient.put(`/leads/${id}`, data),
+  updateLead: async (id: string, data: Partial<Lead>): Promise<Lead> => {
+    throw new Error('External API disabled - use Supabase contact_submissions instead');
+  },
     
-  deleteLead: (id: string): Promise<void> =>
-    apiClient.delete(`/leads/${id}`),
+  deleteLead: async (id: string): Promise<void> => {
+    throw new Error('External API disabled - use Supabase contact_submissions instead');
+  },
 };
 
-// SEO API
 export const seoApi = {
-  getSEOData: (): Promise<SEOData> =>
-    apiClient.get('/seo/overview'),
+  getSEOData: async (): Promise<SEOData> => {
+    throw new Error('External API disabled - use Supabase SEO tables instead');
+  },
     
-  runSEOAudit: (url: string) =>
-    apiClient.post('/seo/audit', { url }),
+  runSEOAudit: async (url: string) => {
+    throw new Error('External API disabled - use Supabase SEO tables instead');
+  },
     
-  trackKeyword: (keyword: string, url: string) =>
-    apiClient.post('/seo/keywords', { keyword, url }),
+  trackKeyword: async (keyword: string, url: string) => {
+    throw new Error('External API disabled - use Supabase SEO tables instead');
+  },
 };

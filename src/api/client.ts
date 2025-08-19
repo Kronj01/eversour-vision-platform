@@ -2,9 +2,8 @@
 import axios, { AxiosInstance } from 'axios';
 import { supabase } from '@/integrations/supabase/client';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-backend-api.herokuapp.com/api/v1'
-  : 'http://localhost:8000/api/v1';
+// Disabled external API calls - using Supabase directly
+const API_BASE_URL = '';
 
 class ApiClient {
   private client: AxiosInstance;
