@@ -29,10 +29,10 @@ import {
   Filter,
   AlertCircle
 } from 'lucide-react';
-import { useLeads } from '@/hooks/api/useLeads';
+import { useSupabaseLeads } from '@/hooks/useSupabaseLeads';
 
 const LeadManagement = () => {
-  const { leads, loading, error, updateLead } = useLeads();
+  const { leads, loading, error, updateLead } = useSupabaseLeads();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -161,7 +161,7 @@ const LeadManagement = () => {
                   <TableHead className="text-gray-300">Contact</TableHead>
                   <TableHead className="text-gray-300">Company</TableHead>
                   <TableHead className="text-gray-300">Status</TableHead>
-                  <TableHead className="text-gray-300">Source</TableHead>
+                  <TableHead className="text-gray-300">Service Interest</TableHead>
                   <TableHead className="text-gray-300">Created</TableHead>
                   <TableHead className="text-gray-300 text-right">Actions</TableHead>
                 </TableRow>
@@ -205,7 +205,7 @@ const LeadManagement = () => {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-gray-400">
-                      {lead.source}
+                      {lead.service_interest || '-'}
                     </TableCell>
                     <TableCell className="text-gray-400">
                       {new Date(lead.created_at).toLocaleDateString()}

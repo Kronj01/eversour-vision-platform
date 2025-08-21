@@ -3,10 +3,10 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { BarChart3, TrendingUp, Users, Globe, Activity, AlertCircle } from 'lucide-react';
-import { useAnalytics } from '@/hooks/api/useAnalytics';
+import { useSupabaseAnalytics } from '@/hooks/useSupabaseAnalytics';
 
 const BackendAnalyticsDashboard = () => {
-  const { data: analytics, loading, error } = useAnalytics();
+  const { data: analytics, loading, error } = useSupabaseAnalytics();
 
   if (loading) {
     return (
