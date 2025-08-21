@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -13,49 +12,41 @@ interface ContactFormData {
 }
 
 export const useContactForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const submitContactForm = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-    
+  const submitContactForm = async (formData: ContactFormData) => {
     try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([{
-          name: data.name,
-          email: data.email,
-          phone: data.phone || null,
-          company: data.company || null,
-          service_interest: data.service_interest || null,
-          message: data.message
-        }]);
+      setLoading(true);
 
-      if (error) {
-        throw error;
-      }
+      const { data, error } = await supabase.functions.invoke('contact-notification', {
+        body: formData
+      });
+
+      if (error) throw error;
 
       toast({
         title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
+        description: "Thank you for your message. We'll get back to you soon.",
       });
 
-      return { success: true };
+      return { success: true, data };
     } catch (error: any) {
-      console.error('Contact form submission error:', error);
+      console.error('Contact form error:', error);
       toast({
-        title: "Failed to send message",
-        description: "Please try again or contact us directly.",
+        title: "Error sending message",
+        description: error.message || "Please try again later.",
         variant: "destructive",
       });
       return { success: false, error: error.message };
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
   return {
     submitContactForm,
-    isSubmitting
+    loading,
+    isSubmitting: loading
   };
 };
