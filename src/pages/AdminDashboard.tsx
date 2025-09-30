@@ -14,6 +14,8 @@ import BackendAnalyticsDashboard from '@/components/backend/BackendAnalyticsDash
 import LeadManagement from '@/components/backend/LeadManagement';
 import BugReportingDashboard from '@/components/admin/BugReportingDashboard';
 import ContentManagementDashboard from '@/components/admin/ContentManagementDashboard';
+import { PageManagement } from '@/components/admin/PageManagement';
+import { MediaLibrary } from '@/components/admin/MediaLibrary';
 import FunnelBuilderDashboard from '@/components/admin/FunnelBuilderDashboard';
 import ThemeCustomizer from '@/components/admin/ThemeCustomizer';
 import RealTimeDashboard from '@/components/admin/RealTimeDashboard';
@@ -69,7 +71,7 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="realtime" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8 bg-gray-800/50">
+          <TabsList className="grid w-full grid-cols-9 bg-gray-800/50">
             <TabsTrigger value="realtime" className="text-white data-[state=active]:bg-purple-600">
               <Zap className="w-4 h-4 mr-2" />
               Real-Time
@@ -94,9 +96,13 @@ const AdminDashboard = () => {
               <Zap className="w-4 h-4 mr-2" />
               Automation
             </TabsTrigger>
-            <TabsTrigger value="content" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="pages" className="text-white data-[state=active]:bg-purple-600">
               <Globe className="w-4 h-4 mr-2" />
-              Content
+              Pages
+            </TabsTrigger>
+            <TabsTrigger value="media" className="text-white data-[state=active]:bg-purple-600">
+              <FileText className="w-4 h-4 mr-2" />
+              Media
             </TabsTrigger>
             <TabsTrigger value="theme" className="text-white data-[state=active]:bg-purple-600">
               <Layout className="w-4 h-4 mr-2" />
@@ -215,8 +221,12 @@ const AdminDashboard = () => {
             </Tabs>
           </TabsContent>
 
-          <TabsContent value="content">
-            <ContentManagementDashboard />
+          <TabsContent value="pages">
+            <PageManagement />
+          </TabsContent>
+          
+          <TabsContent value="media">
+            <MediaLibrary />
           </TabsContent>
 
           <TabsContent value="theme">

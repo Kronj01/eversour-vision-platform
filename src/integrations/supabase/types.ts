@@ -806,6 +806,99 @@ export type Database = {
         }
         Relationships: []
       }
+      media_files: {
+        Row: {
+          alt_text: string | null
+          caption: string | null
+          cdn_url: string | null
+          created_at: string
+          description: string | null
+          dimensions: Json | null
+          file_path: string
+          file_size: number
+          file_type: string
+          filename: string
+          folder_path: string | null
+          id: string
+          is_optimized: boolean | null
+          metadata: Json | null
+          mime_type: string
+          original_name: string
+          updated_at: string
+          uploaded_by: string
+        }
+        Insert: {
+          alt_text?: string | null
+          caption?: string | null
+          cdn_url?: string | null
+          created_at?: string
+          description?: string | null
+          dimensions?: Json | null
+          file_path: string
+          file_size: number
+          file_type: string
+          filename: string
+          folder_path?: string | null
+          id?: string
+          is_optimized?: boolean | null
+          metadata?: Json | null
+          mime_type: string
+          original_name: string
+          updated_at?: string
+          uploaded_by: string
+        }
+        Update: {
+          alt_text?: string | null
+          caption?: string | null
+          cdn_url?: string | null
+          created_at?: string
+          description?: string | null
+          dimensions?: Json | null
+          file_path?: string
+          file_size?: number
+          file_type?: string
+          filename?: string
+          folder_path?: string | null
+          id?: string
+          is_optimized?: boolean | null
+          metadata?: Json | null
+          mime_type?: string
+          original_name?: string
+          updated_at?: string
+          uploaded_by?: string
+        }
+        Relationships: []
+      }
+      menus: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean | null
+          items: Json
+          location: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          items?: Json
+          location: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          items?: Json
+          location?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       newsletter_subscriptions: {
         Row: {
           created_at: string
@@ -875,6 +968,53 @@ export type Database = {
         }
         Relationships: []
       }
+      page_revisions: {
+        Row: {
+          content: string
+          created_at: string
+          created_by: string
+          custom_fields: Json | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          page_id: string
+          revision_note: string | null
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          created_by: string
+          custom_fields?: Json | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          page_id: string
+          revision_note?: string | null
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          created_by?: string
+          custom_fields?: Json | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          page_id?: string
+          revision_note?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_revisions_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       page_views: {
         Row: {
           bounce: boolean | null
@@ -919,6 +1059,80 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "visitor_sessions"
             referencedColumns: ["session_id"]
+          },
+        ]
+      }
+      pages: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          custom_fields: Json | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          parent_id: string | null
+          password: string | null
+          scheduled_at: string | null
+          seo_settings: Json | null
+          slug: string
+          sort_order: number | null
+          status: string
+          template: string | null
+          title: string
+          updated_at: string
+          visibility: string | null
+        }
+        Insert: {
+          author_id: string
+          content?: string
+          created_at?: string
+          custom_fields?: Json | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          parent_id?: string | null
+          password?: string | null
+          scheduled_at?: string | null
+          seo_settings?: Json | null
+          slug: string
+          sort_order?: number | null
+          status?: string
+          template?: string | null
+          title: string
+          updated_at?: string
+          visibility?: string | null
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          custom_fields?: Json | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          parent_id?: string | null
+          password?: string | null
+          scheduled_at?: string | null
+          seo_settings?: Json | null
+          slug?: string
+          sort_order?: number | null
+          status?: string
+          template?: string | null
+          title?: string
+          updated_at?: string
+          visibility?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pages_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1530,6 +1744,42 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+        }
+        Relationships: []
+      }
+      widgets: {
+        Row: {
+          content: Json
+          created_at: string
+          created_by: string
+          id: string
+          is_global: boolean | null
+          name: string
+          settings: Json | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          created_by: string
+          id?: string
+          is_global?: boolean | null
+          name: string
+          settings?: Json | null
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_global?: boolean | null
+          name?: string
+          settings?: Json | null
+          type?: string
+          updated_at?: string
         }
         Relationships: []
       }
