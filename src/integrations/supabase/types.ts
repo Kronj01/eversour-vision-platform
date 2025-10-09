@@ -713,6 +713,143 @@ export type Database = {
         }
         Relationships: []
       }
+      funnel_analytics: {
+        Row: {
+          completed: boolean | null
+          created_at: string
+          current_step: number
+          dropped_at_step: number | null
+          funnel_id: string | null
+          id: string
+          metadata: Json | null
+          session_id: string
+          step_timestamps: Json | null
+          time_to_complete: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          completed?: boolean | null
+          created_at?: string
+          current_step: number
+          dropped_at_step?: number | null
+          funnel_id?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id: string
+          step_timestamps?: Json | null
+          time_to_complete?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          completed?: boolean | null
+          created_at?: string
+          current_step?: number
+          dropped_at_step?: number | null
+          funnel_id?: string | null
+          id?: string
+          metadata?: Json | null
+          session_id?: string
+          step_timestamps?: Json | null
+          time_to_complete?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "funnel_analytics_funnel_id_fkey"
+            columns: ["funnel_id"]
+            isOneToOne: false
+            referencedRelation: "funnel_definitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      funnel_definitions: {
+        Row: {
+          conversion_window_hours: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          steps: Json
+          updated_at: string
+        }
+        Insert: {
+          conversion_window_hours?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          steps?: Json
+          updated_at?: string
+        }
+        Update: {
+          conversion_window_hours?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          steps?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      heatmap_data: {
+        Row: {
+          created_at: string
+          device_type: string
+          element_selector: string | null
+          id: string
+          interaction_type: string
+          page_url: string
+          scroll_depth: number | null
+          session_id: string | null
+          timestamp: string
+          viewport_height: number | null
+          viewport_width: number | null
+          x_position: number | null
+          y_position: number | null
+        }
+        Insert: {
+          created_at?: string
+          device_type?: string
+          element_selector?: string | null
+          id?: string
+          interaction_type: string
+          page_url: string
+          scroll_depth?: number | null
+          session_id?: string | null
+          timestamp?: string
+          viewport_height?: number | null
+          viewport_width?: number | null
+          x_position?: number | null
+          y_position?: number | null
+        }
+        Update: {
+          created_at?: string
+          device_type?: string
+          element_selector?: string | null
+          id?: string
+          interaction_type?: string
+          page_url?: string
+          scroll_depth?: number | null
+          session_id?: string | null
+          timestamp?: string
+          viewport_height?: number | null
+          viewport_width?: number | null
+          x_position?: number | null
+          y_position?: number | null
+        }
+        Relationships: []
+      }
       keyword_tracking: {
         Row: {
           cpc: number | null
@@ -1190,6 +1327,84 @@ export type Database = {
         }
         Relationships: []
       }
+      performance_snapshots: {
+        Row: {
+          cls: number | null
+          created_at: string
+          css_size_kb: number | null
+          device_type: string
+          fcp: number | null
+          fid: number | null
+          font_size_kb: number | null
+          id: string
+          image_size_kb: number | null
+          js_size_kb: number | null
+          lcp: number | null
+          lighthouse_accessibility: number | null
+          lighthouse_best_practices: number | null
+          lighthouse_performance: number | null
+          lighthouse_pwa: number | null
+          lighthouse_seo: number | null
+          resource_count: number | null
+          resource_size_kb: number | null
+          speed_index: number | null
+          tbt: number | null
+          ttfb: number | null
+          tti: number | null
+          url: string
+        }
+        Insert: {
+          cls?: number | null
+          created_at?: string
+          css_size_kb?: number | null
+          device_type?: string
+          fcp?: number | null
+          fid?: number | null
+          font_size_kb?: number | null
+          id?: string
+          image_size_kb?: number | null
+          js_size_kb?: number | null
+          lcp?: number | null
+          lighthouse_accessibility?: number | null
+          lighthouse_best_practices?: number | null
+          lighthouse_performance?: number | null
+          lighthouse_pwa?: number | null
+          lighthouse_seo?: number | null
+          resource_count?: number | null
+          resource_size_kb?: number | null
+          speed_index?: number | null
+          tbt?: number | null
+          ttfb?: number | null
+          tti?: number | null
+          url: string
+        }
+        Update: {
+          cls?: number | null
+          created_at?: string
+          css_size_kb?: number | null
+          device_type?: string
+          fcp?: number | null
+          fid?: number | null
+          font_size_kb?: number | null
+          id?: string
+          image_size_kb?: number | null
+          js_size_kb?: number | null
+          lcp?: number | null
+          lighthouse_accessibility?: number | null
+          lighthouse_best_practices?: number | null
+          lighthouse_performance?: number | null
+          lighthouse_pwa?: number | null
+          lighthouse_seo?: number | null
+          resource_count?: number | null
+          resource_size_kb?: number | null
+          speed_index?: number | null
+          tbt?: number | null
+          ttfb?: number | null
+          tti?: number | null
+          url?: string
+        }
+        Relationships: []
+      }
       performance_tracking: {
         Row: {
           connection_type: string | null
@@ -1304,6 +1519,36 @@ export type Database = {
           id?: string
           role?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      realtime_metrics: {
+        Row: {
+          created_at: string
+          dimensions: Json | null
+          id: string
+          metric_name: string
+          metric_type: string
+          metric_value: number
+          timestamp: string
+        }
+        Insert: {
+          created_at?: string
+          dimensions?: Json | null
+          id?: string
+          metric_name: string
+          metric_type: string
+          metric_value: number
+          timestamp?: string
+        }
+        Update: {
+          created_at?: string
+          dimensions?: Json | null
+          id?: string
+          metric_name?: string
+          metric_type?: string
+          metric_value?: number
+          timestamp?: string
         }
         Relationships: []
       }
@@ -1556,6 +1801,54 @@ export type Database = {
           updated_at?: string
           url?: string
           voice_optimization_score?: number | null
+        }
+        Relationships: []
+      }
+      session_recordings: {
+        Row: {
+          created_at: string
+          device_info: Json | null
+          duration: number | null
+          ended_at: string | null
+          event_count: number | null
+          id: string
+          is_processed: boolean | null
+          page_count: number | null
+          recording_data: Json
+          session_id: string
+          started_at: string
+          storage_url: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          device_info?: Json | null
+          duration?: number | null
+          ended_at?: string | null
+          event_count?: number | null
+          id?: string
+          is_processed?: boolean | null
+          page_count?: number | null
+          recording_data?: Json
+          session_id: string
+          started_at?: string
+          storage_url?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          device_info?: Json | null
+          duration?: number | null
+          ended_at?: string | null
+          event_count?: number | null
+          id?: string
+          is_processed?: boolean | null
+          page_count?: number | null
+          recording_data?: Json
+          session_id?: string
+          started_at?: string
+          storage_url?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

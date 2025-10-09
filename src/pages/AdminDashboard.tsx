@@ -22,6 +22,9 @@ import RealTimeDashboard from '@/components/admin/RealTimeDashboard';
 import MarketingAutomationDashboard from '@/components/admin/MarketingAutomationDashboard';
 import AdvancedFormBuilder from '@/components/admin/AdvancedFormBuilder';
 import FormSubmissionsManagement from '@/components/admin/FormSubmissionsManagement';
+import { RealTimeAnalyticsDashboard } from '@/components/admin/RealTimeAnalyticsDashboard';
+import { BehavioralAnalyticsDashboard } from '@/components/admin/BehavioralAnalyticsDashboard';
+import { FunnelAnalyticsDashboard } from '@/components/admin/FunnelAnalyticsDashboard';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -108,10 +111,26 @@ const AdminDashboard = () => {
               <Layout className="w-4 h-4 mr-2" />
               Theme
             </TabsTrigger>
+            <TabsTrigger value="behavioral" className="text-white data-[state=active]:bg-purple-600">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Behavioral
+            </TabsTrigger>
+            <TabsTrigger value="funnels" className="text-white data-[state=active]:bg-purple-600">
+              <Target className="w-4 h-4 mr-2" />
+              Funnels
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="realtime">
-            <RealTimeDashboard />
+            <RealTimeAnalyticsDashboard />
+          </TabsContent>
+          
+          <TabsContent value="behavioral">
+            <BehavioralAnalyticsDashboard />
+          </TabsContent>
+          
+          <TabsContent value="funnels">
+            <FunnelAnalyticsDashboard />
           </TabsContent>
 
           <TabsContent value="backend">
