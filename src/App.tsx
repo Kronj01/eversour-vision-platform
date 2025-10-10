@@ -28,6 +28,8 @@ import Career from "./pages/Career";
 import NotFound from "./pages/NotFound";
 import SEOOptimizer from "./components/seo/SEOOptimizer";
 import AnonymousTracker from "./components/analytics/AnonymousTracker";
+import { AdvancedAnalyticsTracker } from "./components/analytics/AdvancedAnalyticsTracker";
+import { PerformanceTracker } from "./components/analytics/PerformanceTracker";
 import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient({
@@ -52,6 +54,8 @@ const App: React.FC = () => {
               <Layout>
                 <SEOOptimizer />
                 <AnonymousTracker />
+                <AdvancedAnalyticsTracker enabled={true} />
+                <PerformanceTracker enabled={true} />
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/auth" element={<Auth />} />

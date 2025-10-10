@@ -25,6 +25,7 @@ import FormSubmissionsManagement from '@/components/admin/FormSubmissionsManagem
 import { RealTimeAnalyticsDashboard } from '@/components/admin/RealTimeAnalyticsDashboard';
 import { BehavioralAnalyticsDashboard } from '@/components/admin/BehavioralAnalyticsDashboard';
 import { FunnelAnalyticsDashboard } from '@/components/admin/FunnelAnalyticsDashboard';
+import { ABTestingDashboard } from '@/components/admin/ABTestingDashboard';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -125,12 +126,23 @@ const AdminDashboard = () => {
             <RealTimeAnalyticsDashboard />
           </TabsContent>
           
-          <TabsContent value="behavioral">
-            <BehavioralAnalyticsDashboard />
-          </TabsContent>
-          
-          <TabsContent value="funnels">
-            <FunnelAnalyticsDashboard />
+          <TabsContent value="advanced">
+            <Tabs defaultValue="behavioral" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="behavioral">Behavioral</TabsTrigger>
+                <TabsTrigger value="funnels">Funnels</TabsTrigger>
+                <TabsTrigger value="abtesting">A/B Testing</TabsTrigger>
+              </TabsList>
+              <TabsContent value="behavioral">
+                <BehavioralAnalyticsDashboard />
+              </TabsContent>
+              <TabsContent value="funnels">
+                <FunnelAnalyticsDashboard />
+              </TabsContent>
+              <TabsContent value="abtesting">
+                <ABTestingDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
 
           <TabsContent value="backend">
@@ -241,15 +253,22 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="pages">
-            <PageManagement />
-          </TabsContent>
-          
-          <TabsContent value="media">
-            <MediaLibrary />
-          </TabsContent>
-
-          <TabsContent value="theme">
-            <ThemeCustomizer />
+            <Tabs defaultValue="management" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="management">Page Management</TabsTrigger>
+                <TabsTrigger value="media">Media Library</TabsTrigger>
+                <TabsTrigger value="theme">Theme</TabsTrigger>
+              </TabsList>
+              <TabsContent value="management">
+                <PageManagement />
+              </TabsContent>
+              <TabsContent value="media">
+                <MediaLibrary />
+              </TabsContent>
+              <TabsContent value="theme">
+                <ThemeCustomizer />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
       </div>
