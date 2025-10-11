@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, BarChart3, Users, FileText, Settings, AlertCircle, Bug, Globe, Zap, Target, Megaphone, Layout } from 'lucide-react';
+import { Shield, BarChart3, Users, FileText, Settings, AlertCircle, Bug, Globe, Zap, Target, Megaphone, Layout, Mail, Tag, FormInput } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import BlogManagement from '@/components/admin/BlogManagement';
@@ -26,6 +26,9 @@ import { RealTimeAnalyticsDashboard } from '@/components/admin/RealTimeAnalytics
 import { BehavioralAnalyticsDashboard } from '@/components/admin/BehavioralAnalyticsDashboard';
 import { FunnelAnalyticsDashboard } from '@/components/admin/FunnelAnalyticsDashboard';
 import { ABTestingDashboard } from '@/components/admin/ABTestingDashboard';
+import { EmailMarketingDashboard } from '@/components/admin/EmailMarketingDashboard';
+import { SegmentationDashboard } from '@/components/admin/SegmentationDashboard';
+import { LeadCaptureDashboard } from '@/components/admin/LeadCaptureDashboard';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -75,55 +78,62 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="realtime" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-9 bg-gray-800/50">
-            <TabsTrigger value="realtime" className="text-white data-[state=active]:bg-purple-600">
+          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 bg-background/50 backdrop-blur-sm border border-border/50">
+            <TabsTrigger value="realtime" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Zap className="w-4 h-4 mr-2" />
               Real-Time
             </TabsTrigger>
-            <TabsTrigger value="backend" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="marketing" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              <Mail className="w-4 h-4 mr-2" />
+              Marketing
+            </TabsTrigger>
+            <TabsTrigger value="backend" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Shield className="w-4 h-4 mr-2" />
               Backend
             </TabsTrigger>
-            <TabsTrigger value="users" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="users" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Users className="w-4 h-4 mr-2" />
               Users
             </TabsTrigger>
-            <TabsTrigger value="blog" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="blog" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <FileText className="w-4 h-4 mr-2" />
               Blog
             </TabsTrigger>
-            <TabsTrigger value="seo" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="seo" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Target className="w-4 h-4 mr-2" />
               SEO
             </TabsTrigger>
-            <TabsTrigger value="automation" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="automation" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Zap className="w-4 h-4 mr-2" />
               Automation
             </TabsTrigger>
-            <TabsTrigger value="pages" className="text-white data-[state=active]:bg-purple-600">
+            <TabsTrigger value="pages" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Globe className="w-4 h-4 mr-2" />
               Pages
-            </TabsTrigger>
-            <TabsTrigger value="media" className="text-white data-[state=active]:bg-purple-600">
-              <FileText className="w-4 h-4 mr-2" />
-              Media
-            </TabsTrigger>
-            <TabsTrigger value="theme" className="text-white data-[state=active]:bg-purple-600">
-              <Layout className="w-4 h-4 mr-2" />
-              Theme
-            </TabsTrigger>
-            <TabsTrigger value="behavioral" className="text-white data-[state=active]:bg-purple-600">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Behavioral
-            </TabsTrigger>
-            <TabsTrigger value="funnels" className="text-white data-[state=active]:bg-purple-600">
-              <Target className="w-4 h-4 mr-2" />
-              Funnels
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="realtime">
             <RealTimeAnalyticsDashboard />
+          </TabsContent>
+
+          <TabsContent value="marketing">
+            <Tabs defaultValue="email" className="space-y-4">
+              <TabsList className="bg-background/30 backdrop-blur-sm">
+                <TabsTrigger value="email">Email Campaigns</TabsTrigger>
+                <TabsTrigger value="segments">Segmentation</TabsTrigger>
+                <TabsTrigger value="leads">Lead Capture</TabsTrigger>
+              </TabsList>
+              <TabsContent value="email">
+                <EmailMarketingDashboard />
+              </TabsContent>
+              <TabsContent value="segments">
+                <SegmentationDashboard />
+              </TabsContent>
+              <TabsContent value="leads">
+                <LeadCaptureDashboard />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
           
           <TabsContent value="advanced">
