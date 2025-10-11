@@ -29,6 +29,8 @@ import { ABTestingDashboard } from '@/components/admin/ABTestingDashboard';
 import { EmailMarketingDashboard } from '@/components/admin/EmailMarketingDashboard';
 import { SegmentationDashboard } from '@/components/admin/SegmentationDashboard';
 import { LeadCaptureDashboard } from '@/components/admin/LeadCaptureDashboard';
+import { AutomationWorkflowBuilder } from '@/components/admin/AutomationWorkflowBuilder';
+import { CampaignAnalyticsDashboard } from '@/components/admin/CampaignAnalyticsDashboard';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -123,6 +125,8 @@ const AdminDashboard = () => {
                 <TabsTrigger value="email">Email Campaigns</TabsTrigger>
                 <TabsTrigger value="segments">Segmentation</TabsTrigger>
                 <TabsTrigger value="leads">Lead Capture</TabsTrigger>
+                <TabsTrigger value="workflows">Workflows</TabsTrigger>
+                <TabsTrigger value="analytics">Analytics</TabsTrigger>
               </TabsList>
               <TabsContent value="email">
                 <EmailMarketingDashboard />
@@ -132,6 +136,12 @@ const AdminDashboard = () => {
               </TabsContent>
               <TabsContent value="leads">
                 <LeadCaptureDashboard />
+              </TabsContent>
+              <TabsContent value="workflows">
+                <AutomationWorkflowBuilder />
+              </TabsContent>
+              <TabsContent value="analytics">
+                <CampaignAnalyticsDashboard />
               </TabsContent>
             </Tabs>
           </TabsContent>
