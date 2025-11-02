@@ -31,6 +31,9 @@ import { SegmentationDashboard } from '@/components/admin/SegmentationDashboard'
 import { LeadCaptureDashboard } from '@/components/admin/LeadCaptureDashboard';
 import { AutomationWorkflowBuilder } from '@/components/admin/AutomationWorkflowBuilder';
 import { CampaignAnalyticsDashboard } from '@/components/admin/CampaignAnalyticsDashboard';
+import EnvironmentManagement from '@/components/admin/EnvironmentManagement';
+import APIManagement from '@/components/admin/APIManagement';
+import BackupRecovery from '@/components/admin/BackupRecovery';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -80,7 +83,7 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="realtime" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 bg-background/50 backdrop-blur-sm border border-border/50">
+          <TabsList className="grid w-full grid-cols-7 lg:grid-cols-14 bg-background/50 backdrop-blur-sm border border-border/50">
             <TabsTrigger value="realtime" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Zap className="w-4 h-4 mr-2" />
               Real-Time
@@ -88,6 +91,10 @@ const AdminDashboard = () => {
             <TabsTrigger value="marketing" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Mail className="w-4 h-4 mr-2" />
               Marketing
+            </TabsTrigger>
+            <TabsTrigger value="enterprise" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              <Settings className="w-4 h-4 mr-2" />
+              Enterprise
             </TabsTrigger>
             <TabsTrigger value="backend" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
               <Shield className="w-4 h-4 mr-2" />
@@ -287,6 +294,25 @@ const AdminDashboard = () => {
               </TabsContent>
               <TabsContent value="theme">
                 <ThemeCustomizer />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
+          <TabsContent value="enterprise">
+            <Tabs defaultValue="environments" className="space-y-4">
+              <TabsList className="bg-gray-800/30">
+                <TabsTrigger value="environments">Environments</TabsTrigger>
+                <TabsTrigger value="api">API Management</TabsTrigger>
+                <TabsTrigger value="backup">Backup & Recovery</TabsTrigger>
+              </TabsList>
+              <TabsContent value="environments">
+                <EnvironmentManagement />
+              </TabsContent>
+              <TabsContent value="api">
+                <APIManagement />
+              </TabsContent>
+              <TabsContent value="backup">
+                <BackupRecovery />
               </TabsContent>
             </Tabs>
           </TabsContent>

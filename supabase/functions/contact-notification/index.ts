@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -28,6 +29,10 @@ const handler = async (req: Request): Promise<Response> => {
     const submission: ContactSubmission = await req.json();
     
     console.log('Processing contact submission:', submission);
+
+    // Initialize Resend for email notifications
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
     // Store in contact_submissions table
     const { data: contactData, error: contactError } = await supabase
@@ -78,6 +83,35 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (conversionError) {
       console.error('Error tracking conversion:', conversionError);
+    }
+
+    // Send email notification to admin
+    if (resend) {
+      try {
+        await resend.emails.send({
+          from: 'Contact Form <onboarding@resend.dev>',
+          to: ['eversour01@gmail.com'],
+          subject: `New Contact Form Submission from ${submission.name}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>Name:</strong> ${submission.name}</p>
+            <p><strong>Email:</strong> ${submission.email}</p>
+            ${submission.phone ? `<p><strong>Phone:</strong> ${submission.phone}</p>` : ''}
+            ${submission.company ? `<p><strong>Company:</strong> ${submission.company}</p>` : ''}
+            ${submission.service_interest ? `<p><strong>Service Interest:</strong> ${submission.service_interest}</p>` : ''}
+            <p><strong>Message:</strong></p>
+            <p>${submission.message}</p>
+            <hr>
+            <p><small>Submitted at: ${new Date().toLocaleString()}</small></p>
+          `,
+        });
+        console.log('Email notification sent to eversour01@gmail.com');
+      } catch (emailError) {
+        console.error('Error sending email notification:', emailError);
+        // Don't fail the whole request if email fails
+      }
+    } else {
+      console.log('Resend API key not configured - email notification skipped');
     }
 
     console.log('Contact submission processed successfully');
