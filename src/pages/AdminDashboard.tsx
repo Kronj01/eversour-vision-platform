@@ -34,6 +34,10 @@ import { CampaignAnalyticsDashboard } from '@/components/admin/CampaignAnalytics
 import EnvironmentManagement from '@/components/admin/EnvironmentManagement';
 import APIManagement from '@/components/admin/APIManagement';
 import BackupRecovery from '@/components/admin/BackupRecovery';
+import JobPostingManagement from '@/components/admin/JobPostingManagement';
+import ApplicationTracking from '@/components/admin/ApplicationTracking';
+import InterviewScheduling from '@/components/admin/InterviewScheduling';
+import NewsletterCampaignManagement from '@/components/admin/NewsletterCampaignManagement';
 
 const AdminDashboard = () => {
   const { user, loading } = useAuth();
@@ -304,6 +308,8 @@ const AdminDashboard = () => {
                 <TabsTrigger value="environments">Environments</TabsTrigger>
                 <TabsTrigger value="api">API Management</TabsTrigger>
                 <TabsTrigger value="backup">Backup & Recovery</TabsTrigger>
+                <TabsTrigger value="jobs">Job Portal</TabsTrigger>
+                <TabsTrigger value="newsletter">Newsletter</TabsTrigger>
               </TabsList>
               <TabsContent value="environments">
                 <EnvironmentManagement />
@@ -313,6 +319,27 @@ const AdminDashboard = () => {
               </TabsContent>
               <TabsContent value="backup">
                 <BackupRecovery />
+              </TabsContent>
+              <TabsContent value="jobs">
+                <Tabs defaultValue="postings" className="space-y-6">
+                  <TabsList className="bg-gray-800/30">
+                    <TabsTrigger value="postings">Job Postings</TabsTrigger>
+                    <TabsTrigger value="applications">Applications</TabsTrigger>
+                    <TabsTrigger value="interviews">Interviews</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="postings">
+                    <JobPostingManagement />
+                  </TabsContent>
+                  <TabsContent value="applications">
+                    <ApplicationTracking />
+                  </TabsContent>
+                  <TabsContent value="interviews">
+                    <InterviewScheduling />
+                  </TabsContent>
+                </Tabs>
+              </TabsContent>
+              <TabsContent value="newsletter">
+                <NewsletterCampaignManagement />
               </TabsContent>
             </Tabs>
           </TabsContent>

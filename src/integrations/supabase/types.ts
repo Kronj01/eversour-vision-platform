@@ -454,6 +454,35 @@ export type Database = {
         }
         Relationships: []
       }
+      candidate_tags: {
+        Row: {
+          application_id: string
+          created_at: string | null
+          id: string
+          tag: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string | null
+          id?: string
+          tag: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string | null
+          id?: string
+          tag?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_tags_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "job_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           admin_notes: string | null
@@ -1005,6 +1034,196 @@ export type Database = {
           viewport_width?: number | null
           x_position?: number | null
           y_position?: number | null
+        }
+        Relationships: []
+      }
+      interview_schedules: {
+        Row: {
+          application_id: string
+          created_at: string | null
+          duration_minutes: number | null
+          feedback: string | null
+          id: string
+          interview_type: string
+          interviewer_email: string | null
+          interviewer_name: string | null
+          location: string | null
+          notes: string | null
+          scheduled_at: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          application_id: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          feedback?: string | null
+          id?: string
+          interview_type: string
+          interviewer_email?: string | null
+          interviewer_name?: string | null
+          location?: string | null
+          notes?: string | null
+          scheduled_at: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          application_id?: string
+          created_at?: string | null
+          duration_minutes?: number | null
+          feedback?: string | null
+          id?: string
+          interview_type?: string
+          interviewer_email?: string | null
+          interviewer_name?: string | null
+          location?: string | null
+          notes?: string | null
+          scheduled_at?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interview_schedules_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "job_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_applications: {
+        Row: {
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string | null
+          applied_at: string | null
+          availability_date: string | null
+          cover_letter: string | null
+          current_company: string | null
+          expected_salary: string | null
+          id: string
+          job_id: string
+          linkedin_url: string | null
+          notes: string | null
+          portfolio_url: string | null
+          rating: number | null
+          resume_url: string
+          status: string
+          updated_at: string | null
+          years_of_experience: number | null
+        }
+        Insert: {
+          applicant_email: string
+          applicant_name: string
+          applicant_phone?: string | null
+          applied_at?: string | null
+          availability_date?: string | null
+          cover_letter?: string | null
+          current_company?: string | null
+          expected_salary?: string | null
+          id?: string
+          job_id: string
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          rating?: number | null
+          resume_url: string
+          status?: string
+          updated_at?: string | null
+          years_of_experience?: number | null
+        }
+        Update: {
+          applicant_email?: string
+          applicant_name?: string
+          applicant_phone?: string | null
+          applied_at?: string | null
+          availability_date?: string | null
+          cover_letter?: string | null
+          current_company?: string | null
+          expected_salary?: string | null
+          id?: string
+          job_id?: string
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          rating?: number | null
+          resume_url?: string
+          status?: string
+          updated_at?: string | null
+          years_of_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_postings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_postings: {
+        Row: {
+          application_count: number | null
+          benefits: string | null
+          closes_at: string | null
+          created_at: string | null
+          created_by: string | null
+          department: string
+          description: string
+          employment_type: string
+          id: string
+          location: string
+          published_at: string | null
+          requirements: string
+          responsibilities: string | null
+          salary_range: string | null
+          status: string
+          title: string
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          application_count?: number | null
+          benefits?: string | null
+          closes_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          department: string
+          description: string
+          employment_type: string
+          id?: string
+          location: string
+          published_at?: string | null
+          requirements: string
+          responsibilities?: string | null
+          salary_range?: string | null
+          status?: string
+          title: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          application_count?: number | null
+          benefits?: string | null
+          closes_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          department?: string
+          description?: string
+          employment_type?: string
+          id?: string
+          location?: string
+          published_at?: string | null
+          requirements?: string
+          responsibilities?: string | null
+          salary_range?: string | null
+          status?: string
+          title?: string
+          updated_at?: string | null
+          view_count?: number | null
         }
         Relationships: []
       }
