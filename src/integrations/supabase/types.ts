@@ -1815,7 +1815,7 @@ export type Database = {
           content_type: string
           created_at: string
           id: string
-          search_vector: unknown | null
+          search_vector: unknown
           tags: string[] | null
           title: string
           updated_at: string
@@ -1827,7 +1827,7 @@ export type Database = {
           content_type: string
           created_at?: string
           id?: string
-          search_vector?: unknown | null
+          search_vector?: unknown
           tags?: string[] | null
           title: string
           updated_at?: string
@@ -1839,7 +1839,7 @@ export type Database = {
           content_type?: string
           created_at?: string
           id?: string
-          search_vector?: unknown | null
+          search_vector?: unknown
           tags?: string[] | null
           title?: string
           updated_at?: string
@@ -2511,22 +2511,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      calculate_reading_time: {
-        Args: { content: string }
-        Returns: number
-      }
-      generate_slug: {
-        Args: { title: string }
-        Returns: string
-      }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      calculate_reading_time: { Args: { content: string }; Returns: number }
+      generate_slug: { Args: { title: string }; Returns: string }
+      get_current_user_role: { Args: never; Returns: string }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
